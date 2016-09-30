@@ -1,0 +1,3 @@
+'atom-workspace':
+    'f5': 'monkey:buildDefault'
+    'f6': 'monkey:buildCurrent'

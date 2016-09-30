@@ -1,4 +1,5 @@
-# monkey-x package
+# Monkey Language Package
+
 
 This is a direct port from the TextMate package.
 It includes syntax highlighting and snippets for
@@ -15,7 +16,7 @@ Chose the Atom Menu, then Snippets and a file will open. The syntax for snippets
 		"DrawRect":
 			prefix: 'DrawRect'
 			body: 'DrawRect(${1:x}, ${2:y}, ${3:width}, ${4:height})$0'
-		
+
 For more info and how to further improve Atom for Monkey-X visit the official forums: [monkey](http://www.monkey-x.com/Community/_index_.php)
 
 [Thread on monkey-x forums](http://www.monkey-x.com/Community/posts.php?topic=10505)

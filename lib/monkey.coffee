@@ -40,6 +40,10 @@ module.exports = Monkey =
         @subscriptions.add atom.commands.add 'atom-workspace',
             'monkey:buildDefault': => @buildDefault()
 
+        @subscriptions.add atom.commands.add 'atom-workspace',
+            'monkey:buildCurrent': (event) ->
+                self.build(atom.workspace.getActiveTextEditor().getPath())
+
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey:setCompilationTarget': (event) ->
                 self.setCompilationTarget(event.target)
@@ -131,23 +135,24 @@ module.exports = Monkey =
                 mPath += "/bin/transcc_macos"
             else
                 mPath += "/bin/transcc_linux"
-            buildOut = spawn mPath, ['-run', '-target=HTML5_Game', '-config=debug', targetPath]
+            buildOut = spawn mPath, ['-run', '-target=Html5_Game', '-config=debug', targetPath]
         else
             atom.notifications.addError("Not a monkey file!")
             return
-            
+
         atom.notifications.addInfo("Compiling...")
 
         buildOut.stdout.on 'data', (data) ->
             message = data.toString().trim()
             errorRegex = /error/gi
             runningRegex = /Running/
-
+            atom.notifications.addInfo(message)
+            ###
             if message.search(errorRegex) > -1
                 atom.notifications.addError(message)
             if message.search(runningRegex) > -1
                 atom.notifications.addSuccess("Success!")
-
+            ###
         buildOut.stderr.on 'data', (data) ->
             message = data.toString().trim()
             atom.notifications.addError(message)

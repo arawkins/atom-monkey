@@ -7,6 +7,10 @@
                 {
                     'label': 'Build Default'
                     'command': 'monkey:buildDefault'
+                },
+                {
+                    'label': 'Build Current'
+                    'command': 'monkey:buildCurrent'
                 }
             ]
         ]
@@ -21,7 +25,28 @@
             label: 'Monkey',
             submenu: [
                 {label: 'Set Default Target', command: 'monkey:setCompilationTarget'}
-                {label: 'Compile This File', command: 'monkey:buildSelected'}
+                {label: 'Build Selected', command: 'monkey:buildSelected'}
+            ]
+        },
+        {
+            type: 'separator'
+        }
+    ]
+    'atom-text-editor': [
+        {
+            type: 'separator'
+        },
+        {
+            label: 'Monkey',
+            submenu: [
+                {
+                    'label': 'Build Default'
+                    'command': 'monkey:buildDefault'
+                },
+                {
+                    'label': 'Build Current'
+                    'command': 'monkey:buildCurrent'
+                }
             ]
         },
         {
