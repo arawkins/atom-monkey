@@ -2,13 +2,14 @@ MonkeyView = require './monkey-view'
 
 exec = require('child_process').exec
 spawn = require('child_process').spawn
+os = require('os')
 
 {CompositeDisposable} = require 'atom'
 
 module.exports = Monkey =
     config:
         monkeyPath:
-            title: 'Monkey-x Path'
+            title: 'Monkey-X Path'
             description: 'The path to your installation of Monkey-x'
             type: 'string'
             default: ''
@@ -24,6 +25,7 @@ module.exports = Monkey =
     compilationTarget: ''
 
     activate: (state) ->
+        console.log "Activating monkey module"
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
         @modalPanel = atom.workspace.addModalPanel(item: @monkeyViewState.getElement(), visible: false)
@@ -54,12 +56,23 @@ module.exports = Monkey =
         @compilationTarget = filePath
 
     build: ->
-        if @compilationTarget == ''
-            console.log("no compilation target set")
+        if @compilationTarget == '' or @compilationTarget == null or @compilationTarget == undefined
+            atom.notifications.addError("No compilation target set. Right click a monkey2 file in the folder tree and choose 'Set Compilation Target'")
             return false
 
-        m2Path = atom.config.get "monkey.monkey2Path"
-        m2Path += "\\bin\\mx2cc_windows.exe"
+        m2Path = atom.config.get "language-monkey.monkey2Path"
+
+        if m2Path == '' or m2Path == null or m2Path == undefined
+            atom.notifications.addError("The path to Monkey2 needs to be set in the package settings")
+            return
+
+        if os.platform() == 'win32'
+            m2Path += "\\bin\\mx2cc_windows.exe"
+        else if os.platform() == 'darwin'
+            m2Path += "/bin/mx2cc_macos"
+        else
+            m2Path += "/bin/mx2cc_linux"
+
         buildOut = spawn m2Path, ['makeapp', @compilationTarget]
         atom.notifications.addInfo("Compiling...")
 
