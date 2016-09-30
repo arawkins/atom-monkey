@@ -23,25 +23,47 @@ module.exports = Monkey =
     modalPanel: null
     subscriptions: null
     compilationTarget: ''
+    projects: {}
+    projectNamespace: ''
 
     activate: (state) ->
-        console.log "Activating monkey module"
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
         @modalPanel = atom.workspace.addModalPanel(item: @monkeyViewState.getElement(), visible: false)
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
-        @compilationTarget = state.compilationTarget
 
-        # Register command that toggles this view
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:build': => @build()
+            'monkey:build': => @build(self.getCompilationTarget())
+
+        @subscriptions.add atom.commands.add 'atom-workspace',
+            'monkey:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey:setCompilationTarget': (event) ->
-                filePath = event.target.getAttribute('data-path')
-                self.setCompilationTarget(filePath)
+                self.setCompilationTarget(event.target)
+
+        @subscriptions.add atom.commands.add '.file.selected',
+            'monkey:buildSelected': (event) ->
+                self.build(event.target.getAttribute('data-path'))
+
+
+        @projectNamespace = atom.project.getPaths()[0]
+
+        if state.projects != null and state.projects != undefined
+            @projects = state.projects
+            compilationTarget = @projects[@projectNamespace].compilationTarget
+
+            if compilationTarget != undefined
+                pathToSearch = '[data-path="'+compilationTarget+'"]'
+                fileNodes = document.querySelectorAll('.name.icon-file-text')
+                fileNode = (item for item in fileNodes when item.getAttribute('data-path') == compilationTarget).pop()
+                this.setCompilationTarget(fileNode)
+            console.log("restored serialized state")
+        else
+            @projects = {}
+            console.log "fresh projects state"
 
     deactivate: ->
         @modalPanel.destroy()
@@ -50,37 +72,75 @@ module.exports = Monkey =
 
     serialize: ->
         monkeyViewState: @monkeyViewState.serialize()
-        compilationTarget: @compilationTarget
+        projects: @projects
 
-    setCompilationTarget: (filePath)->
-        @compilationTarget = filePath
+    setCompilationTarget: (fileNode)->
+        #check for existing compilationTarget; remove styling if found
+        ctNode = document.getElementById("compilationTarget")
+        if ctNode != null
+            ctNode.id = ''
+            ctNode.classList.remove('icon-arrow-right')
+            ctNode.classList.add('icon-file-text')
 
-    build: ->
-        if @compilationTarget == '' or @compilationTarget == null or @compilationTarget == undefined
-            atom.notifications.addError("No compilation target set. Right click a monkey2 file in the folder tree and choose 'Set Compilation Target'")
+        #add green arrow styling
+        fileNode.classList.remove('icon-file-text')
+        fileNode.classList.add('icon-arrow-right')
+        fileNode.id = "compilationTarget"
+
+        #save a copy of the file path to the project so we can serialize it
+        @projects[@projectNamespace] =
+            compilationTarget : fileNode.getAttribute('data-path')
+
+    getCompilationTarget: ->
+        @projects[@projectNamespace].compilationTarget
+
+    buildDefault: ->
+        target = this.getCompilationTarget()
+        if target == null
+            atom.notifications.addError("No compilation target set. Right click a monkey file in the folder tree and choose 'Set Compilation Target'")
             return false
-
-        m2Path = atom.config.get "language-monkey.monkey2Path"
-
-        if m2Path == '' or m2Path == null or m2Path == undefined
-            atom.notifications.addError("The path to Monkey2 needs to be set in the package settings")
-            return
-
-        if os.platform() == 'win32'
-            m2Path += "\\bin\\mx2cc_windows.exe"
-        else if os.platform() == 'darwin'
-            m2Path += "/bin/mx2cc_macos"
         else
-            m2Path += "/bin/mx2cc_linux"
+            this.build(target)
 
-        buildOut = spawn m2Path, ['makeapp', @compilationTarget]
+    build: (targetPath) ->
+        extension = targetPath.substr(targetPath.lastIndexOf('.')+1)
+        mPath = ''
+        buildOut = null
+
+        if extension == 'monkey2'
+            mPath = atom.config.get "language-monkey.monkey2Path"
+            if mPath == '' or mPath == null or mPath == undefined
+                atom.notifications.addError("The path to Monkey2 needs to be set in the package settings")
+                return
+            if os.platform() == 'win32'
+                mPath += "\\bin\\mx2cc_windows.exe"
+            else if os.platform() == 'darwin'
+                mPath += "/bin/mx2cc_macos"
+            else
+                mPath += "/bin/mx2cc_linux"
+            buildOut = spawn mPath, ['makeapp', targetPath]
+
+        else if extension == 'monkey'
+            mPath = atom.config.get "language-monkey.monkeyPath"
+            if mPath == '' or mPath == null or mPath == undefined
+                atom.notifications.addError("The path to Monkey-X needs to be set in the package settings")
+                return
+            if os.platform() == 'win32'
+                mPath += "\\bin\\transcc_winnt.exe"
+            else if os.platform() == 'darwin'
+                mPath += "/bin/transcc_macos"
+            else
+                mPath += "/bin/transcc_linux"
+            buildOut = spawn mPath, ['-run', '-target=HTML5_Game', '-config=debug', targetPath]
+        else
+            atom.notifications.addError("Not a monkey file!")
+            return
+            
         atom.notifications.addInfo("Compiling...")
 
         buildOut.stdout.on 'data', (data) ->
             message = data.toString().trim()
-            console.log message
             errorRegex = /error/gi
-            mx2Regex = /mx2cc/
             runningRegex = /Running/
 
             if message.search(errorRegex) > -1
@@ -90,7 +150,6 @@ module.exports = Monkey =
 
         buildOut.stderr.on 'data', (data) ->
             message = data.toString().trim()
-            console.log message
             atom.notifications.addError(message)
 
     toggle: ->

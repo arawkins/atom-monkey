@@ -16,6 +16,7 @@
     },
     "activationCommands": {
         "atom-workspace": "monkey:build",
+        "atom-workspace": "monkey:buildDefault",
         ".file.selected": "monkey:setCompilationTarget"
     },
     "activationHooks": [

@@ -5,8 +5,8 @@
             'label': 'Monkey'
             'submenu': [
                 {
-                    'label': 'Build'
-                    'command': 'monkey:build'
+                    'label': 'Build Default'
+                    'command': 'monkey:buildDefault'
                 }
             ]
         ]
@@ -15,7 +15,16 @@
 'context-menu':
     '.file.selected': [
         {
-            'label': 'Set Monkey Compilation Target'
-            'command': 'monkey:setCompilationTarget'
+            type: 'separator'
+        },
+        {
+            label: 'Monkey',
+            submenu: [
+                {label: 'Set Default Target', command: 'monkey:setCompilationTarget'}
+                {label: 'Compile This File', command: 'monkey:buildSelected'}
+            ]
+        },
+        {
+            type: 'separator'
         }
     ]
