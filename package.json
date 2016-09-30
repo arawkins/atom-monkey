@@ -1,19 +1,28 @@
 {
-  "name": "monkey-x",
-  "version": "0.1.0",
-  "description": "Syntax highlighting and snippets for the monkey-x programming language.",
-  "keywords": [
-    "monkey",
-    "monkey-x",
-    "game programming language"
-  ],
-  "repository": "https://github.com/frameland/atom-monkey",
-  "license": "MIT",
-  "engines": {
-    "atom": ">=1.0.0 <2.0.0"
-  },
-  "activationHooks": [
-    "language-monkey:grammar-used"
-  ],
-  "dependencies": {}
+    "name": "language-monkey",
+    "version": "0.1.0",
+    "main": "./lib/monkey",
+    "description": "Language support for Monkey programming languages.",
+    "keywords": [
+        "monkey",
+        "monkey-x",
+        "monkey2",
+        "game programming language"
+    ],
+    "repository": "https://github.com/arawkins/atom-monkey",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=1.0.0 <2.0.0"
+    },
+    "activationCommands": {
+        "atom-workspace": "monkey:build",
+        ".file.selected": "monkey:setCompilationTarget"
+    },
+    "activationHooks": [
+        "language-monkey:grammar-used",
+        "language-monkey2:grammar-used"
+    ],
+    "dependencies": {
+        "jquery": "^2.1.4"
+    }
 }

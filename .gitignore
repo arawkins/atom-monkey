@@ -1,1 +1,4 @@
 snippets/fl*
+*.monkey2
+*.buildv*
+node_modules

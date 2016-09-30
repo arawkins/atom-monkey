@@ -16,7 +16,7 @@ foldingStopMarker: '''
           \\#end|'\\#end\\s?region|end
       )\\b
 '''
-name: "Monkey"
+name: "Monkey2"
 patterns: [
   {
     match: ";"
