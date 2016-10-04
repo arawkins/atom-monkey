@@ -1,4 +1,5 @@
 MonkeyView = require './monkey-view'
+{$} = require 'atom-space-pen-views'
 
 exec = require('child_process').exec
 spawn = require('child_process').spawn
@@ -29,7 +30,8 @@ module.exports = Monkey =
     activate: (state) ->
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
-        @panel = atom.workspace.addTopPanel(item: @monkeyViewState.getElement(), visible: false)
+        
+        @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
@@ -55,7 +57,7 @@ module.exports = Monkey =
 
         @projectNamespace = atom.project.getPaths()[0]
         @projects = state.projects
-        
+
         if @projects != null and @projects != undefined and @projects[@projectNamespace] != undefined
 
             compilationTarget = @projects[@projectNamespace].compilationTarget
