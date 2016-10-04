@@ -29,7 +29,7 @@ module.exports = Monkey =
     activate: (state) ->
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
-        @modalPanel = atom.workspace.addModalPanel(item: @monkeyViewState.getElement(), visible: false)
+        @panel = atom.workspace.addTopPanel(item: @monkeyViewState.getElement(), visible: false)
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
@@ -54,9 +54,10 @@ module.exports = Monkey =
 
 
         @projectNamespace = atom.project.getPaths()[0]
+        @projects = state.projects
+        
+        if @projects != null and @projects != undefined and @projects[@projectNamespace] != undefined
 
-        if state.projects != null and state.projects != undefined
-            @projects = state.projects
             compilationTarget = @projects[@projectNamespace].compilationTarget
 
             if compilationTarget != undefined

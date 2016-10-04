@@ -11,6 +11,7 @@ class MonkeyView
     message.classList.add('message')
     @element.appendChild(message)
 
+
   # Returns an object that can be retrieved when package is activated
   serialize: ->
 
