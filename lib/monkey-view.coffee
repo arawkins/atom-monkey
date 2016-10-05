@@ -2,101 +2,162 @@ $ = require 'jquery'
 
 module.exports =
 class MonkeyView
-  constructor: (serializedState) ->
-    # Create root element
-    @element = document.createElement('atom-panel')
-    @element.classList.add('monkey-panel')
-    @element.classList.add('inline-block-tight')
+    constructor: (serializedState) ->
+        self = this
 
-    # Create message element
-    message = document.createElement('div')
-    message.textContent = "Monkey2"
-    message.classList.add('inline-block')
-    message.classList.add('monkey2Logo')
+        # Create root element
+        @element = document.createElement('atom-panel')
+        @element.classList.add('monkey-panel')
+        @element.classList.add('inline-block-tight')
 
-    @element.appendChild(message)
 
-    @actionSelector = document.createElement('select')
-    @actionSelector.classList.add('input-select')
-    @actionSelector.classList.add('inline-block')
 
-    action1 = document.createElement('option')
-    action1.textContent = "run"
-    @actionSelector.appendChild(action1)
+        # Create compiler controls
+        compilerControls = document.createElement('div')
+        compilerControls.classList.add('inline-block', 'monkey-compiler-controls')
 
-    action2 = document.createElement('option')
-    action2.textContent = "build"
-    @actionSelector.appendChild(action2)
+        # Create message element
+        message = document.createElement('div')
+        message.textContent = "Monkey2"
+        message.classList.add('inline-block')
+        message.classList.add('monkey2Logo')
 
-    @targetSelector = document.createElement('select')
-    @targetSelector.classList.add('input-select')
-    @targetSelector.classList.add('inline-block')
+        compilerControls.appendChild(message)
 
-    target1 = document.createElement('option')
-    target1.textContent = "desktop"
-    @targetSelector.appendChild(target1)
 
-    target2 = document.createElement('option')
-    target2.textContent = "emscripten"
-    @targetSelector.appendChild(target2)
+        @actionSelector = document.createElement('select')
+        @actionSelector.classList.add('input-select', 'inline-block')
 
-    @configSelector = document.createElement('select')
-    @configSelector.classList.add('input-select')
-    @configSelector.classList.add('inline-block')
+        action1 = document.createElement('option')
+        action1.textContent = "run"
+        @actionSelector.appendChild(action1)
 
-    config1 = document.createElement('option')
-    config1.textContent = "debug"
-    @configSelector.appendChild(config1)
+        action2 = document.createElement('option')
+        action2.textContent = "build"
+        @actionSelector.appendChild(action2)
 
-    config2 = document.createElement('option')
-    config2.textContent = "release"
-    @configSelector.appendChild(config2)
+        @targetSelector = document.createElement('select')
+        @targetSelector.classList.add('input-select')
+        @targetSelector.classList.add('inline-block')
 
-    @appTypeSelector = document.createElement('select')
-    @appTypeSelector.classList.add('input-select')
-    @appTypeSelector.classList.add('inline-block')
+        target1 = document.createElement('option')
+        target1.textContent = "desktop"
+        @targetSelector.appendChild(target1)
 
-    appType1 = document.createElement('option')
-    appType1.textContent = "gui"
-    @appTypeSelector.appendChild(appType1)
+        target2 = document.createElement('option')
+        target2.textContent = "emscripten"
+        @targetSelector.appendChild(target2)
 
-    appType2 = document.createElement('option')
-    appType2.textContent = "console"
-    @appTypeSelector.appendChild(appType2)
+        @configSelector = document.createElement('select')
+        @configSelector.classList.add('input-select')
+        @configSelector.classList.add('inline-block')
 
-    @playBtn = document.createElement('button')
-    @playBtn.classList.add('icon')
-    @playBtn.classList.add('icon-playback-play')
-    @playBtn.classList.add('btn')
-    @playBtn.classList.add('btn-success')
-    @playBtn.classList.add('monkey-play-btn')
+        config1 = document.createElement('option')
+        config1.textContent = "debug"
+        @configSelector.appendChild(config1)
 
-    @element.appendChild(@actionSelector)
-    @element.appendChild(@targetSelector)
-    @element.appendChild(@configSelector)
-    @element.appendChild(@appTypeSelector)
-    @element.appendChild(@playBtn)
+        config2 = document.createElement('option')
+        config2.textContent = "release"
+        @configSelector.appendChild(config2)
 
-  # Returns an object that can be retrieved when package is activated
-  serialize: ->
+        @appTypeSelector = document.createElement('select')
+        @appTypeSelector.classList.add('input-select')
+        @appTypeSelector.classList.add('inline-block')
 
-  # Tear down any state and detach
-  destroy: ->
-    @element.remove()
-    @playBtn.remove()
-    @actionSelector.remove()
-    @configSelector.remove()
-    @targetSelector.remove()
-    @appTypeSelector.remove()
+        appType1 = document.createElement('option')
+        appType1.textContent = "gui"
+        @appTypeSelector.appendChild(appType1)
 
-  getOptions: ->
-      action: $(@actionSelector).val()
-      target: $(@targetSelector).val()
-      config: $(@configSelector).val()
-      appType: $(@appTypeSelector).val()
+        appType2 = document.createElement('option')
+        appType2.textContent = "console"
+        @appTypeSelector.appendChild(appType2)
 
-  getPlayBtn: ->
-    @playBtn
+        @playBtn = document.createElement('button')
+        @playBtn.classList.add('icon')
+        @playBtn.classList.add('icon-playback-play')
+        @playBtn.classList.add('btn')
+        @playBtn.classList.add('btn-success')
+        @playBtn.classList.add('monkey-play-btn')
 
-  getElement: ->
-    @element
+        compilerControls.appendChild(@actionSelector)
+        compilerControls.appendChild(@targetSelector)
+        compilerControls.appendChild(@configSelector)
+        compilerControls.appendChild(@appTypeSelector)
+        compilerControls.appendChild(@playBtn)
+
+        @output = document.createElement('atom-panel')
+        @output.classList.add('monkey-console')
+        @outputMessages = document.createElement('ul')
+        @outputMessages.classList.add('info-messages', 'block', 'run-command', 'native-key-bindings')
+        @outputMessages.tabIndex = -1
+        @output.appendChild(@outputMessages)
+
+        outputControls = document.createElement('div')
+        outputControls.classList.add('controls', 'inline-block')
+        outputControlsLabel = document.createElement('div')
+        outputControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
+        outputControlsLabel.textContent = "Output"
+        outputControls.appendChild(outputControlsLabel)
+
+        @toggleBtn = document.createElement('button')
+        @toggleBtn.classList.add('icon', 'icon-triangle-up', 'btn', 'inline-block')
+        @toggleBtn.textContent = "Show"
+        outputControls.appendChild(@toggleBtn)
+
+        @clearBtn = document.createElement('button')
+        @clearBtn.classList.add('icon', 'icon-circle-slash', 'btn', 'inline-block')
+        @clearBtn.textContent = "Clear"
+        outputControls.appendChild(@clearBtn)
+
+        @element.appendChild(compilerControls)
+        @element.appendChild(outputControls)
+
+    # Returns an object that can be retrieved when package is activated
+    serialize: ->
+
+    # Tear down any state and detach
+    destroy: ->
+        @element.remove()
+        @playBtn.remove()
+
+
+    getOptions: ->
+        action: $(@actionSelector).val()
+        target: $(@targetSelector).val()
+        config: $(@configSelector).val()
+        appType: $(@appTypeSelector).val()
+
+    getPlayBtn: ->
+        @playBtn
+
+    getClearBtn: ->
+        @clearBtn
+
+    getToggleBtn: ->
+        @toggleBtn
+
+    getElement: ->
+        @element
+
+    getOutput: ->
+        @output
+
+    outputMessage: (message) ->
+        messageNode = document.createElement('li')
+        messageNode.textContent = message
+        @outputMessages.appendChild(messageNode)
+        @outputMessages.scrollTop = @outputMessages.scrollHeight;
+
+    hideOutput: ->
+        @toggleBtn.classList.remove('icon-triangle-down')
+        @toggleBtn.classList.add('icon-triangle-up')
+        @toggleBtn.textContent = "Show"
+
+    showOutput: ->
+        @toggleBtn.classList.add('icon-triangle-down')
+        @toggleBtn.classList.remove('icon-triangle-up')
+        @toggleBtn.textContent = "Hide"
+
+    clearOutput: ->
+        console.log "Clearing output..."
+        $(@outputMessages).empty()

@@ -24,7 +24,6 @@
         "language-monkey2:grammar-used"
     ],
     "dependencies": {
-        "jquery": "^2.1.4",
-        "atom-space-pen-views": "^2.2.0"
+        "jquery": "^2.1.4"
     }
 }

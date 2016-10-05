@@ -30,10 +30,24 @@ module.exports = Monkey =
     activate: (state) ->
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
+        @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
+        @outputPanel = atom.workspace.addBottomPanel(item: @monkeyViewState.getOutput(), visible: false)
+
+        # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
             this.buildDefault()
 
-        @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
+        $(@monkeyViewState.toggleBtn).on 'click', (event) =>
+            if @outputPanel.isVisible()
+                @outputPanel.hide()
+                @monkeyViewState.hideOutput()
+            else
+                @outputPanel.show()
+                @monkeyViewState.showOutput()
+
+        $(@monkeyViewState.clearBtn).on 'click', (event) =>
+            @monkeyViewState.clearOutput()
+
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
         @subscriptions = new CompositeDisposable
@@ -75,7 +89,6 @@ module.exports = Monkey =
             console.log "fresh projects state"
 
     deactivate: ->
-        @modalPanel.destroy()
         @subscriptions.dispose()
         @monkeyViewState.destroy()
 
@@ -115,7 +128,7 @@ module.exports = Monkey =
         extension = targetPath.substr(targetPath.lastIndexOf('.')+1)
         mPath = ''
         buildOut = null
-
+        console.log @outputPanel
         if extension == 'monkey2'
             mPath = atom.config.get "language-monkey.monkey2Path"
             if mPath == '' or mPath == null or mPath == undefined
@@ -129,6 +142,9 @@ module.exports = Monkey =
                 mPath += "/bin/mx2cc_linux"
             options = @monkeyViewState.getOptions()
             buildOut = spawn mPath, ['makeapp', '-'+options.action, '-target='+options.target, '-config='+options.config, '-apptype='+options.appType, targetPath]
+            @monkeyViewState.clearOutput()
+            @outputPanel.show()
+            @monkeyViewState.showOutput()
 
         else if extension == 'monkey'
             mPath = atom.config.get "language-monkey.monkeyPath"
@@ -148,11 +164,12 @@ module.exports = Monkey =
 
         # atom.notifications.addInfo("Compiling...")
 
-        buildOut.stdout.on 'data', (data) ->
+        buildOut.stdout.on 'data', (data) =>
             message = data.toString().trim()
             errorRegex = /error/gi
             runningRegex = /Running/
-            atom.notifications.addInfo(message)
+            @monkeyViewState.outputMessage(message)
+            #atom.notifications.addInfo(message)
             ###
             if message.search(errorRegex) > -1
                 atom.notifications.addError(message)

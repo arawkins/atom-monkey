@@ -40,6 +40,19 @@ autocomplete-suggestion-list .icon-container:empty {
 
 .monkey-panel {
     padding:1em 0 0 0.5em;
+    
+    display: -webkit-flex;
+	display: flex;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+
+    .label {
+        padding-top:0.25em;
+    }
+    .monkey-compiler-controls {
+        -webkit-flex: auto;
+    	flex: auto;
+    }
 }
 
 .monkey2Logo {
@@ -48,4 +61,35 @@ autocomplete-suggestion-list .icon-container:empty {
     background-size:100%;
     width:24px;
     height:24px;
+}
+
+.monkey-console {
+
+    height:15em;
+    padding:1em;
+    position:relative;
+    -moz-user-select: text;
+     -khtml-user-select: text;
+     -webkit-user-select: text;
+     -ms-user-select: text;
+     user-select: text;
+
+    .controls {
+        position: absolute;
+        top:1.5em;
+        right:2.5em;
+    }
+
+    .info-messages {
+        max-height:15em;
+        overflow:scroll;
+
+        li {
+
+        }
+    }
+}
+
+.monkey-console li {
+
 }
