@@ -79,6 +79,11 @@ class MonkeyView
         @playBtn.classList.add('btn-success')
         @playBtn.classList.add('monkey-play-btn')
 
+        compilerControlsLabel = document.createElement('div')
+        compilerControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
+        compilerControlsLabel.textContent = "mx2cc"
+
+        compilerControls.appendChild(compilerControlsLabel)
         compilerControls.appendChild(@actionSelector)
         compilerControls.appendChild(@targetSelector)
         compilerControls.appendChild(@configSelector)
@@ -96,17 +101,17 @@ class MonkeyView
         outputControls.classList.add('controls', 'inline-block')
         outputControlsLabel = document.createElement('div')
         outputControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
-        outputControlsLabel.textContent = "Output"
+        outputControlsLabel.textContent = "output"
         outputControls.appendChild(outputControlsLabel)
 
         @toggleBtn = document.createElement('button')
-        @toggleBtn.classList.add('icon', 'icon-triangle-up', 'btn', 'inline-block')
-        @toggleBtn.textContent = "Show"
+        @toggleBtn.classList.add('icon', 'icon-eye', 'btn', 'inline-block')
+        @toggleBtn.textContent = "toggle"
         outputControls.appendChild(@toggleBtn)
 
         @clearBtn = document.createElement('button')
         @clearBtn.classList.add('icon', 'icon-circle-slash', 'btn', 'inline-block')
-        @clearBtn.textContent = "Clear"
+        @clearBtn.textContent = "clear"
         outputControls.appendChild(@clearBtn)
 
         @element.appendChild(compilerControls)
@@ -149,14 +154,18 @@ class MonkeyView
         @outputMessages.scrollTop = @outputMessages.scrollHeight;
 
     hideOutput: ->
+        ###
         @toggleBtn.classList.remove('icon-triangle-down')
         @toggleBtn.classList.add('icon-triangle-up')
-        @toggleBtn.textContent = "Show"
+        @toggleBtn.textContent = "show"
+        ###
 
     showOutput: ->
+        ###
         @toggleBtn.classList.add('icon-triangle-down')
         @toggleBtn.classList.remove('icon-triangle-up')
-        @toggleBtn.textContent = "Hide"
+        @toggleBtn.textContent = "hide"
+        ###
 
     clearOutput: ->
         console.log "Clearing output..."
