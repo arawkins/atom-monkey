@@ -102,17 +102,18 @@ class MonkeyView
         outputControlsLabel = document.createElement('div')
         outputControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
         outputControlsLabel.textContent = "output"
-        outputControls.appendChild(outputControlsLabel)
+        # outputControls.appendChild(outputControlsLabel)
 
         @toggleBtn = document.createElement('button')
-        @toggleBtn.classList.add('icon', 'icon-eye', 'btn', 'inline-block')
-        @toggleBtn.textContent = "toggle"
+        @toggleBtn.classList.add('icon', 'icon-browser', 'btn', 'btn-info', 'inline-block')
+        #toggleBtn.textContent = "output"
         outputControls.appendChild(@toggleBtn)
 
         @clearBtn = document.createElement('button')
         @clearBtn.classList.add('icon', 'icon-circle-slash', 'btn', 'inline-block')
         @clearBtn.textContent = "clear"
-        outputControls.appendChild(@clearBtn)
+        # outputControls.appendChild(@clearBtn)
+        # Not sure if I need this...
 
         @element.appendChild(compilerControls)
         @element.appendChild(outputControls)

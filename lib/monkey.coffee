@@ -19,6 +19,10 @@ module.exports = Monkey =
             description: 'The path to your installation of Monkey2'
             type: 'string'
             default: ''
+        showOutputOnBuild:
+            title: 'Automatically show output on build'
+            type: 'boolean'
+            default: true
 
     monkeyViewState: null
     modalPanel: null
@@ -143,7 +147,9 @@ module.exports = Monkey =
             options = @monkeyViewState.getOptions()
             buildOut = spawn mPath, ['makeapp', '-'+options.action, '-target='+options.target, '-config='+options.config, '-apptype='+options.appType, targetPath]
             @monkeyViewState.clearOutput()
-            @outputPanel.show()
+
+            if atom.config.get "language-monkey.showOutputOnBuild"
+                @outputPanel.show()
             @monkeyViewState.showOutput()
 
         else if extension == 'monkey'
