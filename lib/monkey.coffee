@@ -1,5 +1,5 @@
 MonkeyView = require './monkey-view'
-{$} = require 'atom-space-pen-views'
+$ = require 'jquery'
 
 exec = require('child_process').exec
 spawn = require('child_process').spawn
@@ -30,7 +30,9 @@ module.exports = Monkey =
     activate: (state) ->
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
-        
+        $(@monkeyViewState.playBtn).on 'click', (event) =>
+            this.buildDefault()
+
         @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
 
         # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
@@ -125,7 +127,8 @@ module.exports = Monkey =
                 mPath += "/bin/mx2cc_macos"
             else
                 mPath += "/bin/mx2cc_linux"
-            buildOut = spawn mPath, ['makeapp', targetPath]
+            options = @monkeyViewState.getOptions()
+            buildOut = spawn mPath, ['makeapp', '-'+options.action, '-target='+options.target, '-config='+options.config, '-apptype='+options.appType, targetPath]
 
         else if extension == 'monkey'
             mPath = atom.config.get "language-monkey.monkeyPath"
@@ -143,7 +146,7 @@ module.exports = Monkey =
             atom.notifications.addError("Not a monkey file!")
             return
 
-        atom.notifications.addInfo("Compiling...")
+        # atom.notifications.addInfo("Compiling...")
 
         buildOut.stdout.on 'data', (data) ->
             message = data.toString().trim()
