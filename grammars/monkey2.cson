@@ -20,7 +20,7 @@ name: "Monkey2"
 patterns: [
   {
     match: ";"
-    name: "punctuation.terminator.line.monkey"
+    name: "punctuation.terminator.line.monkey2"
   }
   {
     include: "#mnky_comment_quote"
@@ -52,29 +52,29 @@ patterns: [
   {
     captures:
       "1":
-        name: "keyword.other.import.monkey"
+        name: "keyword.other.import.monkey2"
       "2":
-        name: "string.unquoted.module.monkey"
+        name: "string.unquoted.module.monkey2"
     match: "(?i)\\b(import|using)\\s+((?:[a-zA-Z_]\\w*\\.?)+)"
-    name: "import.module.monkey"
+    name: "import.module.monkey2"
   }
   {
     begin: "(?i)\\b(import|using)\\s+((\"))"
     beginCaptures:
       "1":
-        name: "keyword.other.import.monkey"
+        name: "keyword.other.import.monkey2"
       "2":
-        name: "punctuation.definition.string.begin.monkey"
+        name: "punctuation.definition.string.begin.monkey2"
       "3":
-        name: "string.quoted.double.monkey"
-    contentName: "string.quoted.double.monkey"
+        name: "string.quoted.double.monkey2"
+    contentName: "string.quoted.double.monkey2"
     end: "(\")"
     endCaptures:
       "0":
-        name: "punctuation.definition.string.end.monkey"
+        name: "punctuation.definition.string.end.monkey2"
       "1":
-        name: "string.quoted.double.monkey"
-    name: "import.file.monkey"
+        name: "string.quoted.double.monkey2"
+    name: "import.file.monkey2"
     patterns: [
       {
         include: "#mnky_string_content"
@@ -85,20 +85,20 @@ patterns: [
     begin: "(?i)\\b(class)\\s+([a-zA-Z_]\\w*)(?:\\s+(extends)\\s+([a-zA-Z_]\\w*))?(?:\\s+(final|abstract))?"
     beginCaptures:
       "1":
-        name: "storage.type.class.monkey"
+        name: "storage.type.class.monkey2"
       "2":
-        name: "entity.name.type.monkey"
+        name: "entity.name.type.monkey2"
       "3":
-        name: "storage.modifier.extends.monkey"
+        name: "storage.modifier.extends.monkey2"
       "4":
-        name: "entity.other.inherited-class.monkey"
+        name: "entity.other.inherited-class.monkey2"
       "5":
-        name: "storage.modifier.class.monkey"
+        name: "storage.modifier.class.monkey2"
     end: "(?i)\\b(end(\\s?class)?)\\b"
     endCaptures:
       "1":
-        name: "storage.type.class.monkey"
-    name: "type.monkey"
+        name: "storage.type.class.monkey2"
+    name: "type.monkey2"
     patterns: [
       {
         include: "#mnky_comment_quote"
@@ -149,7 +149,7 @@ patterns: [
   }
   {
     match: "\\s*\\b(c(ase|ontinue)|do|e(lse(\\s?if)?|nd(class|for(each)?|function|if|method|select|while)|xit)|for(\\s?each)?|if|return|select|then|wend|while)\\b"
-    name: "control.keywords.monkey"
+    name: "control.keywords.monkey2"
   }
   {
     include: "#mnky_control_keywords"
@@ -158,12 +158,12 @@ patterns: [
     begin: "(?i)\\b(while)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.while.monkey"
+        name: "keyword.control.while.monkey2"
     end: "(?i)\\b(end(\\s?while)?|wend)\\b"
     endCaptures:
       "1":
-        name: "keyword.control.while.end.monkey"
-    name: "control.while.monkey"
+        name: "keyword.control.while.end.monkey2"
+    name: "control.while.monkey2"
     patterns: [
       {
         include: "$self"
@@ -174,24 +174,24 @@ patterns: [
     begin: "(?i)\\b(if|then|else|else(\\s?if)?)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.if.monkey"
+        name: "keyword.control.if.monkey2"
     end: "(?i)\\b(then|end(\\s?if)?)\\b"
     endCaptures:
       "1":
-        name: "keyword.control.if.end.monkey"
-    name: "control.if.monkey"
+        name: "keyword.control.if.end.monkey2"
+    name: "control.if.monkey2"
     patterns: [
       {
         match: "(?i)\\b(then)\\b"
-        name: "keyword.control.then.monkey"
+        name: "keyword.control.then.monkey2"
       }
       {
         match: "(?i)\\b(else(\\s?if)?)\\b"
-        name: "keyword.control.else-if.monkey"
+        name: "keyword.control.else-if.monkey2"
       }
       {
         match: "(?i)\\b(else)\\b"
-        name: "keyword.control.else.monkey"
+        name: "keyword.control.else.monkey2"
       }
       {
         include: "$self"
@@ -202,16 +202,16 @@ patterns: [
     begin: "(?i)\\b(if)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.if.monkey"
+        name: "keyword.control.if.monkey2"
     end: "$"
     endCaptures:
       "1":
-        name: "keyword.control.if.end.monkey"
-    name: "control.if-then.monkey"
+        name: "keyword.control.if.end.monkey2"
+    name: "control.if-then.monkey2"
     patterns: [
       {
         match: "(?i)\\b(then)\\b"
-        name: "keyword.control.then.monkey"
+        name: "keyword.control.then.monkey2"
       }
       {
         include: "$self"
@@ -222,28 +222,28 @@ patterns: [
     begin: "(?i)\\b(for)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.for.monkey"
+        name: "keyword.control.for.monkey2"
     end: "(?i)\\b(next)\\b"
     endCaptures:
       "1":
-        name: "keyword.control.for.end.monkey"
-    name: "control.for.monkey"
+        name: "keyword.control.for.end.monkey2"
+    name: "control.for.monkey2"
     patterns: [
       {
         match: "(?i)\\beachin\\b"
-        name: "keyword.control.for.eachin.monkey"
+        name: "keyword.control.for.eachin.monkey2"
       }
       {
         match: "(?i)\\bto\\b"
-        name: "keyword.control.for.to.monkey"
+        name: "keyword.control.for.to.monkey2"
       }
       {
         match: "(?i)\\buntil\\b"
-        name: "keyword.control.for.until.monkey"
+        name: "keyword.control.for.until.monkey2"
       }
       {
         match: "(?i)\\bstep\\b"
-        name: "keyword.control.for.step.monkey"
+        name: "keyword.control.for.step.monkey2"
       }
       {
         include: "$self"
@@ -254,12 +254,12 @@ patterns: [
     begin: "(?i)\\b(repeat)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.repeat.monkey"
+        name: "keyword.control.repeat.monkey2"
     end: "(?i)\\b(until|forever)\\b"
     endCaptures:
       "1":
-        name: "keyword.control.repeat.end.monkey"
-    name: "control.repeat.monkey"
+        name: "keyword.control.repeat.end.monkey2"
+    name: "control.repeat.monkey2"
     patterns: [
       {
         include: "$self"
@@ -270,26 +270,26 @@ patterns: [
     begin: "(?i)\\b(select)\\b"
     beginCaptures:
       "1":
-        name: "keyword.control.select.monkey"
+        name: "keyword.control.select.monkey2"
     end: "(?i)\\b(end(\\s?select)?)\\b"
     endCaptures:
       "1":
-        name: "keyword.control.select.end.monkey"
-    name: "control.select.monkey"
+        name: "keyword.control.select.end.monkey2"
+    name: "control.select.monkey2"
     patterns: [
       {
         captures:
           "1":
-            name: "keyword.control.select.case.monkey"
+            name: "keyword.control.select.case.monkey2"
         match: "(?i)\\b(case)\\b"
-        name: "control.select.case.monkey"
+        name: "control.select.case.monkey2"
       }
       {
         captures:
           "1":
-            name: "keyword.control.select.default.monkey"
+            name: "keyword.control.select.default.monkey2"
         match: "(?i)\\b(default)\\b"
-        name: "control.select.default.monkey"
+        name: "control.select.default.monkey2"
       }
       {
         include: "$self"
@@ -298,19 +298,19 @@ patterns: [
   }
   {
     match: "(?i)\\b(mod|shl|shr|and|or|not)\\b"
-    name: "keyword.operator.monkey"
+    name: "keyword.operator.monkey2"
   }
   {
     match: ":?[\\^+\\-&~|=><]"
-    name: "keyword.operator.monkey"
+    name: "keyword.operator.monkey2"
   }
   {
     match: "(?i)\\b(private|public|virtual|override|final|property)\\b"
-    name: "keyword.other.scope.monkey"
+    name: "keyword.other.scope.monkey2"
   }
   {
     match: "(?i)\\b(strict)\\b"
-    name: "keyword.other.strictness.monkey"
+    name: "keyword.other.strictness.monkey2"
   }
   {
     include: "#mnky_null"
@@ -326,11 +326,11 @@ patterns: [
   }
   {
     match: "(?i)\\b(self)\\b"
-    name: "variable.language.self.monkey"
+    name: "variable.language.self.monkey2"
   }
   {
     match: "(?i)\\b(super)\\b"
-    name: "variable.language.super.monkey"
+    name: "variable.language.super.monkey2"
   }
   {
     include: "#mnky_constructor"
@@ -347,12 +347,12 @@ repository:
     begin: "(\\[)"
     beginCaptures:
       "1":
-        name: "keyword.operator.array.monkey"
+        name: "keyword.operator.array.monkey2"
     end: "(\\])"
     endCaptures:
       "1":
-        name: "keyword.operator.array.monkey"
-    name: "array.monkey"
+        name: "keyword.operator.array.monkey2"
+    name: "array.monkey2"
     patterns: [
       {
         include: "$self"
@@ -362,20 +362,20 @@ repository:
     begin: "(\\{)"
     beginCaptures:
       "1":
-        name: "storage.modifier.attributes.braces.monkey"
+        name: "storage.modifier.attributes.braces.monkey2"
     end: "(\\})"
     endCaptures:
       "1":
-        name: "storage.modifier.attributes.braces.monkey"
-    name: "attributes.monkey"
+        name: "storage.modifier.attributes.braces.monkey2"
+    name: "attributes.monkey2"
     patterns: [
       {
         begin: "\\b([a-zA-Z_]\\w*)\\s*(=)\\s*"
         beginCaptures:
           "1":
-            name: "entity.other.attribute-name.monkey"
+            name: "entity.other.attribute-name.monkey2"
         end: "(?=\\s|\\}|[a-zA-Z_])"
-        name: "attribute.monkey"
+        name: "attribute.monkey2"
         patterns: [
           {
             include: "#mnky_string_quoted"
@@ -388,24 +388,24 @@ repository:
       {
         captures:
           "1":
-            name: "entity.other.attribute-name.monkey"
+            name: "entity.other.attribute-name.monkey2"
         match: "\\b([a-zA-Z_]\\w*)(?:\\s*((?!=)|(?=\\})))"
-        name: "attribute.monkey"
+        name: "attribute.monkey2"
       }
     ]
   mnky_boolean:
     match: "(?i)\\b(true|false)\\b"
-    name: "constant.language.boolean.monkey"
+    name: "constant.language.boolean.monkey2"
   mnky_char:
     match: "\\b(CHAR_(TAB|BACKSPACE|ENTER|ESCAPE|PAGE(UP|DOWN)|END|HOME|LEFT|UP|RIGHT|DOWN|INSERT|DELETE))\\b"
-    name: "constant.language.char.monkey"
+    name: "constant.language.char.monkey2"
   mnky_commands:
     match: "(?i)\\b(A(bstract|Cos|Sin|Tan|Tan2|bs|ccel(X|Y|Z)|dd(First|Last)|pp|rray)|B(ackwards|ool)|C(ase|eil|hannelState|l(amp|s)|o(mpare|nst|nt(ains|inue)|py|s|unt)|lear)|D(e(faultFlags|vice(Height|Width))|iscard|raw(Circle|Ellipse|Image|ImageRect|Line|Oval|Point|Poly|Rect|Text))|E(achin|xt(ends|ern)|nd|ndsWith|rror|xit)|F(alse|i(eld|nd|ndLast|rst)|loat(Map|Set)|loor|or(ever)|rames|romChar)|G(et|et(Alpha|Blend|Char|Color|Font|Matrix|Scissor)|lobal|rabImage)|H(andle(X|Y)|eight)|I(m(age|p(lements|ort))|n(clude|line|t(erface|Map|Set))|sEmpty)|Jo(in|y(Down|Hit|X|Y|Z))|Key|Key(Down|Hit|s)|L(ast|ength|ist|o(g|ad(Image|Sound|State|String)|cal))|M(ap|ax|ethod|i(llisecs|n)|o(d(ule)|use(Down|Hit|X|Y))|in)|N(ative|e(w|xt)|o(de)|ull)|O(bject(Enumerator)|n(Create|Loading|Render|Resume|Suspend|Update))|P(laySound|o(pMatrix|w)|r(i(nt|vate)|operty)|u(blic|shMatrix))|R(e(move|move(Each|First|Last)|p(eat|lace)|turn)|nd|otate)|S(aveState|cale|e(ed|lf|t(Alpha|Blend|Channel(Pan|Rate|Volume)|Default|Color|Font|Handle|Image|List|Matrix|Scissor|UpdateRate))|gn|h(l|r)|in|ound|plit|qrt|t(artsWith|ep|opChannel|ri(ct|ng(Map|Set)))|uper)|T(an|hen|o(Lower|Upper|uch(Down|Hit|X|Y))|r(ans(form|late)|im|ue))|Until|V(alue|alue(ForKey|s)|oid)|Width)\\b"
-    name: "keyword.other.commands.monkey"
+    name: "keyword.other.commands.monkey2"
   mnky_comment_block:
     begin: "(?i)(?<=\\s|^|;)\\#rem\\b"
     end: "(?i)(?<=\\s|^|;)\\#end\\b"
-    name: "comment.block.rem.monkey"
+    name: "comment.block.rem.monkey2"
     patterns: [
       {
         include: "#mnky_url_content"
@@ -414,7 +414,7 @@ repository:
   mnky_comment_quote:
     begin: "'"
     end: "$"
-    name: "comment.line.apostrophe.monkey"
+    name: "comment.line.apostrophe.monkey2"
     patterns: [
       {
         include: "#mnky_url_content"
@@ -423,13 +423,13 @@ repository:
   mnky_constant:
     captures:
       "1":
-        name: "keyword.other.new.monkey"
+        name: "keyword.other.new.monkey2"
       "2":
-        name: "constant.monkey"
+        name: "constant.monkey2"
     match: "(?i)\\b(const)\\s+([a-zA-Z_]\\w*)\\b"
-    name: "constant.monkey"
+    name: "constant.monkey2"
   mnky_constants:
-    name: "constants.monkey"
+    name: "constants.monkey2"
     patterns: [
       {
         include: "#mnky_pi"
@@ -453,35 +453,35 @@ repository:
   mnky_constructor:
     captures:
       "1":
-        name: "keyword.other.new.monkey"
+        name: "keyword.other.new.monkey2"
       "2":
-        name: "storage.type.class.monkey"
+        name: "storage.type.class.monkey2"
     match: "(?i)\\b(new)\\s+([a-zA-Z_]\\w*)\\b"
-    name: "call.constructor.monkey"
+    name: "call.constructor.monkey2"
   mnky_control_keywords:
     match: "(?i)\\b(throw|return|exit|continue)\\b"
-    name: "keyword.control.monkey"
+    name: "keyword.control.monkey2"
   mnky_env:
     match: "\\b(TARGET|LANG)\\b"
-    name: "constant.language.env.monkey"
+    name: "constant.language.env.monkey2"
   mnky_field:
     captures:
       "1":
-        name: "keyword.other.field.monkey"
+        name: "keyword.other.field.monkey2"
     match: "(?i)\\b(field)\\s+([a-zA-Z_]\\w*)+\\b"
-    name: "variable.field.monkey"
+    name: "variable.field.monkey2"
   mnky_function:
     begin: "(?i)\\b(function)\\s+([a-zA-Z_]\\w*)\\b"
     beginCaptures:
       "1":
-        name: "storage.type.function.monkey"
+        name: "storage.type.function.monkey2"
       "2":
-        name: "entity.name.function.monkey"
+        name: "entity.name.function.monkey2"
     end: "(?i)\\b(end(\\s?function)?)\\b"
     endCaptures:
       "1":
-        name: "storage.type.function.monkey"
-    name: "function.monkey"
+        name: "storage.type.function.monkey2"
+    name: "function.monkey2"
     patterns: [
       {
         include: "$self"
@@ -490,27 +490,27 @@ repository:
   mnky_global_variable:
     captures:
       "1":
-        name: "storage.modifier.global.monkey"
+        name: "storage.modifier.global.monkey2"
     match: "(?i)\\b(global)\\s+([a-zA-Z_]\\w*)\\b"
-    name: "variable.monkey"
+    name: "variable.monkey2"
   mnky_local_variable:
     captures:
       "1":
-        name: "keyword.other.local.monkey"
+        name: "keyword.other.local.monkey2"
     match: "(?i)\\b(local)\\s+([a-zA-Z_]\\w*)\\b"
-    name: "variable.monkey"
+    name: "variable.monkey2"
   mnky_method:
     begin: "(?i)\\b(method)\\s+([a-zA-Z_]\\w*)\\b"
     beginCaptures:
       "1":
-        name: "storage.type.method.monkey"
+        name: "storage.type.method.monkey2"
       "2":
-        name: "entity.name.method.monkey"
+        name: "entity.name.method.monkey2"
     end: "(?i)\\b(end(\\s?method)?)\\b"
     endCaptures:
       "1":
-        name: "storage.type.method.monkey"
-    name: "method.monkey"
+        name: "storage.type.method.monkey2"
+    name: "method.monkey2"
     patterns: [
       {
         include: "$self"
@@ -518,15 +518,15 @@ repository:
     ]
   mnky_mouse:
     match: "\\bMOUSE_(LEFT|RIGHT|MIDDLE)\\b"
-    name: "constant.language.mouse.monkey"
+    name: "constant.language.mouse.monkey2"
   mnky_null:
     match: "(?i)\\bnull\\b"
-    name: "constant.language.null.monkey"
+    name: "constant.language.null.monkey2"
   mnky_numbers:
     patterns: [
       {
         match: "(\\$[0-9a-fA-F]{1,16})"
-        name: "constant.numeric.integer.hexadecimal.monkey"
+        name: "constant.numeric.integer.hexadecimal.monkey2"
       }
       {
         match: '''
@@ -535,21 +535,21 @@ repository:
                                       (\\. [0-9]+)
                                   )
         '''
-        name: "constant.numeric.float.monkey"
+        name: "constant.numeric.float.monkey2"
       }
       {
         match: "(?x)\\b(([0-9]+))"
-        name: "constant.numeric.integer.monkey"
+        name: "constant.numeric.integer.monkey2"
       }
     ]
   mnky_pi:
     match: "\\b(HALF|TWO)?PI\\b"
-    name: "constant.language.monkey"
+    name: "constant.language.monkey2"
   mnky_string_content:
     patterns: [
       {
         match: "\\~[^\"]"
-        name: "constant.character.escape.monkey"
+        name: "constant.character.escape.monkey2"
       }
       {
         include: "#mnky_url_content"
@@ -559,12 +559,12 @@ repository:
     begin: "\""
     beginCaptures:
       "0":
-        name: "punctuation.definition.string.begin.monkey"
+        name: "punctuation.definition.string.begin.monkey2"
     end: "\""
     endCaptures:
       "0":
-        name: "punctuation.definition.string.end.monkey"
-    name: "string.quoted.double.monkey"
+        name: "punctuation.definition.string.end.monkey2"
+    name: "string.quoted.double.monkey2"
     patterns: [
       {
         include: "#mnky_string_content"
@@ -573,15 +573,15 @@ repository:
   mnky_typename:
     captures:
       "1":
-        name: "storage.type.monkey"
+        name: "storage.type.monkey2"
       "2":
-        name: "storage.type.monkey"
+        name: "storage.type.monkey2"
     match: "(?xi)(?: \\: \\s* ([a-zA-Z_]\\w*) | ([!#%]|@{1,2}|\\$[zw]?) )"
-    name: "typename.monkey"
+    name: "typename.monkey2"
   mnky_types:
     match: "(?i)\\b(ptr|array|bool|int|uint|short|ushort|byte|ubyte|long|ulong|float|double|string)\\b"
-    name: "storage.type.monkey"
+    name: "storage.type.monkey2"
   mnky_url_content:
     match: "[a-zA-Z_]\\w*://[^ \"'()\\[\\]]*(?=$|\\b)"
-    name: "url.monkey"
-scopeName: "source.monkey"
+    name: "url.monkey2"
+scopeName: "source.monkey2"

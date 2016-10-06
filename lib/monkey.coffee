@@ -9,11 +9,6 @@ os = require('os')
 
 module.exports = Monkey =
     config:
-        monkeyPath:
-            title: 'Monkey-X Path'
-            description: 'The path to your installation of Monkey-x'
-            type: 'string'
-            default: ''
         monkey2Path:
             title: 'Monkey2 Path'
             description: 'The path to your installation of Monkey2'
@@ -148,7 +143,7 @@ module.exports = Monkey =
         buildOut = null
 
         if extension == 'monkey2'
-            mPath = atom.config.get "language-monkey.monkey2Path"
+            mPath = atom.config.get "language-monkey2.monkey2Path"
             if mPath == '' or mPath == null or mPath == undefined
                 atom.notifications.addError("The path to Monkey2 needs to be set in the package settings")
                 return
@@ -162,40 +157,15 @@ module.exports = Monkey =
             buildOut = spawn mPath, ['makeapp', '-'+options.action, '-target='+options.target, '-config='+options.config, '-apptype='+options.appType, targetPath]
             @monkeyViewState.clearOutput()
 
-            if atom.config.get "language-monkey.showOutputOnBuild"
+            if atom.config.get "language-monkey2.showOutputOnBuild"
                 @showOutput()
-
-
-        else if extension == 'monkey'
-            mPath = atom.config.get "language-monkey.monkeyPath"
-            if mPath == '' or mPath == null or mPath == undefined
-                atom.notifications.addError("The path to Monkey-X needs to be set in the package settings")
-                return
-            if os.platform() == 'win32'
-                mPath += "\\bin\\transcc_winnt.exe"
-            else if os.platform() == 'darwin'
-                mPath += "/bin/transcc_macos"
-            else
-                mPath += "/bin/transcc_linux"
-            buildOut = spawn mPath, ['-run', '-target=Html5_Game', '-config=debug', targetPath]
-        else
-            atom.notifications.addError("Not a monkey file!")
-            return
-
-        # atom.notifications.addInfo("Compiling...")
 
         buildOut.stdout.on 'data', (data) =>
             message = data.toString().trim()
             errorRegex = /error/gi
             runningRegex = /Running/
             @monkeyViewState.outputMessage(message)
-            #atom.notifications.addInfo(message)
-            ###
-            if message.search(errorRegex) > -1
-                atom.notifications.addError(message)
-            if message.search(runningRegex) > -1
-                atom.notifications.addSuccess("Success!")
-            ###
+
         buildOut.stderr.on 'data', (data) ->
             message = data.toString().trim()
             atom.notifications.addError(message)

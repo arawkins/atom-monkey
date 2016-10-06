@@ -1,3 +1,3 @@
-## 0.1 - First Release
+## 1.0 - First Release
 * Syntax Highlighting
-* Basic Snippet Support
+* Compiler Toolbar
