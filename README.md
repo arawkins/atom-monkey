@@ -1,6 +1,6 @@
 # Monkey2 for Atom
 
-This package provides support for the [Monkey2 programming language](http://monkey2.monkey-x.com) in [Atom](http://atom.io).
+This package provides basic support for the [Monkey2 programming language](http://monkey2.monkey-x.com) in [Atom](http://atom.io).
 
 ## Features
 
@@ -37,8 +37,8 @@ The green arrow will trigger a build of the default target.
 ![Selecting target example](/images/target-selection.png?raw=true "choosing a target")
 
 Right click on any monkey2 file in your project tree. Choose Monkey from
-the context menu. You can "Set Default Target", which will designate the
-chosen file as the one to pass to the compiler by default. You can also choose "Build Selected", which will immediately compile the selected file.
+the context menu. You can **Set Default Target**, which will designate the
+chosen file as the one to pass to the compiler by default. You can also choose **Build Selected**, which will immediately compile the selected file.
 
 ## Keyboard Shortcuts
 
@@ -46,10 +46,10 @@ By default this package uses the following keyboard shortcuts. I've used
 SHIFT as a prefix to hopefully avoid conflicts with other common packages,
 but feel free to re-map them to suit your needs.
 
-* SHIFT-F5: Build default target file
-* SHIFT-F6: Build current file
-* SHIFT-F9: Toggle output window
-* SHIFT-ESCAPE: Close output window
+* **SHIFT-F5**: Build default target file
+* **SHIFT-F6**: Build current file
+* **SHIFT-F9**: Toggle output window
+* **SHIFT-ESCAPE**: Close output window
 
 ## Syntax Highlighting
 
@@ -80,6 +80,6 @@ Pull requests and other contributions are more than welcome :)
 
 ## Monkey-X
 
-This package was originally forked from the [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). For more info on
-that package and how to improve it, visit the official forums:
+This package was originally forked from [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). If you are coding with Monkey-X, that package
+is a better choice. For more info, visit the official forums:
 (http://www.monkey-x.com/Community/posts.php?topic=10505)
