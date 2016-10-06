@@ -52,7 +52,7 @@ but feel free to re-map them to suit your needs.
 
 ## Syntax Highlighting
 
-Highlighting is based off of the Textmate Bundle by [@gingerbeardman](https://github.com/gingerbeardman)'s
+Highlighting is based off of [@gingerbeardman](https://github.com/gingerbeardman)'s
 [Monkey Textmate bundle](https://github.com/gingerbeardman/monkey.tmbundle),
 which was later converted by [@frameland](https://github.com/frameland/).
 
@@ -70,6 +70,7 @@ that package and how to improve it, visit the official forums:
 Below are planned (but not promised!) additions to the package. I'll do my
 best to get these implemented at some point.
 
+* Highlighting of module keywords (mojo, mojox, etc.)
 * Additional Targets (ios/android) in compiler options
 * Autocomplete provider for Atom autocomplete-plus
 * Atom Linter integration
