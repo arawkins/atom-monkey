@@ -52,16 +52,16 @@ but feel free to re-map them to suit your needs.
 
 ## Syntax Highlighting
 
-Highlighting is based off of the Textmate Bundle by @gingerbeardman's
+Highlighting is based off of the Textmate Bundle by [@gingerbeardman](https://github.com/gingerbeardman)'s
 [Monkey Textmate bundle](https://github.com/gingerbeardman/monkey.tmbundle),
-which was later converted by @frameland.
+which was later converted by [@frameland](https://github.com/frameland/).
 
 It includes syntax highlighting for the basic language keywords.
 Currently there is no highlighting for module keywords (ie. mojo stuff).
 
 ## Monkey-X
 
-This package was originally forked from the @frameland's [Monkey-x package](https://github.com/frameland/atom-monkey). For more info on
+This package was originally forked from the [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). For more info on
 that package and how to improve it, visit the official forums:
 (http://www.monkey-x.com/Community/posts.php?topic=10505)
 
