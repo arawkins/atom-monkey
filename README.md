@@ -59,12 +59,6 @@ which was later converted by [@frameland](https://github.com/frameland/).
 It includes syntax highlighting for the basic language keywords.
 Currently there is no highlighting for module keywords (ie. mojo stuff).
 
-## Monkey-X
-
-This package was originally forked from the [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). For more info on
-that package and how to improve it, visit the official forums:
-(http://www.monkey-x.com/Community/posts.php?topic=10505)
-
 ## TO DO
 
 Below are planned (but not promised!) additions to the package. I'll do my
@@ -82,3 +76,9 @@ Please report any bugs or suggestions as github issues.
 ## Contributing
 
 Pull requests and other contributions are more than welcome :)
+
+## Monkey-X
+
+This package was originally forked from the [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). For more info on
+that package and how to improve it, visit the official forums:
+(http://www.monkey-x.com/Community/posts.php?topic=10505)
