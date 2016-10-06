@@ -4,14 +4,14 @@ This package provides support for the Monkey2 programming language in Atom.
 
 ## Features
 
-**Compiler Integration**
+**Compiler Integration**  
 Set build options, assign a default target, and get build output from within
 atom.
 
-**Syntax Highlighting**
+**Syntax Highlighting**  
 Highlighting for core language keywords.
 
-**Keyboard Shortcuts**
+**Keyboard Shortcuts**  
 Quickly build your project and toggle the output window.
 
 ## Installation
