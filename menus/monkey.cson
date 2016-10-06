@@ -11,6 +11,10 @@
                 {
                     'label': 'Build Current'
                     'command': 'monkey:buildCurrent'
+                },
+                {
+                    'label': 'Toggle Output'
+                    'command': 'monkey:toggleOutput'
                 }
             ]
         ]
@@ -46,6 +50,10 @@
                 {
                     'label': 'Build Current'
                     'command': 'monkey:buildCurrent'
+                },
+                {
+                    'label': 'Toggle Output'
+                    'command': 'monkey:toggleOutput'
                 }
             ]
         },

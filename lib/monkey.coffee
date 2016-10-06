@@ -66,6 +66,12 @@ module.exports = Monkey =
             'monkey:buildCurrent': (event) ->
                 self.build(atom.workspace.getActiveTextEditor().getPath())
 
+        @subscriptions.add atom.commands.add 'atom-workspace',
+            'monkey:hideOutput': => @hideOutput()
+
+        @subscriptions.add atom.commands.add 'atom-workspace',
+            'monkey:toggleOutput': => @toggleOutput()
+
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey:setCompilationTarget': (event) ->
                 self.setCompilationTarget(event.target)
@@ -73,7 +79,6 @@ module.exports = Monkey =
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey:buildSelected': (event) ->
                 self.build(event.target.getAttribute('data-path'))
-
 
         @projectNamespace = atom.project.getPaths()[0]
         @projects = state.projects
@@ -120,6 +125,15 @@ module.exports = Monkey =
     getCompilationTarget: ->
         @projects[@projectNamespace].compilationTarget
 
+    hideOutput: ->
+        @outputPanel.hide()
+
+    showOutput: ->
+        @outputPanel.show()
+
+    toggleOutput: ->
+        if @outputPanel.isVisible() then @outputPanel.hide() else @outputPanel.show()
+
     buildDefault: ->
         target = this.getCompilationTarget()
         if target == null
@@ -132,7 +146,7 @@ module.exports = Monkey =
         extension = targetPath.substr(targetPath.lastIndexOf('.')+1)
         mPath = ''
         buildOut = null
-        console.log @outputPanel
+
         if extension == 'monkey2'
             mPath = atom.config.get "language-monkey.monkey2Path"
             if mPath == '' or mPath == null or mPath == undefined
@@ -149,8 +163,8 @@ module.exports = Monkey =
             @monkeyViewState.clearOutput()
 
             if atom.config.get "language-monkey.showOutputOnBuild"
-                @outputPanel.show()
-            @monkeyViewState.showOutput()
+                @showOutput()
+
 
         else if extension == 'monkey'
             mPath = atom.config.get "language-monkey.monkeyPath"
@@ -185,9 +199,3 @@ module.exports = Monkey =
         buildOut.stderr.on 'data', (data) ->
             message = data.toString().trim()
             atom.notifications.addError(message)
-
-    toggle: ->
-        if @modalPanel.isVisible()
-            @modalPanel.hide()
-        else
-            @modalPanel.show()

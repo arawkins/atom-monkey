@@ -11,7 +11,6 @@ class MonkeyView
         @element.classList.add('inline-block-tight')
 
 
-
         # Create compiler controls
         compilerControls = document.createElement('div')
         compilerControls.classList.add('inline-block', 'monkey-compiler-controls')
@@ -99,14 +98,14 @@ class MonkeyView
 
         outputControls = document.createElement('div')
         outputControls.classList.add('controls', 'inline-block')
-        outputControlsLabel = document.createElement('div')
-        outputControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
-        outputControlsLabel.textContent = "output"
+        # outputControlsLabel = document.createElement('div')
+        # outputControlsLabel.classList.add('inline-block', 'label', 'text-highlight')
+        # outputControlsLabel.textContent = "output"
         # outputControls.appendChild(outputControlsLabel)
 
         @toggleBtn = document.createElement('button')
-        @toggleBtn.classList.add('icon', 'icon-browser', 'btn', 'btn-info', 'inline-block')
-        #toggleBtn.textContent = "output"
+        @toggleBtn.classList.add('icon', 'icon-browser', 'btn', 'inline-block')
+        @toggleBtn.textContent = "output"
         outputControls.appendChild(@toggleBtn)
 
         @clearBtn = document.createElement('button')
@@ -152,7 +151,7 @@ class MonkeyView
         messageNode = document.createElement('li')
         messageNode.textContent = message
         @outputMessages.appendChild(messageNode)
-        @outputMessages.scrollTop = @outputMessages.scrollHeight;
+        @outputMessages.scrollTop = @outputMessages.scrollHeight
 
     hideOutput: ->
         ###
