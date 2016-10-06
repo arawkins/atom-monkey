@@ -1,4 +1,4 @@
-# Monkey2 Language for Atom
+# Monkey2 for Atom
 
 This package provides support for the [Monkey2 programming language](http://monkey2.monkey-x.com) in [Atom](http://atom.io).
 
@@ -16,7 +16,8 @@ Quickly build your project and toggle the output window.
 
 ## Installation
 
-Install the package via the Atom package manager. In settings, enter the
+1. Install the package via the Atom package manager.
+2. In the packange settings, enter the
 path to your Monkey2 installation (eg. /Users/your-username/monkey2).
 
 ## Compiler integration and Toolbar
