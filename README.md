@@ -1,6 +1,6 @@
 # Monkey2 Language for Atom
 
-This package provides support for the Monkey2 programming language in Atom.
+This package provides support for the [Monkey2 programming language](http://monkey2.monkey-x.com) in [Atom](http://atom.io).
 
 ## Features
 
@@ -65,9 +65,18 @@ This package was originally forked from the [@frameland](https://github.com/fram
 that package and how to improve it, visit the official forums:
 (http://www.monkey-x.com/Community/posts.php?topic=10505)
 
+## TO DO
+
+Below are planned (but not promised!) additions to the package. I'll do my
+best to get these implemented at some point.
+
+* Additional Targets (ios/android) in compiler options
+* Autocomplete provider for Atom autocomplete-plus
+* Atom Linter integration
+
 ## Support
 
-Please report any bugs as github issues.
+Please report any bugs or suggestions as github issues.
 
 ## Contributing
 
