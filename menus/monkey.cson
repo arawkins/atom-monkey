@@ -15,6 +15,10 @@
                 {
                     'label': 'Toggle Output'
                     'command': 'monkey:toggleOutput'
+                },
+                {
+                    'label': 'Clear Default Target'
+                    'command': 'monkey:clearCompilationTarget'
                 }
             ]
         ]
@@ -29,6 +33,7 @@
             label: 'Monkey',
             submenu: [
                 {label: 'Set Default Target', command: 'monkey:setCompilationTarget'}
+                {label: 'Clear Default Target', command: 'monkey:clearCompilationTarget'}
                 {label: 'Build Selected', command: 'monkey:buildSelected'}
             ]
         },

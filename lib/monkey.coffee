@@ -59,6 +59,9 @@ module.exports = Monkey =
             'monkey:build': => @build(self.getCompilationTarget())
 
         @subscriptions.add atom.commands.add 'atom-workspace',
+            'monkey:clearCompilationTarget': => @clearCompilationTarget()
+
+        @subscriptions.add atom.commands.add 'atom-workspace',
             'monkey:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
@@ -85,11 +88,11 @@ module.exports = Monkey =
 
             compilationTarget = @projects[@projectNamespace].compilationTarget
 
-            if compilationTarget != undefined
+            if compilationTarget != undefined and compilationTarget != ''
                 pathToSearch = '[data-path="'+compilationTarget+'"]'
                 fileNodes = document.querySelectorAll('.name.icon-file-text')
                 fileNode = (item for item in fileNodes when item.getAttribute('data-path') == compilationTarget).pop()
-                this.setCompilationTarget(fileNode)
+                @setCompilationTarget(fileNode)
             console.log("restored serialized state")
         else
             @projects = {}
@@ -106,12 +109,7 @@ module.exports = Monkey =
         projects: @projects
 
     setCompilationTarget: (fileNode)->
-        #check for existing compilationTarget; remove styling if found
-        ctNode = document.getElementById("compilationTarget")
-        if ctNode != null
-            ctNode.id = ''
-            ctNode.classList.remove('icon-arrow-right')
-            ctNode.classList.add('icon-file-text')
+        @clearCompilationTarget()
 
         #add green arrow styling
         fileNode.classList.remove('icon-file-text')
@@ -124,6 +122,16 @@ module.exports = Monkey =
 
     getCompilationTarget: ->
         @projects[@projectNamespace].compilationTarget
+
+    clearCompilationTarget: ->
+        #check for existing compilationTarget; remove styling if found
+        ctNode = document.getElementById("compilationTarget")
+        if ctNode != null
+            ctNode.id = ''
+            ctNode.classList.remove('icon-arrow-right')
+            ctNode.classList.add('icon-file-text')
+        @projects[@projectNamespace].compilationTarget = ''
+        console.log "target cleared"
 
     hideOutput: ->
         @outputPanel.hide()
@@ -174,7 +182,7 @@ module.exports = Monkey =
         else
             atom.notifications.addError("Not a monkey2 file!")
             return
-            
+
         buildOut.stdout.on 'data', (data) =>
             message = data.toString().trim()
             errorRegex = /error/gi
