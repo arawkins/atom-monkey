@@ -11,7 +11,7 @@ module.exports = Monkey =
     config:
         monkey2Path:
             title: 'Monkey2 Path'
-            description: 'The path to your installation of Monkey2'
+            description: 'The full path to your installation of Monkey2 (eg. /home/user/monkey2, c:\\monkey2)'
             type: 'string'
             default: ''
         showOutputOnBuild:
@@ -141,6 +141,7 @@ module.exports = Monkey =
         target = @getCompilationTarget()
         if target == null
             atom.notifications.addError("No compilation target set. Right click a monkey file in the folder tree and choose 'Set Compilation Target'")
+
             return false
         else
             this.build(target)
@@ -154,6 +155,7 @@ module.exports = Monkey =
             mPath = atom.config.get "language-monkey2.monkey2Path"
             if mPath == '' or mPath == null or mPath == undefined
                 atom.notifications.addError("The path to Monkey2 needs to be set in the package settings")
+                atom.workspace.open("atom://config/packages/language-monkey2")
                 return
             if os.platform() == 'win32'
                 mPath += "\\bin\\mx2cc_windows.exe"
