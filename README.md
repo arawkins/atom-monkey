@@ -40,9 +40,9 @@ file is currently active in the editor.
 
 Right click on any monkey2 file in your project tree. Choose Monkey from
 the context menu. You can **Set Default Target**, which will designate the
-chosen file as the one to pass to the compiler by default. You can also choose **Build Selected**,
-which will immediately compile the selected file, and **Clear Default Target**, which
-will clear any target you have previously selected as the default.
+chosen file as the one to pass to the compiler by default. You can also choose **Clear Default Target**, which
+will clear any target you have previously selected as the default and **Build Selected**,
+which will immediately compile the selected file.
 
 ## Keyboard Shortcuts
 
