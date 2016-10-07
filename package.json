@@ -1,6 +1,6 @@
 {
     "name": "language-monkey2",
-    "version": "1.0.0",
+    "version": "0.0.0",
     "main": "./lib/monkey",
     "description": "Syntax highlighting and compiler integration for the Monkey2 programming language.",
     "keywords": [
@@ -13,7 +13,7 @@
     "repository": "https://github.com/arawkins/atom-monkey",
     "license": "MIT",
     "engines": {
-        "atom": ">=1.1.0 <2.0.0"
+        "atom": ">=1.0.0 <2.0.0"
     },
     "activationCommands": {
         "atom-workspace": "monkey:build",
