@@ -85,5 +85,5 @@ Pull requests and other contributions are welcome.
 ## Monkey-X
 
 This package was originally forked from [@frameland](https://github.com/frameland/)'s [Monkey-x package](https://github.com/frameland/atom-monkey). If you are coding with Monkey-X, that package
-is a better choice. For more info, visit the official forums:
+is the one you want. For more info, visit the official forums:
 (http://www.monkey-x.com/Community/posts.php?topic=10505)
