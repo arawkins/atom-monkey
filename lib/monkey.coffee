@@ -34,7 +34,11 @@ module.exports = Monkey =
 
         # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
-            this.buildDefault()
+            target = @getCompilationTarget()
+            if target != undefined and target != ''
+                @buildDefault()
+            else
+                @buildCurrent()
 
         $(@monkeyViewState.toggleBtn).on 'click', (event) =>
             if @outputPanel.isVisible()
@@ -58,8 +62,7 @@ module.exports = Monkey =
             'monkey:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:buildCurrent': (event) ->
-                self.build(atom.workspace.getActiveTextEditor().getPath())
+            'monkey:buildCurrent': => @buildCurrent()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
             'monkey:hideOutput': => @hideOutput()
@@ -90,6 +93,8 @@ module.exports = Monkey =
             console.log("restored serialized state")
         else
             @projects = {}
+            @projects[@projectNamespace] = ''
+            @projects[@projectNamespace].compilationTarget = ''
             console.log "fresh projects state"
 
     deactivate: ->
@@ -129,8 +134,11 @@ module.exports = Monkey =
     toggleOutput: ->
         if @outputPanel.isVisible() then @outputPanel.hide() else @outputPanel.show()
 
+    buildCurrent: ->
+        @build(atom.workspace.getActiveTextEditor().getPath())
+
     buildDefault: ->
-        target = this.getCompilationTarget()
+        target = @getCompilationTarget()
         if target == null
             atom.notifications.addError("No compilation target set. Right click a monkey file in the folder tree and choose 'Set Compilation Target'")
             return false

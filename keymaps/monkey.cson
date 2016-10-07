@@ -2,4 +2,4 @@
     'shift-f5': 'monkey:buildDefault'
     'shift-f6': 'monkey:buildCurrent'
     'shift-f9': 'monkey:toggleOutput'
-    'escape': 'monkey:hideOutput'
+    'shift-escape': 'monkey:hideOutput'
