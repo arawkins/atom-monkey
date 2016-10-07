@@ -169,7 +169,12 @@ module.exports = Monkey =
 
             if atom.config.get "language-monkey2.showOutputOnBuild"
                 @showOutput()
-
+            else
+                atom.notifications.addInfo("mx2cc compiling...")
+        else
+            atom.notifications.addError("Not a monkey2 file!")
+            return
+            
         buildOut.stdout.on 'data', (data) =>
             message = data.toString().trim()
             errorRegex = /error/gi
