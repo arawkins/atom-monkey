@@ -31,7 +31,7 @@ The selected options will be used when building any file in the current
 project.
 
 If you have chosen a default target (see below), clicking the green arrow button
-will build it. Otherwise, the green arrow button will try to build whatever
+will build it. Otherwise, it will try to build whatever
 file is currently active in the editor.
 
 ## Selecting targets
@@ -41,7 +41,8 @@ file is currently active in the editor.
 Right click on any monkey2 file in your project tree. Choose Monkey from
 the context menu. You can **Set Default Target**, which will designate the
 chosen file as the one to pass to the compiler by default. You can also choose **Build Selected**,
-which will immediately compile the selected file.
+which will immediately compile the selected file, and **Clear Default Target**, which
+will clear any target you have previously selected as the default.
 
 ## Keyboard Shortcuts
 
