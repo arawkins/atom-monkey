@@ -59,9 +59,6 @@ module.exports = Monkey =
             'monkey2:build': => @build(self.getCompilationTarget())
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:clearCompilationTarget': => @clearCompilationTarget()
-
-        @subscriptions.add atom.commands.add 'atom-workspace',
             'monkey2:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
@@ -76,6 +73,9 @@ module.exports = Monkey =
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey2:setCompilationTarget': (event) ->
                 self.setCompilationTarget(event.target)
+
+        @subscriptions.add atom.commands.add '.file.selected',
+            'monkey2:clearCompilationTarget': => @clearCompilationTarget()
 
         @subscriptions.add atom.commands.add '.file.selected',
             'monkey2:buildSelected': (event) ->
@@ -131,7 +131,7 @@ module.exports = Monkey =
             ctNode.classList.remove('icon-arrow-right')
             ctNode.classList.add('icon-file-text')
         @projects[@projectNamespace].compilationTarget = ''
-        
+
 
     hideOutput: ->
         @outputPanel.hide()

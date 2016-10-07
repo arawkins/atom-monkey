@@ -15,10 +15,6 @@
                 {
                     'label': 'Toggle Output'
                     'command': 'monkey2:toggleOutput'
-                },
-                {
-                    'label': 'Clear Default Target'
-                    'command': 'monkey2:clearCompilationTarget'
                 }
             ]
         ]
@@ -59,10 +55,6 @@
                 {
                     'label': 'Toggle Output'
                     'command': 'monkey2:toggleOutput'
-                },
-                {
-                    'label': 'Clear Default Target'
-                    'command': 'monkey2:clearCompilationTarget'
                 }
             ]
         },
