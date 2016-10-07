@@ -5,14 +5,10 @@ This package provides basic support for the [Monkey2 programming language](http:
 ## Features
 
 **Compiler Integration**  
-Set build options, assign a default target, and get build output from within
-atom.
+Configure and run mx2cc from within Atom. Easily set build options, assign a default target, and get build output.
 
 **Syntax Highlighting**  
 Highlighting for core language keywords.
-
-**Keyboard Shortcuts**  
-Quickly build your project and toggle the output window.
 
 ## Installation
 
