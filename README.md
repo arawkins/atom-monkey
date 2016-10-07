@@ -80,7 +80,7 @@ Please report any bugs or suggestions as github issues.
 
 ## Contributing
 
-Pull requests and other contributions are more than welcome :)
+Pull requests and other contributions are welcome.
 
 ## Monkey-X
 
