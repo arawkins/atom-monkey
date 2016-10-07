@@ -143,7 +143,9 @@ module.exports = Monkey =
         if @outputPanel.isVisible() then @outputPanel.hide() else @outputPanel.show()
 
     buildCurrent: ->
-        @build(atom.workspace.getActiveTextEditor().getPath())
+        currentEditor = atom.workspace.getActiveTextEditor()
+        if currentEditor != '' and currentEditor != undefined
+            @build(currentEditor.getPath())
 
     buildDefault: ->
         target = @getCompilationTarget()
