@@ -56,29 +56,29 @@ module.exports = Monkey =
         @subscriptions = new CompositeDisposable
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:build': => @build(self.getCompilationTarget())
+            'monkey2:build': => @build(self.getCompilationTarget())
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:clearCompilationTarget': => @clearCompilationTarget()
+            'monkey2:clearCompilationTarget': => @clearCompilationTarget()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:buildDefault': => @buildDefault()
+            'monkey2:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:buildCurrent': => @buildCurrent()
+            'monkey2:buildCurrent': => @buildCurrent()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:hideOutput': => @hideOutput()
+            'monkey2:hideOutput': => @hideOutput()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey:toggleOutput': => @toggleOutput()
+            'monkey2:toggleOutput': => @toggleOutput()
 
         @subscriptions.add atom.commands.add '.file.selected',
-            'monkey:setCompilationTarget': (event) ->
+            'monkey2:setCompilationTarget': (event) ->
                 self.setCompilationTarget(event.target)
 
         @subscriptions.add atom.commands.add '.file.selected',
-            'monkey:buildSelected': (event) ->
+            'monkey2:buildSelected': (event) ->
                 self.build(event.target.getAttribute('data-path'))
 
         @projectNamespace = atom.project.getPaths()[0]
@@ -131,7 +131,7 @@ module.exports = Monkey =
             ctNode.classList.remove('icon-arrow-right')
             ctNode.classList.add('icon-file-text')
         @projects[@projectNamespace].compilationTarget = ''
-        console.log "target cleared"
+        
 
     hideOutput: ->
         @outputPanel.hide()

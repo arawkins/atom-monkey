@@ -1,5 +1,5 @@
 'atom-workspace':
-    'shift-f5': 'monkey:buildDefault'
-    'shift-f6': 'monkey:buildCurrent'
-    'shift-f9': 'monkey:toggleOutput'
-    'shift-escape': 'monkey:hideOutput'
+    'shift-f5': 'monkey2:buildDefault'
+    'shift-f6': 'monkey2:buildCurrent'
+    'shift-f9': 'monkey2:toggleOutput'
+    'shift-escape': 'monkey2:hideOutput'

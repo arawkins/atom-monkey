@@ -2,23 +2,23 @@
     {
         'label': 'Packages'
         'submenu': [
-            'label': 'Monkey'
+            'label': 'Monkey2'
             'submenu': [
                 {
                     'label': 'Build Default'
-                    'command': 'monkey:buildDefault'
+                    'command': 'monkey2:buildDefault'
                 },
                 {
                     'label': 'Build Current'
-                    'command': 'monkey:buildCurrent'
+                    'command': 'monkey2:buildCurrent'
                 },
                 {
                     'label': 'Toggle Output'
-                    'command': 'monkey:toggleOutput'
+                    'command': 'monkey2:toggleOutput'
                 },
                 {
                     'label': 'Clear Default Target'
-                    'command': 'monkey:clearCompilationTarget'
+                    'command': 'monkey2:clearCompilationTarget'
                 }
             ]
         ]
@@ -30,11 +30,11 @@
             type: 'separator'
         },
         {
-            label: 'Monkey',
+            label: 'Monkey2',
             submenu: [
-                {label: 'Set Default Target', command: 'monkey:setCompilationTarget'}
-                {label: 'Clear Default Target', command: 'monkey:clearCompilationTarget'}
-                {label: 'Build Selected', command: 'monkey:buildSelected'}
+                {label: 'Set Default Target', command: 'monkey2:setCompilationTarget'}
+                {label: 'Clear Default Target', command: 'monkey2:clearCompilationTarget'}
+                {label: 'Build Selected', command: 'monkey2:buildSelected'}
             ]
         },
         {
@@ -46,19 +46,23 @@
             type: 'separator'
         },
         {
-            label: 'Monkey',
+            label: 'Monkey2',
             submenu: [
                 {
                     'label': 'Build Default'
-                    'command': 'monkey:buildDefault'
+                    'command': 'monkey2:buildDefault'
                 },
                 {
                     'label': 'Build Current'
-                    'command': 'monkey:buildCurrent'
+                    'command': 'monkey2:buildCurrent'
                 },
                 {
                     'label': 'Toggle Output'
-                    'command': 'monkey:toggleOutput'
+                    'command': 'monkey2:toggleOutput'
+                },
+                {
+                    'label': 'Clear Default Target'
+                    'command': 'monkey2:clearCompilationTarget'
                 }
             ]
         },
