@@ -21,7 +21,6 @@
         ".file.selected": "monkey:setCompilationTarget"
     },
     "activationHooks": [
-        "language-monkey:grammar-used",
         "language-monkey2:grammar-used"
     ],
     "dependencies": {
