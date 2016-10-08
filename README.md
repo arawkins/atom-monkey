@@ -18,7 +18,7 @@ path to your Monkey2 installation (eg. /Users/your-username/monkey2).
 
 ## Compiler integration and Toolbar
 
-![Toolbar Screenshot](/images/mx2cc-toolbar.png?raw=true "mx2cc toolbar")
+![Toolbar Screenshot](https://github.com/arawkins/atom-monkey/blob/master/images/mx2cc-toolbar.png?raw=true "mx2cc toolbar")
 
 The compiler options can all be set via the toolbar. Currently only the
 desktop and emscripten targets are enabled.
@@ -32,7 +32,7 @@ file is currently active in the editor.
 
 ## Selecting targets
 
-![Selecting target example](/images/target-selection.png?raw=true "choosing a target")
+![Selecting target example](https://github.com/arawkins/atom-monkey/blob/master/images/target-selection.png?raw=true "choosing a target")
 
 Right click on any monkey2 file in your project tree. Choose Monkey from
 the context menu. You can **Set Default Target**, which will designate the
