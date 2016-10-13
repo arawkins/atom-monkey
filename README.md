@@ -72,7 +72,7 @@ best to get these implemented at some point.
 
 ## Support
 
-Please report any bugs or suggestions as github issues.
+Please report any bugs or suggestions as github issues or in [this thread](http://monkey2.monkey-x.com/forums/topic/atom-package-for-monkey2/) on the monkey2 forums
 
 ## Contributing
 
