@@ -1,28 +1,35 @@
 {
-  "name": "language-monkey2",
-  "version": "1.0.2",
-  "main": "./lib/monkey",
-  "description": "Syntax highlighting and compiler integration for the Monkey2 programming language.",
-  "keywords": [
-    "monkey",
-    "monkey2",
-    "blitz",
-    "brl",
-    "basic"
-  ],
-  "repository": "https://github.com/arawkins/atom-monkey",
-  "license": "MIT",
-  "engines": {
-    "atom": ">=1.0.0 <2.0.0"
-  },
-  "activationCommands": {
-    "atom-workspace": "monkey:buildDefault",
-    ".file.selected": "monkey:setCompilationTarget"
-  },
-  "activationHooks": [
-    "language-monkey2:grammar-used"
-  ],
-  "dependencies": {
-    "jquery": "^2.1.4"
-  }
+    "name": "language-monkey2",
+    "version": "1.0.2",
+    "main": "./lib/monkey",
+    "description": "Syntax highlighting and compiler integration for the Monkey2 programming language.",
+    "keywords": [
+        "monkey",
+        "monkey2",
+        "blitz",
+        "brl",
+        "basic"
+    ],
+    "repository": "https://github.com/arawkins/atom-monkey",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=1.0.0 <2.0.0"
+    },
+    "activationCommands": {
+        "atom-workspace": "monkey:buildDefault",
+        ".file.selected": "monkey:setCompilationTarget"
+    },
+    "activationHooks": [
+        "language-monkey2:grammar-used"
+    ],
+    "dependencies": {
+        "jquery": "^2.1.4"
+    },
+    "providedServices": {
+        "autocomplete.provider": {
+            "versions": {
+                "2.0.0": "provide"
+            }
+        }
+    }
 }

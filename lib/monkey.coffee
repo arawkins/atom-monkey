@@ -5,6 +5,7 @@ exec = require('child_process').exec
 spawn = require('child_process').spawn
 os = require('os')
 
+
 {CompositeDisposable} = require 'atom'
 
 module.exports = Monkey =
@@ -18,20 +19,23 @@ module.exports = Monkey =
             title: 'Automatically show output on build'
             type: 'boolean'
             default: true
-
     monkeyViewState: null
     modalPanel: null
     subscriptions: null
     compilationTarget: ''
     projects: {}
     projectNamespace: ''
+    provider: null
+
+    provide: ->
+        @provider
 
     activate: (state) ->
         self = this
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
         @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
         @outputPanel = atom.workspace.addBottomPanel(item: @monkeyViewState.getOutput(), visible: false)
-
+        @provider = require './provider'
         # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
             target = @getCompilationTarget()
