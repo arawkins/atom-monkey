@@ -1,5 +1,6 @@
 fs = require 'fs'
 path = require 'path'
+readline = require 'readline'
 
 module.exports =
     selector: '.source.monkey2'
@@ -13,6 +14,55 @@ module.exports =
 
     # This will be suggested before the default provider, which has a suggestionPriority of 1.
     suggestionPriority: 2
+
+    buildSuggestions: ->
+        console.log("building suggestions...")
+        mPath = atom.config.get "language-monkey2.monkey2Path"
+        modsPath = path.join(mPath,'/modules/mojo/')
+        console.log("module path is:" + modsPath);
+
+        # lets try reading the canvas module for kicks
+        canvasModPath = path.join(modsPath, "/graphics/canvas.monkey2")
+        canvasLineCount = 0
+        methodRegex = RegExp /^\s*Method(.*)\((.*)\)$/, 'img'
+        functionRegex = RegExp /^\s*Function(.*)\((.*)\)$/, 'img'
+        classRegex = RegExp /^\s*Class/, 'im'
+        #docRegex = RegExp /\s*#rem monkeydoc(.*)/, 'img'
+
+        # TODO Read module data into data structure, eg.
+        # class ->
+        #   var
+        #   method...
+        # function ->
+        # global ->
+        # possibly keyed by namespace?
+        
+        fs.readFile canvasModPath, 'utf8', (err,data) =>
+            if (err)
+                throw err
+            else
+                foundMethods = methodRegex.exec(data)
+                console.log(foundDocs)
+
+                while methodRegex.lastIndex > 0
+                    foundDocs = methodRegex.exec(data)
+                    console.log(foundDocs)
+
+
+        ###
+        rl = readline.createInterface({
+            input: fs.createReadStream(canvasModPath)
+        })
+
+        rl.on 'line', (line) =>
+            index = line.search(classRegex)
+            if index >= 0
+                console.log line
+
+        ###
+
+
+
 
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->

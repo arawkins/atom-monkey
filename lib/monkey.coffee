@@ -36,6 +36,8 @@ module.exports = Monkey =
         @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
         @outputPanel = atom.workspace.addBottomPanel(item: @monkeyViewState.getOutput(), visible: false)
         @provider = require './provider'
+        @provider.buildSuggestions()
+
         # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
             target = @getCompilationTarget()

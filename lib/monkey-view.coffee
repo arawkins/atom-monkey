@@ -20,7 +20,7 @@ class MonkeyView
         message.textContent = "Monkey2"
         message.classList.add('inline-block')
         message.classList.add('monkey2Logo')
-
+        
         compilerControls.appendChild(message)
 
 
