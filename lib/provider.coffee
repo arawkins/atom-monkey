@@ -116,15 +116,43 @@ module.exports =
                         nextComment = checkComment[1].trim()
                         return
 
+                checkFunction = functionRegex.exec(line)
+                if checkFunction != null
+                    functionName = checkFunction[1].trim()
+                    functionParams = checkFunction[2].trim().split(',')
+                    functionSnippet = ''
+
+                    suggestion =
+                        type:'function'
+                        description: ''
+
+                    if functionParams.length > 0
+                        functionSnippet = functionName + "("
+                        for param, index in functionParams
+                            # console.log index, param
+                            if param != ''
+                                functionSnippet += "${"+(index+1)+":"+param+"}"
+                            if index < functionParams.length-1
+                                functionSnippet += ","
+                            else
+                                functionSnippet += ")$3"
+                    else
+                        functionSnippet = functionName + "()"
+
+                    suggestion.snippet = functionSnippet
+
+                    if nextComment != ''
+                        suggestion.description = nextComment
+                        nextComment = ''
+                    if suggestion.description.search('@hidden') == -1
+                        @suggestions.functions.push(suggestion)
+                    return
+
                 if inClass == ''
                     checkClass = classRegex.exec(line)
                     if checkClass != null
                         inClass = checkClass[1].trim()
-                        # store this class as a suggestion
-                        suggestion =
-                            text: inClass
-                            type: 'class'
-                        @suggestions.classes.push (suggestion)
+                        # don't store this; wait for a constructor
                         return
                 else
                     checkMethod = methodRegex.exec(line)
@@ -132,14 +160,20 @@ module.exports =
                         methodName = checkMethod[1].trim()
                         methodParams = checkMethod[2].trim().split(',')
                         methodSnippet = ""
-
                         suggestion =
-                            type: 'method'
                             description: ''
 
+                        if methodName == 'New'
+                            suggestion.type = 'class'
+                            suggestion.displayText = inClass
+                        else
+                            suggestion.type = 'method'
 
                         if methodParams.length > 0
-                            methodSnippet = methodName + "("
+                            if suggestion.type == 'class'
+                                methodSnippet = inClass + "("
+                            else
+                                methodSnippet = methodName + "("
                             for param, index in methodParams
                                 # console.log index, param
                                 if param != ''
@@ -158,23 +192,13 @@ module.exports =
                             suggestion.description = nextComment
                             nextComment = ''
                         if suggestion.description.search('@hidden') == -1
-                            @suggestions.methods.push(suggestion)
+                            if methodName == 'New'
+                                @suggestions.classes.push(suggestion)
+                            else
+                                @suggestions.methods.push(suggestion)
                         return
 
-                    checkFunction = functionRegex.exec(line)
-                    if checkFunction != null
-                        functionName = checkFunction[1].trim()
-                        functionParams = checkFunction[2].trim()
-                        suggestion =
-                            text:functionName
-                            type:'function'
-                            description: ''
-                        if nextComment != ''
-                            suggestion.description = nextComment
-                            nextComment = ''
-                        if suggestion.description.search('@hidden') == -1
-                            @suggestions.functions.push(suggestion)
-                        return
+
 
                     checkProperty = propertyRegex.exec(line)
                     if checkProperty != null
@@ -213,25 +237,46 @@ module.exports =
         # console.log prefix, scopeDescriptor, bufferPosition, editor
         fullPrefix = editor.getTextInBufferRange( [[bufferPosition.row, 0], [bufferPosition.row, bufferPosition.column]]).trim()
         shortlist = []
-        isMethod = fullPrefix.search(/\./)
+        isInstance = fullPrefix.search(/\./)
         inParams = fullPrefix.search(/\(/)
         isAssignment = fullPrefix.search("=")
-        isConstructor = fullPrefix.search("New")
-
-        # let's just search everything to start with
+        isConstructor = fullPrefix.toLowerCase().search("new")
 
         for own type, list of @suggestions
-            if (isMethod >= 0 and type == 'methods' and inParams == -1) or (isMethod == -1 and type != 'methods')
-                for suggestion in list
-                    if (suggestion.hasOwnProperty('snippet') and suggestion.snippet != '')
-                        if suggestion.snippet.search(prefix) >= 0
-                            suggestion.replacementPrefix = prefix
-                            shortlist.push(suggestion)
-                    else if (suggestion.hasOwnProperty('text') and suggestion.text != '')
-                        if suggestion.text.search(prefix) >= 0
-                            suggestion.replacementPrefix = prefix
-                            shortlist.push(suggestion)
 
+            if (isInstance >= 0 and (type == 'methods' or type == 'properties') and inParams == -1)
+                for suggestion in list
+                    if @checkSuggestion(suggestion, prefix)
+                        if prefix != '.'
+                            suggestion.replacementPrefix = prefix
+                        else
+                            suggestion.replacementPrefix = ''
+                        shortlist.push(suggestion)
+
+            else if (isConstructor >= 0 and type == 'classes' and inParams == -1)
+                for suggestion in list
+                    if @checkSuggestion(suggestion, prefix)
+                        if prefix != '' and prefix != ' '
+                            suggestion.replacementPrefix = prefix
+                        shortlist.push(suggestion)
+
+            else if (isInstance == -1 and type == 'functions' and inParams == -1)
+                for suggestion in list
+                    if @checkSuggestion(suggestion, prefix)
+                        if prefix != '' and prefix != ' '
+                            suggestion.replacementPrefix = prefix
+                        shortlist.push(suggestion)
 
         new Promise (resolve) ->
             resolve(shortlist)
+
+    checkSuggestion: (suggestion, prefix) ->
+        if prefix = ''
+            return true
+        if (suggestion.hasOwnProperty('snippet') and suggestion.snippet != '')
+            if suggestion.snippet.toLowerCase().search(prefix.toLowerCase()) >= 0
+                return true
+        else if (suggestion.hasOwnProperty('text') and suggestion.text != '')
+            if suggestion.text.search(prefix) >= 0
+                return true
+        return false
