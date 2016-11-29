@@ -25,14 +25,17 @@ module.exports =
 
         # lets try reading the canvas module for kicks
         canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
-        privateRegex = RegExp /^\s*Private\s*$/,'img'
-        publicRegex = RegExp /^\s*Public\s*$/,'img'
-        methodRegex = RegExp /^\s*Method(.*)\((.*)\)$/, 'img'
-        functionRegex = RegExp /^\s*Function(.*)\((.*)\)$/, 'img'
-        namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'img'
-        propertyRegex = RegExp /^\s*Property\s*(.*):(.*)\(\)$/, 'img'
+        privateRegex = RegExp /^\s*Private\s*$/,'im'
+        publicRegex = RegExp /^\s*Public\s*$/,'im'
+        globalRegex = RegExp /^\s*Global\s+\b(\w+?):(\w+?)\b/, 'im'
+        fieldRegex = RegExp /^\s*Field\s+\b(\w+?):(\w+?)\b/, 'im'
+        variableRegex = RegExp /^\s*Global\s+\b(\w+?):(=?\w+?)\b/, 'im'
+        methodRegex = RegExp /^\s*Method(.*)\((.*)\)$/, 'im'
+        functionRegex = RegExp /^\s*Function(.*)\((.*)\)$/, 'im'
+        namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
+        propertyRegex = RegExp /^\s*Property\s*(.*):(.*)\(\)$/, 'im'
         classRegex = RegExp /^\s*Class(.*)$/, 'im'
-        commentRegex = RegExp /\s*#rem monkeydoc(.*)/, 'img'
+        commentRegex = RegExp /\s*#rem monkeydoc(.*)/, 'im'
 
         # TODO Read module data into data structure, eg.
         # class ->
@@ -47,6 +50,7 @@ module.exports =
         @suggestions.classes = [];
         @suggestions.functions = [];
         @suggestions.globals = [];
+        @suggestions.variables = [];
         @suggestions.properties = []
 
         inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
@@ -116,6 +120,32 @@ module.exports =
                         nextComment = checkComment[1].trim()
                         return
 
+                checkVariable = variableRegex.exec(line)
+                if checkVariable != null
+
+                    variableName = checkVariable[1].trim()
+                    variableType = checkVariable[2].trim()
+
+                    # if this Local is in the format Local x:=...
+                    # the variable type will be an equals sign (assignment/equals)
+                    # so we'll just ignore what comes after it
+                    if variableType.charAt(0) == '='
+                        variableType = ''
+
+                    suggestion =
+                        type: 'variable'
+                        description: ''
+                        rightLabel: variableType
+                        text: variableName
+
+                    if nextComment != ''
+                        suggestion.description = nextComment
+                        nextComment = ''
+                    if suggestion.description.search('@hidden') == -1
+                        @suggestions.variables.push(suggestion)
+
+                    return
+
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
                     functionName = checkFunction[1].trim()
@@ -135,7 +165,7 @@ module.exports =
                             if index < functionParams.length-1
                                 functionSnippet += ","
                             else
-                                functionSnippet += ")$3"
+                                functionSnippet += ")$"+(index+2)
                     else
                         functionSnippet = functionName + "()"
 
@@ -162,6 +192,7 @@ module.exports =
                         methodSnippet = ""
                         suggestion =
                             description: ''
+                            inClass: inClass
 
                         if methodName == 'New'
                             suggestion.type = 'class'
@@ -181,7 +212,7 @@ module.exports =
                                 if index < methodParams.length-1
                                     methodSnippet += ","
                                 else
-                                    methodSnippet += ")$3"
+                                    methodSnippet += ")$" + (index+2)
 
                         if methodSnippet != ''
                             suggestion.snippet = methodSnippet
@@ -198,7 +229,24 @@ module.exports =
                                 @suggestions.methods.push(suggestion)
                         return
 
+                    checkField = fieldRegex.exec(line)
+                    if checkField != null
 
+                        fieldName = checkField[1].trim()
+                        fieldType = checkField[2].trim()
+                        suggestion =
+                            type: 'property'
+                            inClass: inClass
+                            description: ''
+                            rightLabel: fieldType
+                            text: fieldName
+
+                        if nextComment != ''
+                            suggestion.description = nextComment
+                            nextComment = ''
+                        if suggestion.description.search('@hidden') == -1
+                            @suggestions.properties.push(suggestion)
+                        return
 
                     checkProperty = propertyRegex.exec(line)
                     if checkProperty != null
@@ -206,9 +254,10 @@ module.exports =
                         propertyType = checkProperty[2]
                         suggestion =
                             text: propertyName
-                            type: 'Property'
+                            type: 'property'
                             rightLabel: propertyType
                             description: ''
+                            inClass: inClass
                         if nextComment != ''
                             suggestion.description = nextComment
                             nextComment = ''
@@ -235,6 +284,11 @@ module.exports =
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
         # console.log @suggestions
         # console.log prefix, scopeDescriptor, bufferPosition, editor
+
+        # if the first character of the prefix is a number, get out of here
+        if /^\d/.test(prefix.charAt(0))
+            return
+
         fullPrefix = editor.getTextInBufferRange( [[bufferPosition.row, 0], [bufferPosition.row, bufferPosition.column]]).trim()
         shortlist = []
         isInstance = fullPrefix.search(/\./)
@@ -260,7 +314,7 @@ module.exports =
                             suggestion.replacementPrefix = prefix
                         shortlist.push(suggestion)
 
-            else if (isInstance == -1 and type == 'functions' and inParams == -1)
+            else if (isInstance == -1 and (type == 'functions' or type == 'variables') and inParams == -1)
                 for suggestion in list
                     if @checkSuggestion(suggestion, prefix)
                         if prefix != '' and prefix != ' '
@@ -271,8 +325,9 @@ module.exports =
             resolve(shortlist)
 
     checkSuggestion: (suggestion, prefix) ->
-        if prefix = ''
+        if prefix == ''
             return true
+
         if (suggestion.hasOwnProperty('snippet') and suggestion.snippet != '')
             if suggestion.snippet.toLowerCase().search(prefix.toLowerCase()) >= 0
                 return true
