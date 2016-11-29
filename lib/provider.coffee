@@ -15,16 +15,16 @@ module.exports =
     # This will be suggested before the default provider, which has a suggestionPriority of 1.
     suggestionPriority: 2
 
-    suggestions : {}
+    suggestions :
+        methods: []
+        classes: []
+        functions: []
+        globals: []
+        variables: []
+        properties: []
 
-    buildSuggestions: ->
-        console.log("building suggestions...")
-        mPath = atom.config.get "language-monkey2.monkey2Path"
-        modsPath = path.join(mPath,'/modules/')
-        console.log("module path is:" + modsPath);
+    parseFile: (filePath) ->
 
-        # lets try reading the canvas module for kicks
-        canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         globalRegex = RegExp /^\s*Global\s+\b(\w+?):(\w+?)\b/, 'im'
@@ -37,47 +37,13 @@ module.exports =
         classRegex = RegExp /^\s*Class(.*)$/, 'im'
         commentRegex = RegExp /\s*#rem monkeydoc(.*)/, 'im'
 
-        # TODO Read module data into data structure, eg.
-        # class ->
-        #   var
-        #   method...
-        # function ->
-        # global ->
-        # possibly keyed by namespace?
-
-        # store suggestions by type.
-        @suggestions.methods = [];
-        @suggestions.classes = [];
-        @suggestions.functions = [];
-        @suggestions.globals = [];
-        @suggestions.variables = [];
-        @suggestions.properties = []
-
         inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
         inClass = ""; # when inside a class definition, store the class here
         inNamespace = ""; # where the heck are we anyways?
         nextComment = ""; # when a monkeydoc comment is found, store it here; tack it on to the next thing that is found
 
-        fs.readFile canvasModPath, 'utf8', (err,data) =>
-            if (err)
-                throw err
-            else
-                # look for the namespace
-
-
-                ###
-                foundMethods = methodRegex.exec(data)
-                console.log(foundMethods)
-
-                while methodRegex.lastIndex > 0
-                    foundMethods = methodRegex.exec(data)
-                    console.log(foundMethods)
-                ###
-
-
-
         rl = readline.createInterface({
-            input: fs.createReadStream(canvasModPath)
+            input: fs.createReadStream(filePath)
         })
 
         applyComment = (suggestion, comment) ->
@@ -264,19 +230,16 @@ module.exports =
                         if suggestion.description.search('@hidden') == -1
                             @suggestions.properties.push(suggestion)
 
-            ###
-            result = namespaceRegex.exec(line)
-            # console.log line
-            if result != null
-                console.log result[1]
-                nsArray = result[1].split('.')
-                console.log nsArray
-                for seg in nsArray
-                    console.log seg
-                # ok, we have the namespace broken into array segments
-                # now what?
 
-            ###
+
+    buildSuggestions: ->
+        console.log("building suggestions...")
+        mPath = atom.config.get "language-monkey2.monkey2Path"
+        modsPath = path.join(mPath,'/modules/')
+        console.log("module path is:" + modsPath);
+        # lets try reading the canvas module for kicks
+        canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
+        @parseFile(canvasModPath)
 
 
 
