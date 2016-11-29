@@ -1,6 +1,7 @@
 fs = require 'fs'
 path = require 'path'
 readline = require 'readline'
+dir = require 'node-dir'
 
 module.exports =
     selector: '.source.monkey2'
@@ -238,8 +239,20 @@ module.exports =
         modsPath = path.join(mPath,'/modules/')
         console.log("module path is:" + modsPath);
         # lets try reading the canvas module for kicks
-        canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
-        @parseFile(canvasModPath)
+        #canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
+        #@parseFile(canvasModPath)
+
+
+        dir.files(path.join(modsPath, '/mojo'), (err, files) =>
+            if (err)
+                console.log err
+                return
+            files = files.filter((file) ->
+               return /.monkey2$/.test(file)
+            )
+            for file in files
+                @parseFile(file)
+        )
 
 
 
