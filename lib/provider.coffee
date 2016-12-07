@@ -23,14 +23,51 @@ module.exports =
         globals: []
         variables: []
         properties: []
+        instances: []
+
+    buildSuggestions: ->
+        console.log("building suggestions...")
+        mPath = atom.config.get "language-monkey2.monkey2Path"
+        modsPath = path.join(mPath,'/modules/')
+        console.log("module path is:" + modsPath);
+        # lets try reading the canvas module for kicks
+        #canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
+        #@parseFile(canvasModPath)
+        console.log ("project path is" + [0])
+
+        for projectPath in atom.project.getPaths()
+            dir.files(projectPath, (err, files) =>
+                if (err)
+                    console.log err
+                    return
+                files = files.filter((file) ->
+                   return /.monkey2$/.test(file)
+                )
+                for file in files
+                    @parseFile(file)
+            )
+
+        dir.files(path.join(modsPath, '/mojo/graphics'), (err, files) =>
+            if (err)
+                console.log err
+                return
+            files = files.filter((file) ->
+               return /.monkey2$/.test(file)
+            )
+            for file in files
+                @parseFile(file)
+        )
+
+        #@parseFile(path.join(modsPath, 'mojo/graphics/canvas.monkey2'))
 
     parseFile: (filePath) ->
-
+        console.log("parsing " + filePath)
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         globalRegex = RegExp /^\s*Global\s+\b(\w+?):(\w+?)\b/, 'im'
         fieldRegex = RegExp /^\s*Field\s+\b(\w+?):(\w+?)\b/, 'im'
-        variableRegex = RegExp /^\s*Global\s+\b(\w+?):(=?\w+?)\b/, 'im'
+        variableRegex = RegExp /^\s*Global|Local\s+\b(\w+?):(=?.+)$/, 'im'
+        instanceRegex = RegExp /^\s*Global|Local\s+(\w+):.*New\s\b(\w+)\b.*$/, 'im'
         methodRegex = RegExp /^\s*Method(.*)\((.*)\)$/, 'im'
         functionRegex = RegExp /^\s*Function(.*)\((.*)\)$/, 'im'
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
@@ -60,20 +97,20 @@ module.exports =
                 checkNamespace = namespaceRegex.exec(line)
                 if checkNamespace != null
                     inNamespace = checkNamespace[1].trim()
-                    console.log ("in namespace: " + inNamespace)
+                    #console.log ("in namespace: " + inNamespace)
                     return;
 
             # check for public/private
             if inPrivate
                 checkPublic = publicRegex.exec(line)
                 if checkPublic != null
-                    console.log "back in public"
+                    #console.log "back in public"
                     inPrivate = false
                     return;
 
             checkPrivate = privateRegex.exec(line)
             if checkPrivate != null
-                console.log "inside private declaration"
+                #console.log "inside private declaration"
                 inPrivate = true
                 return;
 
@@ -87,17 +124,39 @@ module.exports =
                         nextComment = checkComment[1].trim()
                         return
 
+                checkInstance = instanceRegex.exec(line)
+                if checkInstance != null
+                    instanceName = checkInstance[1].trim()
+                    instanceType = checkInstance[2].trim()
+                    suggestion =
+                        type: 'variable'
+                        description: ''
+                        rightLabel: instanceType
+                        text: instanceName
+                    console.log suggestion
+                    if nextComment != ''
+                        suggestion.description = nextComment
+                        nextComment = ''
+                    if suggestion.description.search('@hidden') == -1
+                        @suggestions.instances.push(suggestion)
+
+                    return
+                ###
                 checkVariable = variableRegex.exec(line)
                 if checkVariable != null
 
                     variableName = checkVariable[1].trim()
                     variableType = checkVariable[2].trim()
+                    indexOfNew = variableType.indexOf('New')
+                    if indexOfNew == -1
+                        indexOfNew = variableType.indexOf('new')
 
-                    # if this Local is in the format Local x:=...
-                    # the variable type will be an equals sign (assignment/equals)
-                    # so we'll just ignore what comes after it
+
+
                     if variableType.charAt(0) == '='
-                        variableType = ''
+                        variableType = variableType.slice(1)
+                    console.log variableName
+                    console.log variableType
 
                     suggestion =
                         type: 'variable'
@@ -112,7 +171,7 @@ module.exports =
                         @suggestions.variables.push(suggestion)
 
                     return
-
+                ###
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
                     functionName = checkFunction[1].trim()
@@ -233,29 +292,6 @@ module.exports =
 
 
 
-    buildSuggestions: ->
-        console.log("building suggestions...")
-        mPath = atom.config.get "language-monkey2.monkey2Path"
-        modsPath = path.join(mPath,'/modules/')
-        console.log("module path is:" + modsPath);
-        # lets try reading the canvas module for kicks
-        #canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
-        #@parseFile(canvasModPath)
-
-
-        dir.files(path.join(modsPath, '/mojo'), (err, files) =>
-            if (err)
-                console.log err
-                return
-            files = files.filter((file) ->
-               return /.monkey2$/.test(file)
-            )
-            for file in files
-                @parseFile(file)
-        )
-
-
-
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
         # console.log @suggestions
@@ -275,13 +311,25 @@ module.exports =
         for own type, list of @suggestions
 
             if (isInstance >= 0 and (type == 'methods' or type == 'properties') and inParams == -1)
-                for suggestion in list
-                    if @checkSuggestion(suggestion, prefix)
-                        if prefix != '.'
-                            suggestion.replacementPrefix = prefix
-                        else
-                            suggestion.replacementPrefix = ''
-                        shortlist.push(suggestion)
+
+                # lets find the type of this instance
+                segments = fullPrefix.split('.')
+                segments.pop() # we don't need the last element; it's already in the prefix variable
+                instanceName = segments.pop() # this is the first bit before the period. This should be the instance name
+                instanceType = ''
+                for instanceSuggestion in @suggestions.instances
+                    if instanceName == instanceSuggestion.text
+                        instanceType = instanceSuggestion.rightLabel
+                        break
+
+                if instanceType != ''
+                    for suggestion in list
+                        if @checkSuggestion(suggestion, prefix, instanceType)
+                            if prefix != '.'
+                                suggestion.replacementPrefix = prefix
+                            else
+                                suggestion.replacementPrefix = ''
+                            shortlist.push(suggestion)
 
             else if (isConstructor >= 0 and type == 'classes' and inParams == -1)
                 for suggestion in list
@@ -300,9 +348,13 @@ module.exports =
         new Promise (resolve) ->
             resolve(shortlist)
 
-    checkSuggestion: (suggestion, prefix) ->
+    checkSuggestion: (suggestion, prefix, instanceType) ->
         if prefix == ''
             return true
+
+        if instanceType != undefined and instanceType != ''
+            if suggestion.inClass != instanceType
+                return false
 
         if (suggestion.hasOwnProperty('snippet') and suggestion.snippet != '')
             if suggestion.snippet.toLowerCase().search(prefix.toLowerCase()) >= 0
