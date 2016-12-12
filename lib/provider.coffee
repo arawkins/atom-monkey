@@ -1,7 +1,20 @@
+
 fs = require 'fs'
 path = require 'path'
 readline = require 'readline'
 dir = require 'node-dir'
+
+class MonkeyClass
+
+    fileName: ''
+    extends: 'none'
+    functions: []
+    globals: []
+    methods: []
+    fields: []
+
+    constructor: (@name) ->
+
 
 module.exports =
     selector: '.source.monkey2'
@@ -25,6 +38,9 @@ module.exports =
         properties: []
         instances: []
 
+    documents: {}
+
+
     buildSuggestions: ->
         console.log("building suggestions...")
         mPath = atom.config.get "language-monkey2.monkey2Path"
@@ -46,7 +62,7 @@ module.exports =
                 for file in files
                     @parseFile(file)
             )
-
+            ###
         dir.files(path.join(modsPath, '/mojo/graphics'), (err, files) =>
             if (err)
                 console.log err
@@ -59,27 +75,35 @@ module.exports =
                 @parseFile(file)
 
         )
-
+###
         #@parseFile(path.join(modsPath, 'mojo/graphics/canvas.monkey2'))
 
     parseFile: (filePath) ->
         console.log("parsing " + filePath)
+
+        classRegex = RegExp /^\s*Class\s+\b(\w+)\b(\s+Extends\s+(\b\w+\b))?\s*$/, 'im'
+        statementRegex = RegExp /^\s*(If|For|Select|While).*$/, 'im'
+        methodRegex = RegExp /^\s*Method\s+(\w+)(:\w+)?\s*\((.*)\).*$/, 'im'
+        functionRegex = RegExp /^\s*Function\s+(\w+)(:\w+)?\s*\((.*)\).*$/, 'im'
+        endRegex = RegExp /^\s*(w?end(if)?)|Next\s*$/, 'im'
+
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         globalRegex = RegExp /^\s*Global\s+\b(\w+?):(\w+?)\b/, 'im'
         fieldRegex = RegExp /^\s*Field\s+\b(\w+?):(\w+?)\b/, 'im'
         variableRegex = RegExp /^\s*Global|Local\s+\b(\w+?):(=?.+)$/, 'im'
         instanceRegex = RegExp /^\s*Global|Local\s+(\w+):.*New\s\b(\w+)\b.*$/, 'im'
-        methodRegex = RegExp /^\s*Method(.*)\((.*)\)$/, 'im'
-        functionRegex = RegExp /^\s*Function(.*):?(.*)?\((.*)\)$/, 'im'
+
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
         propertyRegex = RegExp /^\s*Property\s*(.*):(.*)\(\)$/, 'im'
-        classRegex = RegExp /^\s*Class\s+\b(\w+)\b.*$/, 'im'
+
         commentRegex = RegExp /\s*#rem monkeydoc(.*)/, 'im'
 
         inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
         inClass = ""; # when inside a class definition, store the class here
+        scope = [] # tracks what scope we are inside of (class, if statement, method, etc.).
         inNamespace = ""; # where the heck are we anyways?
+
         nextComment = ""; # when a monkeydoc comment is found, store it here; tack it on to the next thing that is found
 
         rl = readline.createInterface({
@@ -120,185 +144,35 @@ module.exports =
             # ok, if we're not in private, lets check first for a comment
             if not inPrivate
 
-                if nextComment == ''
-                    checkComment = commentRegex.exec(line)
-                    if checkComment != null
-                        nextComment = checkComment[1].trim()
-                        return
-
-                checkInstance = instanceRegex.exec(line)
-                if checkInstance != null
-                    console.log("Found instance")
-                    console.log(checkInstance)
-                    instanceName = checkInstance[1].trim()
-                    instanceType = checkInstance[2].trim()
-                    suggestion =
-                        type: 'variable'
-                        description: ''
-                        rightLabel: instanceType
-                        text: instanceName
-
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        @suggestions.instances.push(suggestion)
-
-                    return
-                ###
-                checkVariable = variableRegex.exec(line)
-                if checkVariable != null
-
-                    variableName = checkVariable[1].trim()
-                    variableType = checkVariable[2].trim()
-                    indexOfNew = variableType.indexOf('New')
-                    if indexOfNew == -1
-                        indexOfNew = variableType.indexOf('new')
-
-
-
-                    if variableType.charAt(0) == '='
-                        variableType = variableType.slice(1)
-                    console.log variableName
-                    console.log variableType
-
-                    suggestion =
-                        type: 'variable'
-                        description: ''
-                        rightLabel: variableType
-                        text: variableName
-
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        @suggestions.variables.push(suggestion)
-
-                    return
-                ###
-                checkFunction = functionRegex.exec(line)
-                if checkFunction != null
-                    console.log("Found function", checkFunction)
-                    functionName = checkFunction[1].trim()
-                    functionParams = checkFunction[2].trim().split(',')
-                    functionSnippet = ''
-
-                    suggestion =
-                        type:'function'
-                        description: ''
-
-                    if functionParams.length > 0
-                        functionSnippet = functionName + "("
-                        for param, index in functionParams
-                            # console.log index, param
-                            if param != ''
-                                functionSnippet += "${"+(index+1)+":"+param+"}"
-                            if index < functionParams.length-1
-                                functionSnippet += ","
-                            else
-                                functionSnippet += ")$"+(index+2)
-                    else
-                        functionSnippet = functionName + "()"
-
-                    suggestion.snippet = functionSnippet
-
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        @suggestions.functions.push(suggestion)
-                    return
-
-
                 checkClass = classRegex.exec(line)
                 if checkClass != null
-                    inClass = checkClass[1].trim()
-                    console.log("found class", checkClass)
-                    # don't store this; wait for a constructor
-                    return
+                    #console.log "Found class"
+                    #console.log checkClass
+                    scope.push("Class")
+
+                checkFunction = functionRegex.exec(line)
+                if checkFunction != null
+                    #console.log "Found function"
+                    #console.log checkFunction
+                    scope.push("Function")
 
                 checkMethod = methodRegex.exec(line)
                 if checkMethod != null
-                    console.log("found method", checkMethod)
-                    methodName = checkMethod[1].trim()
-                    methodParams = checkMethod[2].trim().split(',')
-                    methodSnippet = ""
-                    suggestion =
-                        description: ''
-                        inClass: inClass
+                    #console.log "Found method"
+                    #console.log checkMethod
+                    scope.push("Method")
 
-                    if methodName == 'New'
-                        suggestion.type = 'class'
-                        suggestion.displayText = inClass
-                    else
-                        suggestion.type = 'method'
+                checkStatement = statementRegex.exec(line)
+                if checkStatement != null
+                    #console.log "found statement"
+                    #console.log checkStatement
+                    scope.push("statement")
 
-                    if methodParams.length > 0
-                        if suggestion.type == 'class'
-                            methodSnippet = inClass + "("
-                        else
-                            methodSnippet = methodName + "("
-                        for param, index in methodParams
-                            # console.log index, param
-                            if param != ''
-                                methodSnippet += "${"+(index+1)+":"+param+"}"
-                            if index < methodParams.length-1
-                                methodSnippet += ","
-                            else
-                                methodSnippet += ")$" + (index+2)
-
-                    if methodSnippet != ''
-                        suggestion.snippet = methodSnippet
-                    else
-                        suggestion.text = methodName
-
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        if methodName == 'New'
-                            @suggestions.classes.push(suggestion)
-                        else
-                            @suggestions.methods.push(suggestion)
-                    return
-
-                checkField = fieldRegex.exec(line)
-                if checkField != null
-                    console.log("Found field", checkField)
-                    fieldName = checkField[1].trim()
-                    fieldType = checkField[2].trim()
-                    suggestion =
-                        type: 'property'
-                        inClass: inClass
-                        description: ''
-                        rightLabel: fieldType
-                        text: fieldName
-
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        @suggestions.properties.push(suggestion)
-                    return
-
-                checkProperty = propertyRegex.exec(line)
-                if checkProperty != null
-                    console.log("found property", checkProperty)
-                    propertyName = checkProperty[1]
-                    propertyType = checkProperty[2]
-                    suggestion =
-                        text: propertyName
-                        type: 'property'
-                        rightLabel: propertyType
-                        description: ''
-                        inClass: inClass
-                    if nextComment != ''
-                        suggestion.description = nextComment
-                        nextComment = ''
-                    if suggestion.description.search('@hidden') == -1
-                        @suggestions.properties.push(suggestion)
-
-
+                checkEnd = endRegex.exec(line)
+                if checkEnd != null
+                    #console.log "Ending a scope"
+                    #console.log checkEnd
+                    scope.pop()
 
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
