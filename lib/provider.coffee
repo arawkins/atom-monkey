@@ -13,8 +13,26 @@ class MonkeyClass
     methods: []
     fields: []
 
+    constructor: (name) ->
+        @name = name
+        @functions = []
+
+class MonkeyFunction
+
+    fileName: ''
+    parameters: []
+    returnType: ''
+
     constructor: (@name) ->
 
+
+
+class MonkeyVariable
+
+    fileName: ''
+    type: ''
+
+    constructor: (@name, @type) ->
 
 module.exports =
     selector: '.source.monkey2'
@@ -38,7 +56,9 @@ module.exports =
         properties: []
         instances: []
 
-    documents: {}
+    classes: []
+    functions: []
+    globals: []
 
 
     buildSuggestions: ->
@@ -49,7 +69,6 @@ module.exports =
         # lets try reading the canvas module for kicks
         #canvasModPath = path.join(modsPath, "/mojo/graphics/canvas.monkey2")
         #@parseFile(canvasModPath)
-        console.log ("project path is" + [0])
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -61,8 +80,10 @@ module.exports =
                 )
                 for file in files
                     @parseFile(file)
+
             )
-            ###
+
+        ###
         dir.files(path.join(modsPath, '/mojo/graphics'), (err, files) =>
             if (err)
                 console.log err
@@ -75,10 +96,11 @@ module.exports =
                 @parseFile(file)
 
         )
-###
+        ###
         #@parseFile(path.join(modsPath, 'mojo/graphics/canvas.monkey2'))
 
     parseFile: (filePath) ->
+
         console.log("parsing " + filePath)
 
         classRegex = RegExp /^\s*Class\s+\b(\w+)\b(\s+Extends\s+(\b\w+\b))?\s*$/, 'im'
@@ -147,14 +169,42 @@ module.exports =
                 checkClass = classRegex.exec(line)
                 if checkClass != null
                     #console.log "Found class"
-                    #console.log checkClass
-                    scope.push("Class")
+                    thisClassName = checkClass[1]
+                    thisClassExtends = checkClass[3]
+                    thisClass = new MonkeyClass(thisClassName)
+                    thisClass.fileName = filePath
+
+                    if thisClassExtends != undefined
+                        thisClass.extends = thisClassExtends
+
+                    scope.push(thisClass)
+                    @classes.push(thisClass)
 
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
                     #console.log "Found function"
                     #console.log checkFunction
-                    scope.push("Function")
+                    thisFunctionName = checkFunction[1]
+                    thisFunctionReturnType = checkFunction[2]
+                    thisFunction = new MonkeyFunction(thisFunctionName)
+
+                    if thisFunctionReturnType != undefined
+                        thisFunction.returnType = thisFunctionReturnType.slice(1)
+
+                    parentClass = null
+                    for scopeLevel in scope by -1
+                        if scopeLevel instanceof MonkeyClass
+                            parentClass = scopeLevel
+                            break
+                    if parentClass != null
+                        if thisFunction.name == 'new' or thisFunction.name == 'New'
+                            parentClass.functions.unshift(thisFunction)
+                        else
+                            parentClass.functions.push(thisFunction)
+                    else
+                        @functions.push(thisFunction)
+
+                    scope.push(thisFunction)
 
                 checkMethod = methodRegex.exec(line)
                 if checkMethod != null
@@ -174,14 +224,18 @@ module.exports =
                     #console.log checkEnd
                     scope.pop()
 
+
+
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
         # console.log @suggestions
         # console.log prefix, scopeDescriptor, bufferPosition, editor
-
+        console.log @functions
+        console.log @classes
         # if the first character of the prefix is a number, get out of here
         if /^\d/.test(prefix.charAt(0))
             return
+
 
         fullPrefix = editor.getTextInBufferRange( [[bufferPosition.row, 0], [bufferPosition.row, bufferPosition.column]]).trim()
         shortlist = []
