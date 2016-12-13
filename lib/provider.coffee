@@ -125,7 +125,7 @@ module.exports =
         statementRegex = RegExp /^\s*(If|For|Select|While).*$/, 'im'
         methodRegex = RegExp /^\s*Method\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         functionRegex = RegExp /^\s*Function\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
-        fieldRegex = RegExp /^\s*Field\s+\b(\w+?):(.+?)\b/, 'im'
+        fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
         propertyRegex = RegExp /^\s*Property\s+(.+):(.+)\(\).*$/, 'im'
         commentRegex = RegExp /^\s*#rem monkeydoc(.*)/, 'im'
         lambdaRegex = RegExp /Lambda/, 'im'
@@ -133,7 +133,7 @@ module.exports =
 
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
-        globalRegex = RegExp /^\s*Global\s+\b(\w+?):(\w+?)\b/, 'im'
+        globalRegex = RegExp /^\s*Global\s+\b(\w+?):(.+)$/, 'im'
         variableRegex = RegExp /^\s*Global|Local\s+\b(\w+?):(=?.+)$/, 'im'
         instanceRegex = RegExp /^\s*Global|Local\s+(\w+):.*New\s\b(\w+)\b.*$/, 'im'
 
@@ -218,8 +218,8 @@ module.exports =
 
                 checkStruct = structRegex.exec(line)
                 if checkStruct != null
-                    console.log "Found struct"
-                    console.log checkStruct
+                    #console.log "Found struct"
+                    #console.log checkStruct
                     thisStruct = new MonkeyClass(checkStruct[1])
                     thisStruct.fileName = filePath
 
@@ -230,6 +230,23 @@ module.exports =
                         thisStruct.hidden = true
                     @structs.push(thisStruct)
                     scope.push(thisStruct)
+
+                checkField = fieldRegex.exec(line)
+                if checkField != null
+                    #console.log "found field in " + filePath
+                    #console.log checkField
+                    thisVar = new MonkeyVariable(checkField[1], checkField[2])
+
+                    parentClass = null
+                    for scopeLevel in scope by -1
+                        if scopeLevel instanceof MonkeyClass
+                            parentClass = scopeLevel
+                            break
+                    if parentClass != null
+                        parentClass.fields.push(thisVar)
+                    else
+                        console.log "Could not find class for " + thisVar
+                        console.log filePath
 
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
