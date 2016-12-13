@@ -13,6 +13,7 @@ class MonkeyClass
     globals: []
     methods: []
     fields: []
+    constants:[]
     properties: []
     hidden: false
 
@@ -23,6 +24,7 @@ class MonkeyClass
         @globals = []
         @fields = []
         @properties = []
+        @constants = []
         @hidden = false
 
 class MonkeyFunction
@@ -77,14 +79,16 @@ module.exports =
     functions: []
     globals: []
     structs: []
+    constants: []
+    interfaces: []
 
     buildSuggestions: ->
-        console.log("building suggestions...")
+        #console.log("building suggestions...")
         mPath = atom.config.get "language-monkey2.monkey2Path"
         modsPath = path.join(mPath,'/modules/')
-        console.log("module path is:" + modsPath);
+        #console.log("module path is:" + modsPath);
         # lets try reading the canvas module for kicks
-        canvasModPath = path.join(modsPath, "/mojo/graphics/test.monkey2")
+        canvasModPath = path.join(modsPath, "/mojo/app/event.monkey2")
         #@parseFile(canvasModPath)
 
         for projectPath in atom.project.getPaths()
@@ -101,7 +105,7 @@ module.exports =
             )
 
 
-        dir.files(path.join(modsPath, '/mojo/graphics'), (err, files) =>
+        dir.files(path.join(modsPath, '/'), (err, files) =>
             if (err)
                 console.log err
                 return
@@ -118,22 +122,28 @@ module.exports =
 
     parseFile: (filePath) ->
 
-        console.log("parsing " + filePath)
+        #console.log("parsing " + filePath)
 
-        classRegex = RegExp /^\s*Class\s+\b(\w+)\b(\s+Extends\s+(\b\w+\b))?\s*$/, 'im'
-        structRegex = RegExp /^\s*Struct\s+\b(\w+)\b\s*$/, 'im'
+        classRegex = RegExp /^\s*Class\s+(\b[\w<>]+\b)(\s+Extends\s+(\b\w+\b))?.*$/, 'im'
+        structRegex = RegExp /^\s*Struct\s+\b([\w<>]+)\b.*$/, 'im'
         statementRegex = RegExp /^\s*(If|For|Select|While).*$/, 'im'
         methodRegex = RegExp /^\s*Method\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         functionRegex = RegExp /^\s*Function\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
+        globalRegex = RegExp /^\s*Global\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
+        constRegex = RegExp /^\s*Const\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
         propertyRegex = RegExp /^\s*Property\s+(.+):(.+)\(\).*$/, 'im'
         commentRegex = RegExp /^\s*#rem monkeydoc(.*)/, 'im'
         lambdaRegex = RegExp /Lambda/, 'im'
+        enumRegex = RegExp /Enum/, 'im'
+        operatorRegex = RegExp /Operator.*$/,'im'
+        interfaceRegex = RegExp /^\s*Interface\s+(.*)/, 'im'
+
         endRegex = RegExp /^\s*((w?end(if)?)|Next)\s*$/, 'im'
 
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
-        globalRegex = RegExp /^\s*Global\s+\b(\w+?):(.+)$/, 'im'
+        externRegex = RegExp /^\s*Extern\s*$/,'im'
         variableRegex = RegExp /^\s*Global|Local\s+\b(\w+?):(=?.+)$/, 'im'
         instanceRegex = RegExp /^\s*Global|Local\s+(\w+):.*New\s\b(\w+)\b.*$/, 'im'
 
@@ -143,6 +153,7 @@ module.exports =
 
 
         inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
+        inExtern = false # like inPrivate, ignore everything while in an extern
         inClass = ""; # when inside a class definition, store the class here
         scope = [] # tracks what scope we are inside of (class, if statement, method, etc.).
         inNamespace = ""; # where the heck are we anyways?
@@ -162,37 +173,72 @@ module.exports =
                     #console.log ("in namespace: " + inNamespace)
                     return;
 
+            checkExtern = externRegex.exec(line)
+            if checkExtern != null
+                inExtern = true
+                return
+
             # check for public/private
-            if inPrivate
+            if inPrivate or inExtern
                 checkPublic = publicRegex.exec(line)
                 if checkPublic != null
                     #console.log "back in public"
                     inPrivate = false
+                    inExtern = false
                     return;
 
             checkPrivate = privateRegex.exec(line)
             if checkPrivate != null
                 #console.log "inside private declaration"
                 inPrivate = true
+                inExtern = false
                 return;
 
 
             # ok, if we're not in private, lets check first for a comment
-            if not inPrivate
+            if not inPrivate and not inExtern
 
-                if nextComment == ''
-                    checkComment = commentRegex.exec(line)
-                    if checkComment != null
-                        #console.log "Found monkeydoc comment"
-                        #console.log checkComment
-                        nextComment = checkComment[1].trim()
-                        return
+                checkComment = commentRegex.exec(line)
+                if checkComment != null
+                    #console.log "Found monkeydoc comment"
+                    #console.log checkComment
+                    nextComment = checkComment[1].trim()
+                    return
 
                 checkLambda = lambdaRegex.exec(line)
                 if checkLambda != null
                     #console.log "Found lambda"
                     #console.log checkLambda
                     scope.push("Lambda")
+                    return
+
+                checkEnum = enumRegex.exec(line)
+                if checkEnum != null
+                    scope.push("Enum")
+                    return
+
+                checkOperator = operatorRegex.exec(line)
+                if checkOperator != null
+                    #console.log "Found operator"
+                    #console.log checkOperator
+                    scope.push("Operator")
+                    return
+
+                checkInterface = interfaceRegex.exec(line)
+                if checkInterface != null
+                    scope.push("Interface")
+                    #console.log "Found interface"
+                    #console.log checkInterface
+                    thisInterface = new MonkeyClass(checkInterface[1])
+
+                    if nextComment != ''
+                        thisInterface.description = nextComment
+                        nextComment = ''
+                    if thisInterface.description.search("@hidden") != -1
+                        thisInterface.hidden = true
+
+                    scope.push(thisInterface)
+                    @interfaces.push(thisInterface)
                     return
 
                 checkClass = classRegex.exec(line)
@@ -236,6 +282,12 @@ module.exports =
                     #console.log "found field in " + filePath
                     #console.log checkField
                     thisVar = new MonkeyVariable(checkField[1], checkField[2])
+                    thisVar.fileName = filePath
+                    if nextComment != ''
+                        thisVar.description = nextComment
+                        nextComment = ''
+                    if thisVar.description.search("@hidden") != -1
+                        thisVar.hidden = true
 
                     parentClass = null
                     for scopeLevel in scope by -1
@@ -245,8 +297,55 @@ module.exports =
                     if parentClass != null
                         parentClass.fields.push(thisVar)
                     else
-                        console.log "Could not find class for " + thisVar
+                        console.log "Could not find class for field " + thisVar.name
                         console.log filePath
+                        console.log line
+
+                checkGlobal = globalRegex.exec(line)
+                if checkGlobal != null
+                    #console.log "found global in " + filePath
+                    #console.log checkGlobal
+                    thisVar = new MonkeyVariable(checkGlobal[1], checkGlobal[2])
+                    thisVar.fileName = filePath
+
+                    if nextComment != ''
+                        thisVar.description = nextComment
+                        nextComment = ''
+                    if thisVar.description.search("@hidden") != -1
+                        thisVar.hidden = true
+
+                    parentClass = null
+                    for scopeLevel in scope by -1
+                        if scopeLevel instanceof MonkeyClass
+                            parentClass = scopeLevel
+                            break
+                    if parentClass != null
+                        parentClass.globals.push(thisVar)
+                    else
+                        @globals.push(thisVar)
+
+                checkConst = constRegex.exec(line)
+                if checkConst != null
+                    #console.log "found const in " + filePath
+                    #console.log checkConst
+                    thisVar = new MonkeyVariable(checkConst[1], checkConst[2])
+                    thisVar.fileName = filePath
+
+                    if nextComment != ''
+                        thisVar.description = nextComment
+                        nextComment = ''
+                    if thisVar.description.search("@hidden") != -1
+                        thisVar.hidden = true
+
+                    parentClass = null
+                    for scopeLevel in scope by -1
+                        if scopeLevel instanceof MonkeyClass
+                            parentClass = scopeLevel
+                            break
+                    if parentClass != null
+                        parentClass.constants.push(thisVar)
+                    else
+                        @constants.push(thisVar)
 
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
@@ -348,9 +447,13 @@ module.exports =
                     for scopeLevel in scope by -1
                         if scopeLevel instanceof MonkeyClass
                             parentClass = scopeLevel
-                            parentClass.properties.push(thisProperty)
                             break
-
+                    if parentClass != null
+                        parentClass.properties.push(thisProperty)
+                    else
+                        console.log("Could not find a class for property " + thisProperty.name)
+                        console.log scope
+                        console.log filePath
                     scope.push(thisProperty)
                     return
 
@@ -377,6 +480,8 @@ module.exports =
         console.log @functions
         console.log @classes
         console.log @structs
+        console.log @globals
+        console.log @constants
         # if the first character of the prefix is a number, get out of here
         if /^\d/.test(prefix.charAt(0))
             return
