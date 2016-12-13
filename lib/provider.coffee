@@ -477,11 +477,7 @@ module.exports =
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
         # console.log @suggestions
         # console.log prefix, scopeDescriptor, bufferPosition, editor
-        console.log @functions
-        console.log @classes
-        console.log @structs
-        console.log @globals
-        console.log @constants
+
         # if the first character of the prefix is a number, get out of here
         if /^\d/.test(prefix.charAt(0))
             return
