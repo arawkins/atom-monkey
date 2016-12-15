@@ -482,14 +482,57 @@ module.exports =
         if /^\d/.test(prefix.charAt(0))
             return
 
-
         fullPrefix = editor.getTextInBufferRange( [[bufferPosition.row, 0], [bufferPosition.row, bufferPosition.column]]).trim()
         shortlist = []
-        isInstance = fullPrefix.search(/\./)
+        instanceRegex = RegExp /^\s*(\w+)(\.[\w\.])?\s*$/, 'i'
         inParams = fullPrefix.search(/\(/)
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
+        # If there is a period in the full prefix, see if it is a class name
+        if fullPrefix.search(/\./)
+            segments = fullPrefix.split('.')
+            segments.pop() # we don't need the last element; it's already in the prefix variable
+            previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+            for c in @classes
+                if c.name == previousPrefix
+                    for cf in c.functions
+                        if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                            suggestion =
+                                text: cf.name
+                                type: 'function'
+                            shortlist.push(suggestion)
+                    for cConst in c.constants
+                        if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                            suggestion =
+                                text: cConst.name
+                                type: 'constant'
+                            shortlist.push(suggestion)
+                    for cGlobal in c.globals
+                        if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                            suggestion =
+                                text: cGlobal.name
+                                type: 'variable'
+                            shortlist.push(suggestion)
+
+
+
+
+        else
+            for f in @functions
+                if not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    suggestion =
+                        text : f.name
+                        type : 'function'
+                    shortlist.push(suggestion)
+            for c in @classes
+                if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    suggestion =
+                        text: c.name
+                        type: 'class'
+                    shortlist.push(suggestion)
+
+        ###
         for own type, list of @suggestions
 
             if (isInstance >= 0 and (type == 'methods' or type == 'properties') and inParams == -1)
@@ -526,7 +569,7 @@ module.exports =
                         if prefix != '' and prefix != ' '
                             suggestion.replacementPrefix = prefix
                         shortlist.push(suggestion)
-
+        ###
         new Promise (resolve) ->
             resolve(shortlist)
 
