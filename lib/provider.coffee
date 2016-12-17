@@ -27,6 +27,25 @@ class MonkeyClass
         @constants = []
         @hidden = false
 
+    getConstructorSnippet: () ->
+        snippet = ""
+        constructorMethod = @methods[0] # The constructor (New) method should be in the 0 position
+        if constructorMethod != null and constructorMethod != undefined and constructorMethod.name.toLowerCase() == 'new'
+            if constructorMethod.parameters.length > 0
+                snippet = @name + "("
+                for param, index in constructorMethod.parameters
+                    if param != ''
+                        snippet += "${"+(index+1)+":"+param+"}"
+                    if index < constructorMethod.parameters.length-1
+                        snippet += ","
+                    else
+                        snippet += ")$" + (index+2)
+            else
+                snippet = @name + "()"
+        else
+            snippet = @name
+        return snippet
+
 class MonkeyFunction
 
     fileName: ''
@@ -40,6 +59,24 @@ class MonkeyFunction
         @parameters = []
         @returnType = 'Void'
         @hidden = false
+
+    getSnippet: () ->
+        functionSnippet = ''
+        if @parameters.length > 0
+            functionSnippet = @name + "("
+            for param, index in @parameters
+                # console.log index, param
+                if param != ''
+                    functionSnippet += "${"+(index+1)+":"+param+"}"
+                if index < @parameters.length-1
+                    functionSnippet += ","
+                else
+                    functionSnippet += ")$"+(index+2)
+        else
+            functionSnippet = @name + "()"
+        functionSnippet.description = @description
+
+        return functionSnippet
 
 class MonkeyVariable
 
@@ -473,11 +510,14 @@ module.exports =
 
 
 
+
+
+
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
         # console.log @suggestions
         # console.log prefix, scopeDescriptor, bufferPosition, editor
-
+        # console.log scopeDescriptor
         # if the first character of the prefix is a number, get out of here
         if /^\d/.test(prefix.charAt(0))
             return
@@ -489,47 +529,68 @@ module.exports =
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
-        # If there is a period in the full prefix, see if it is a class name
-        if fullPrefix.search(/\./)
-            segments = fullPrefix.split('.')
-            segments.pop() # we don't need the last element; it's already in the prefix variable
-            previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+        # If the word 'new' is in the prefix, search for class constructors
+        if fullPrefix.toLowerCase().search("new") >=0
             for c in @classes
-                if c.name == previousPrefix
-                    for cf in c.functions
-                        if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                            suggestion =
-                                text: cf.name
-                                type: 'function'
-                            shortlist.push(suggestion)
-                    for cConst in c.constants
-                        if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                            suggestion =
-                                text: cConst.name
-                                type: 'constant'
-                            shortlist.push(suggestion)
-                    for cGlobal in c.globals
-                        if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                            suggestion =
-                                text: cGlobal.name
-                                type: 'variable'
-                            shortlist.push(suggestion)
+                if c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    suggestion =
+                        snippet: c.getConstructorSnippet()
+                        type: 'class'
+                        description: c.description
+                    shortlist.push(suggestion)
 
+        # If there is a period in the full prefix, see if it is a class name
+        else if fullPrefix.search(/\./) >= 0
+            #First break the line apart by white space to try to find the furthest line segment with a period in it
+            segments = fullPrefix.split(' ')
+            segToUse = null
+            for seg in segments by -1
+                if seg.search(/\./) >= 0
+                    segToUse = seg
+                    break
 
-
-
+            if segToUse != null
+                segments = segToUse.split('.')
+                #console.log(segments)
+                segments.pop() # we don't need the last element; it's already in the prefix variable
+                previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+                for c in @classes
+                    if c.name == previousPrefix
+                        for cf in c.functions
+                            if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                suggestion =
+                                    snippet: cf.getSnippet()
+                                    type: 'function'
+                                    description: cf.description
+                                shortlist.push(suggestion)
+                        for cConst in c.constants
+                            if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                suggestion =
+                                    text: cConst.name
+                                    type: 'constant'
+                                    description: cConst.description
+                                shortlist.push(suggestion)
+                        for cGlobal in c.globals
+                            if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                suggestion =
+                                    text: cGlobal.name
+                                    type: 'variable'
+                                    description: cGlobal.description
+                                shortlist.push(suggestion)
         else
             for f in @functions
                 if not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
                     suggestion =
-                        text : f.name
+                        snippet: f.getSnippet()
                         type : 'function'
+                        description: f.description
                     shortlist.push(suggestion)
             for c in @classes
                 if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
                     suggestion =
                         text: c.name
                         type: 'class'
+                        description: c.description
                     shortlist.push(suggestion)
 
         ###
