@@ -53,6 +53,7 @@ class MonkeyFunction
     returnType: ''
     description: ''
     hidden: false
+    isConstructor: false
 
     constructor: (name) ->
         @name = name
@@ -491,6 +492,7 @@ module.exports =
                         # If it's a constructor, put it at the front of the methods array
                         if thisMethod.name == 'new' or thisMethod.name == 'New'
                             parentClass.methods.unshift(thisMethod)
+                            thisMethod.isConstructor = true
                         else
                             parentClass.methods.push(thisMethod)
 
@@ -523,8 +525,8 @@ module.exports =
                         parentClass.properties.push(thisProperty)
                     else
                         console.log("Could not find a class for property " + thisProperty.name)
-                        console.log scope
-                        console.log filePath
+                        #console.log scope
+                        #console.log filePath
                     scope.push(thisProperty)
                     return
 
@@ -556,12 +558,12 @@ module.exports =
 
 
     reParseVariables: () ->
-        console.log("reparse all of the broken variables")
+        #console.log("reparse all of the broken variables")
 
         for fileData in @parsedFiles
             for variable in fileData.variables
                 if variable.typeNeedsParsing
-                    console.log(variable.name + ":"+variable.type)
+                    # console.log(variable.name + ":"+variable.type)
 
 
     # Required: Return a promise, an array of suggestions, or null.
@@ -574,9 +576,13 @@ module.exports =
             return
 
         fullPrefix = editor.getTextInBufferRange( [[bufferPosition.row, 0], [bufferPosition.row, bufferPosition.column]]).trim()
+
+        # if there is an open bracket in the prefix, this is likely a method, so don't do autocompletion
+        if /\(/.test(fullPrefix)
+            return
+
         shortlist = []
         instanceRegex = RegExp /^\s*(\w+)(\.[\w\.])?\s*$/, 'i'
-        inParams = fullPrefix.search(/\(/)
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
@@ -612,8 +618,8 @@ module.exports =
                     for variable in fileData.variables
                         if variable.name == previousPrefix
                             instanceType = variable.type
-                            console.log "found instance of type: " + instanceType
-                            #TODO Nested loop to look through all other files for class data for instance type. ug.
+                            # console.log "found instance of type: " + instanceType
+                            # TODO Nested loop to look through all other files for class data for instance type. ug.
                             for fileData2 in @parsedFiles
                                 for c2 in fileData2.classes
                                     if instanceType.toLowerCase() == c2.name.toLowerCase()
@@ -623,6 +629,7 @@ module.exports =
                                                     snippet: cm.getSnippet()
                                                     type: 'method'
                                                     description: cm.description
+                                                    leftLabel: cm.returnType
                                                 shortlist.push(suggestion)
                                         for cp in c2.properties
                                             if cp.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -630,6 +637,7 @@ module.exports =
                                                     text: cp.name
                                                     type: 'property'
                                                     description: cp.description
+                                                    rightLabel: cp.type
                                                 shortlist.push(suggestion)
                                         for cf in c2.fields
                                             if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -637,6 +645,7 @@ module.exports =
                                                     text: cf.name
                                                     type: 'property'
                                                     description: cf.description
+                                                    rightLabel: cf.type
                                                 shortlist.push(suggestion)
 
 
@@ -649,6 +658,7 @@ module.exports =
                                         snippet: cf.getSnippet()
                                         type: 'function'
                                         description: cf.description
+                                        leftLabel: cf.returnType
                                     shortlist.push(suggestion)
                             for cConst in c.constants
                                 if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -656,6 +666,7 @@ module.exports =
                                         text: cConst.name
                                         type: 'constant'
                                         description: cConst.description
+                                        rightLabel: cConst.type
                                     shortlist.push(suggestion)
                             for cGlobal in c.globals
                                 if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -663,6 +674,7 @@ module.exports =
                                         text: cGlobal.name
                                         type: 'variable'
                                         description: cGlobal.description
+                                        rightLabel: cGlobal.type
                                     shortlist.push(suggestion)
             else
                 for f in fileData.functions
@@ -682,19 +694,3 @@ module.exports =
 
         new Promise (resolve) ->
             resolve(shortlist)
-
-    checkSuggestion: (suggestion, prefix, instanceType) ->
-        if prefix == ''
-            return true
-
-        if instanceType != undefined and instanceType != ''
-            if suggestion.inClass != instanceType
-                return false
-
-        if (suggestion.hasOwnProperty('snippet') and suggestion.snippet != '')
-            if suggestion.snippet.toLowerCase().search(prefix.toLowerCase()) >= 0
-                return true
-        else if (suggestion.hasOwnProperty('text') and suggestion.text != '')
-            if suggestion.text.search(prefix) >= 0
-                return true
-        return false
