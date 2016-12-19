@@ -118,6 +118,8 @@ module.exports =
     structs: []
     constants: []
     interfaces: []
+    variables: []
+
 
     buildSuggestions: ->
         #console.log("building suggestions...")
@@ -175,15 +177,12 @@ module.exports =
         enumRegex = RegExp /Enum/, 'im'
         operatorRegex = RegExp /Operator.*$/,'im'
         interfaceRegex = RegExp /^\s*Interface\s+(.*)/, 'im'
-
         endRegex = RegExp /^\s*((w?end(if)?)|Next)\s*$/, 'im'
-
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         externRegex = RegExp /^\s*Extern\s*$/,'im'
-        variableRegex = RegExp /^\s*Global|Local\s+\b(\w+?):(=?.+)$/, 'im'
-        instanceRegex = RegExp /^\s*Global|Local\s+(\w+):.*New\s\b(\w+)\b.*$/, 'im'
-
+        variableRegex = RegExp /^\s*(Global|Local)\s+\b(\w+):(=|\w+)\s+\b(\w+)\b.*$/, 'im'
+        instanceRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s?New\s\b(\w+)\b.*$/, 'im'
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
 
 
@@ -240,6 +239,22 @@ module.exports =
                     #console.log "Found monkeydoc comment"
                     #console.log checkComment
                     nextComment = checkComment[1].trim()
+                    return
+
+                checkInstance = instanceRegex.exec(line)
+                if checkInstance != null
+
+                    instanceName = checkInstance[2].trim()
+                    instanceType = checkInstance[4].trim()
+                    thisInstance = new MonkeyVariable(instanceName, instanceType)
+                    thisInstance.fileName = filePath
+
+                    if nextComment != ''
+                        thisInstance.description = nextComment
+                        nextComment = ''
+                    if thisInstance.description.search('@hidden') == -1
+                        @variables.push(thisInstance)
+
                     return
 
                 checkLambda = lambdaRegex.exec(line)
@@ -554,7 +569,22 @@ module.exports =
                 #console.log(segments)
                 segments.pop() # we don't need the last element; it's already in the prefix variable
                 previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+                instanceType=null
+                for variable in @variables
+                    if variable.name == previousPrefix
+                        instanceType = variable.type
+                        #TODO this won't catch multiple instances with the same name. I guess it should checkfilename or something...
+                        break
+
                 for c in @classes
+                    if instanceType != null and instanceType == c.name
+                        for cm in c.methods
+                            if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                suggestion =
+                                    snippet: cm.getSnippet()
+                                    type: 'method'
+                                    description: cm.description
+                                shortlist.push(suggestion)
                     if c.name == previousPrefix
                         for cf in c.functions
                             if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
