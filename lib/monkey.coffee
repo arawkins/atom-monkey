@@ -26,6 +26,7 @@ module.exports = Monkey =
     projects: {}
     projectNamespace: ''
     provider: null
+    self: this
 
     provide: ->
         @provider
@@ -106,6 +107,12 @@ module.exports = Monkey =
             @projects[@projectNamespace].compilationTarget = ''
             console.log "fresh projects state"
 
+        @subscriptions.add atom.workspace.observeTextEditors (editor) =>
+            if /.monkey2$/.test(editor.getPath())
+                @subscriptions.add editor.onDidStopChanging () =>
+                    @provider.parseFile(editor.getPath())
+
+
     deactivate: ->
         @subscriptions.dispose()
         @monkeyViewState.destroy()
@@ -113,6 +120,10 @@ module.exports = Monkey =
     serialize: ->
         monkeyViewState: @monkeyViewState.serialize()
         projects: @projects
+
+    observeTextEditors: (editor) =>
+
+
 
     setCompilationTarget: (fileNode)->
         @clearCompilationTarget()

@@ -118,8 +118,7 @@ module.exports =
                    return /.monkey2$/.test(file)
                 )
                 for file in files
-                    fileData = @parseFile(file)
-                    @parsedFiles.push(fileData)
+                    @parseFile(file)
 
             )
 
@@ -133,8 +132,8 @@ module.exports =
             )
 
             for file in files
-                fileData = @parseFile(file)
-                @parsedFiles.push(fileData)
+                @parseFile(file)
+
 
         )
 
@@ -514,7 +513,17 @@ module.exports =
                     #console.log checkEnd
                     scope.pop()
                     return
-        return fileData
+
+        #if this file has already been parsed, replace it's existing data
+        for existingFileData in @parsedFiles
+            if existingFileData.filePath == filePath
+                existingFileData = fileData
+                console.log("updating autocomplete data for " + filePath)
+                console.log fileData
+                return
+
+        #otherwise, it's new data, so add it to the parsedfiles array
+        @parsedFiles.push(fileData)
 
 
 
