@@ -103,32 +103,11 @@ module.exports =
     # This will be suggested before the default provider, which has a suggestionPriority of 1.
     suggestionPriority: 2
 
-    suggestions :
-        methods: []
-        classes: []
-        functions: []
-        globals: []
-        variables: []
-        properties: []
-        instances: []
-
-    classes: []
-    functions: []
-    globals: []
-    structs: []
-    constants: []
-    interfaces: []
-    variables: []
-
+    parsedFiles: []
 
     buildSuggestions: ->
-        #console.log("building suggestions...")
         mPath = atom.config.get "language-monkey2.monkey2Path"
         modsPath = path.join(mPath,'/modules/')
-        #console.log("module path is:" + modsPath);
-        # lets try reading the canvas module for kicks
-        canvasModPath = path.join(modsPath, "/mojo/app/event.monkey2")
-        #@parseFile(canvasModPath)
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -139,7 +118,8 @@ module.exports =
                    return /.monkey2$/.test(file)
                 )
                 for file in files
-                    @parseFile(file)
+                    fileData = @parseFile(file)
+                    @parsedFiles.push(fileData)
 
             )
 
@@ -153,13 +133,25 @@ module.exports =
             )
 
             for file in files
-                @parseFile(file)
+                fileData = @parseFile(file)
+                @parsedFiles.push(fileData)
 
         )
 
         #@parseFile(path.join(modsPath, 'mojo/graphics/canvas.monkey2'))
 
     parseFile: (filePath) ->
+
+        #fileData gets filled in with all of the data, then returned
+        fileData =
+            filePath: filePath
+            classes: []
+            functions: []
+            globals: []
+            structs: []
+            constants: []
+            interfaces: []
+            variables: []
 
         #console.log("parsing " + filePath)
 
@@ -253,7 +245,7 @@ module.exports =
                         thisInstance.description = nextComment
                         nextComment = ''
                     if thisInstance.description.search('@hidden') == -1
-                        @variables.push(thisInstance)
+                        fileData.variables.push(thisInstance)
 
                     return
 
@@ -290,7 +282,7 @@ module.exports =
                         thisInterface.hidden = true
 
                     scope.push(thisInterface)
-                    @interfaces.push(thisInterface)
+                    fileData.interfaces.push(thisInterface)
                     return
 
                 checkClass = classRegex.exec(line)
@@ -311,7 +303,7 @@ module.exports =
                         thisClass.hidden = true
 
                     scope.push(thisClass)
-                    @classes.push(thisClass)
+                    fileData.classes.push(thisClass)
                     return
 
                 checkStruct = structRegex.exec(line)
@@ -326,7 +318,7 @@ module.exports =
                         nextComment = ''
                     if thisStruct.description.search("@hidden") != -1
                         thisStruct.hidden = true
-                    @structs.push(thisStruct)
+                    fileData.structs.push(thisStruct)
                     scope.push(thisStruct)
 
                 checkField = fieldRegex.exec(line)
@@ -374,7 +366,7 @@ module.exports =
                     if parentClass != null
                         parentClass.globals.push(thisVar)
                     else
-                        @globals.push(thisVar)
+                        fileData.globals.push(thisVar)
 
                 checkConst = constRegex.exec(line)
                 if checkConst != null
@@ -397,7 +389,7 @@ module.exports =
                     if parentClass != null
                         parentClass.constants.push(thisVar)
                     else
-                        @constants.push(thisVar)
+                        fileData.constants.push(thisVar)
 
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
@@ -433,7 +425,7 @@ module.exports =
                     if parentClass != null
                         parentClass.functions.push(thisFunction)
                     else
-                        @functions.push(thisFunction)
+                        fileData.functions.push(thisFunction)
 
                     scope.push(thisFunction)
                     return
@@ -522,7 +514,7 @@ module.exports =
                     #console.log checkEnd
                     scope.pop()
                     return
-
+        return fileData
 
 
 
@@ -544,123 +536,88 @@ module.exports =
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
-        # If the word 'new' is in the prefix, search for class constructors
-        if fullPrefix.toLowerCase().search("new") >=0
-            for c in @classes
-                if c.name.toLowerCase().search(prefix.toLowerCase()) == 0
-                    suggestion =
-                        snippet: c.getConstructorSnippet()
-                        type: 'class'
-                        description: c.description
-                    shortlist.push(suggestion)
 
-        # If there is a period in the full prefix, see if it is a class name
-        else if fullPrefix.search(/\./) >= 0
-            #First break the line apart by white space to try to find the furthest line segment with a period in it
-            segments = fullPrefix.split(' ')
-            segToUse = null
-            for seg in segments by -1
-                if seg.search(/\./) >= 0
-                    segToUse = seg
-                    break
+        for fileData in @parsedFiles
 
-            if segToUse != null
-                segments = segToUse.split('.')
-                #console.log(segments)
-                segments.pop() # we don't need the last element; it's already in the prefix variable
-                previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
-                instanceType=null
-                for variable in @variables
-                    if variable.name == previousPrefix
-                        instanceType = variable.type
-                        #TODO this won't catch multiple instances with the same name. I guess it should checkfilename or something...
-                        break
-
-                for c in @classes
-                    if instanceType != null and instanceType == c.name
-                        for cm in c.methods
-                            if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                                suggestion =
-                                    snippet: cm.getSnippet()
-                                    type: 'method'
-                                    description: cm.description
-                                shortlist.push(suggestion)
-                    if c.name == previousPrefix
-                        for cf in c.functions
-                            if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                                suggestion =
-                                    snippet: cf.getSnippet()
-                                    type: 'function'
-                                    description: cf.description
-                                shortlist.push(suggestion)
-                        for cConst in c.constants
-                            if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                                suggestion =
-                                    text: cConst.name
-                                    type: 'constant'
-                                    description: cConst.description
-                                shortlist.push(suggestion)
-                        for cGlobal in c.globals
-                            if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                                suggestion =
-                                    text: cGlobal.name
-                                    type: 'variable'
-                                    description: cGlobal.description
-                                shortlist.push(suggestion)
-        else
-            for f in @functions
-                if not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
-                    suggestion =
-                        snippet: f.getSnippet()
-                        type : 'function'
-                        description: f.description
-                    shortlist.push(suggestion)
-            for c in @classes
-                if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
-                    suggestion =
-                        text: c.name
-                        type: 'class'
-                        description: c.description
-                    shortlist.push(suggestion)
-
-        ###
-        for own type, list of @suggestions
-
-            if (isInstance >= 0 and (type == 'methods' or type == 'properties') and inParams == -1)
-
-                # lets find the type of this instance
-                segments = fullPrefix.split('.')
-                segments.pop() # we don't need the last element; it's already in the prefix variable
-                instanceName = segments.pop() # this is the first bit before the period. This should be the instance name
-                instanceType = ''
-                for instanceSuggestion in @suggestions.instances
-                    if instanceName == instanceSuggestion.text
-                        instanceType = instanceSuggestion.rightLabel
-                        break
-
-                if instanceType != ''
-                    for suggestion in list
-                        if @checkSuggestion(suggestion, prefix, instanceType)
-                            if prefix != '.'
-                                suggestion.replacementPrefix = prefix
-                            else
-                                suggestion.replacementPrefix = ''
-                            shortlist.push(suggestion)
-
-            else if (isConstructor >= 0 and type == 'classes' and inParams == -1)
-                for suggestion in list
-                    if @checkSuggestion(suggestion, prefix)
-                        if prefix != '' and prefix != ' '
-                            suggestion.replacementPrefix = prefix
+            # If the word 'new' is in the prefix, search for class constructors
+            if fullPrefix.toLowerCase().search("new") >=0
+                for c in fileData.classes
+                    if c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                        suggestion =
+                            snippet: c.getConstructorSnippet()
+                            type: 'class'
+                            description: c.description
                         shortlist.push(suggestion)
 
-            else if (isInstance == -1 and (type == 'functions' or type == 'variables') and inParams == -1)
-                for suggestion in list
-                    if @checkSuggestion(suggestion, prefix)
-                        if prefix != '' and prefix != ' '
-                            suggestion.replacementPrefix = prefix
+            # If there is a period in the full prefix, see if it is a class name
+            else if fullPrefix.search(/\./) >= 0
+                #First break the line apart by white space to try to find the furthest line segment with a period in it
+                segments = fullPrefix.split(' ')
+                segToUse = null
+                for seg in segments by -1
+                    if seg.search(/\./) >= 0
+                        segToUse = seg
+                        break
+
+                if segToUse != null
+                    segments = segToUse.split('.')
+                    #console.log(segments)
+                    segments.pop() # we don't need the last element; it's already in the prefix variable
+                    previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+                    instanceType=null
+                    for variable in fileData.variables
+                        if variable.name == previousPrefix
+                            instanceType = variable.type
+                            #TODO this won't catch multiple instances with the same name. I guess it should checkfilename or something...
+                            break
+
+                    for c in fileData.classes
+                        if instanceType != null and instanceType == c.name
+                            for cm in c.methods
+                                if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                    suggestion =
+                                        snippet: cm.getSnippet()
+                                        type: 'method'
+                                        description: cm.description
+                                    shortlist.push(suggestion)
+                        if c.name == previousPrefix
+                            for cf in c.functions
+                                if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                    suggestion =
+                                        snippet: cf.getSnippet()
+                                        type: 'function'
+                                        description: cf.description
+                                    shortlist.push(suggestion)
+                            for cConst in c.constants
+                                if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                    suggestion =
+                                        text: cConst.name
+                                        type: 'constant'
+                                        description: cConst.description
+                                    shortlist.push(suggestion)
+                            for cGlobal in c.globals
+                                if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                    suggestion =
+                                        text: cGlobal.name
+                                        type: 'variable'
+                                        description: cGlobal.description
+                                    shortlist.push(suggestion)
+            else
+                for f in fileData.functions
+                    if not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                        suggestion =
+                            snippet: f.getSnippet()
+                            type : 'function'
+                            description: f.description
                         shortlist.push(suggestion)
-        ###
+                for c in fileData.classes
+                    if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                        suggestion =
+                            text: c.name
+                            type: 'class'
+                            description: c.description
+                        shortlist.push(suggestion)
+
         new Promise (resolve) ->
             resolve(shortlist)
 
