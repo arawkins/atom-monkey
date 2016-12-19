@@ -85,6 +85,12 @@ class MonkeyVariable
     description: ''
     hidden: false
 
+    # sometimes we need to come back to variables and figure out their type
+    # later, since it can depend on the parsing of other stuff (ie. method return values)
+    # setting typeNeedsParsing to true will mark the variable to be checked again after
+    # the initial parsing
+    typeNeedsParsing = false
+
     constructor: (name, type) ->
         @name = name
         @type = type
@@ -137,8 +143,6 @@ module.exports =
 
         )
 
-        #@parseFile(path.join(modsPath, 'mojo/graphics/canvas.monkey2'))
-
     parseFile: (filePath) ->
 
         #fileData gets filled in with all of the data, then returned
@@ -172,7 +176,7 @@ module.exports =
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         externRegex = RegExp /^\s*Extern\s*$/,'im'
-        variableRegex = RegExp /^\s*(Global|Local)\s+\b(\w+):(=|\w+)\s+\b(\w+)\b.*$/, 'im'
+        variableRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s+(.*)$/, 'im'
         instanceRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s?New\s\b(\w+)\b.*$/, 'im'
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
 
@@ -245,6 +249,30 @@ module.exports =
                         nextComment = ''
                     if thisInstance.description.search('@hidden') == -1
                         fileData.variables.push(thisInstance)
+
+                    return
+
+                checkVariable = variableRegex.exec(line)
+                if checkVariable != null
+                    #console.log "found variable"
+                    #console.log checkVariable
+                    parseLater = false
+                    variableName = checkVariable[2].trim()
+                    if checkVariable[3] != '='
+                        variableType = checkVariable[3].trim()
+                    else
+                        variableType = checkVariable[4].trim()
+                        parseLater = true
+                    thisVariable = new MonkeyVariable(variableName, variableType)
+                    thisVariable.typeNeedsParsing = parseLater
+                    thisVariable.fileName = filePath
+
+                    if nextComment != ''
+                        thisVariable.description = nextComment
+                        nextComment = ''
+                    if thisVariable.description.search('@hidden') == -1
+                        fileData.variables.push(thisVariable)
+                        #console.log(thisVariable)
 
                     return
 
@@ -515,18 +543,25 @@ module.exports =
                     return
 
         #if this file has already been parsed, replace it's existing data
-        for existingFileData in @parsedFiles
+        for existingFileData, index in @parsedFiles
             if existingFileData.filePath == filePath
-                existingFileData = fileData
-                console.log("updating autocomplete data for " + filePath)
-                console.log fileData
+                #console.log(index)
+                #console.log("updating autocomplete data for " + filePath)
+                #console.log fileData
+                @parsedFiles[index] = fileData
                 return
 
         #otherwise, it's new data, so add it to the parsedfiles array
         @parsedFiles.push(fileData)
 
 
+    reParseVariables: () ->
+        console.log("reparse all of the broken variables")
 
+        for fileData in @parsedFiles
+            for variable in fileData.variables
+                if variable.typeNeedsParsing
+                    console.log(variable.name + ":"+variable.type)
 
 
     # Required: Return a promise, an array of suggestions, or null.
@@ -577,18 +612,36 @@ module.exports =
                     for variable in fileData.variables
                         if variable.name == previousPrefix
                             instanceType = variable.type
-                            #TODO this won't catch multiple instances with the same name. I guess it should checkfilename or something...
-                            break
+                            console.log "found instance of type: " + instanceType
+                            #TODO Nested loop to look through all other files for class data for instance type. ug.
+                            for fileData2 in @parsedFiles
+                                for c2 in fileData2.classes
+                                    if instanceType.toLowerCase() == c2.name.toLowerCase()
+                                        for cm in c2.methods
+                                            if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                                suggestion =
+                                                    snippet: cm.getSnippet()
+                                                    type: 'method'
+                                                    description: cm.description
+                                                shortlist.push(suggestion)
+                                        for cp in c2.properties
+                                            if cp.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                                suggestion =
+                                                    text: cp.name
+                                                    type: 'property'
+                                                    description: cp.description
+                                                shortlist.push(suggestion)
+                                        for cf in c2.fields
+                                            if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                                suggestion =
+                                                    text: cf.name
+                                                    type: 'property'
+                                                    description: cf.description
+                                                shortlist.push(suggestion)
+
 
                     for c in fileData.classes
-                        if instanceType != null and instanceType == c.name
-                            for cm in c.methods
-                                if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
-                                    suggestion =
-                                        snippet: cm.getSnippet()
-                                        type: 'method'
-                                        description: cm.description
-                                    shortlist.push(suggestion)
+
                         if c.name == previousPrefix
                             for cf in c.functions
                                 if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0

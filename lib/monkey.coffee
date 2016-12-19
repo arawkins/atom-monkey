@@ -32,12 +32,13 @@ module.exports = Monkey =
         @provider
 
     activate: (state) ->
-        self = this
+        self = @
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
         @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
         @outputPanel = atom.workspace.addBottomPanel(item: @monkeyViewState.getOutput(), visible: false)
         @provider = require './provider'
         @provider.buildSuggestions()
+        setTimeout((()=>@provider.reParseVariables()),2000)
 
         # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
