@@ -563,7 +563,7 @@ module.exports =
         for fileData in @parsedFiles
             for variable in fileData.variables
                 if variable.typeNeedsParsing
-                    # console.log(variable.name + ":"+variable.type)
+                    console.log(variable.name + ":"+variable.type)
 
 
     # Required: Return a promise, an array of suggestions, or null.
@@ -624,7 +624,7 @@ module.exports =
                                 for c2 in fileData2.classes
                                     if instanceType.toLowerCase() == c2.name.toLowerCase()
                                         for cm in c2.methods
-                                            if cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                            if !cm.isConstructor and cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                                 suggestion =
                                                     snippet: cm.getSnippet()
                                                     type: 'method'
@@ -637,7 +637,7 @@ module.exports =
                                                     text: cp.name
                                                     type: 'property'
                                                     description: cp.description
-                                                    rightLabel: cp.type
+                                                    leftLabel: cp.type
                                                 shortlist.push(suggestion)
                                         for cf in c2.fields
                                             if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -645,7 +645,7 @@ module.exports =
                                                     text: cf.name
                                                     type: 'property'
                                                     description: cf.description
-                                                    rightLabel: cf.type
+                                                    leftLabel: cf.type
                                                 shortlist.push(suggestion)
 
 
@@ -666,7 +666,7 @@ module.exports =
                                         text: cConst.name
                                         type: 'constant'
                                         description: cConst.description
-                                        rightLabel: cConst.type
+                                        leftLabel: cConst.type
                                     shortlist.push(suggestion)
                             for cGlobal in c.globals
                                 if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
@@ -674,7 +674,7 @@ module.exports =
                                         text: cGlobal.name
                                         type: 'variable'
                                         description: cGlobal.description
-                                        rightLabel: cGlobal.type
+                                        leftLabel: cGlobal.type
                                     shortlist.push(suggestion)
             else
                 for f in fileData.functions
@@ -683,6 +683,7 @@ module.exports =
                             snippet: f.getSnippet()
                             type : 'function'
                             description: f.description
+                            leftLabel: f.returnType
                         shortlist.push(suggestion)
                 for c in fileData.classes
                     if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
