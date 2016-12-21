@@ -23,7 +23,8 @@
     "language-monkey2:grammar-used"
   ],
   "dependencies": {
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "node-dir": "^0.1.16"
   },
   "providedServices": {
     "autocomplete.provider": {
