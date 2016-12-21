@@ -118,6 +118,7 @@ module.exports =
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
+
                 if (err)
                     console.log err
                     return
@@ -560,11 +561,12 @@ module.exports =
     reParseVariables: () ->
         #console.log("reparse all of the broken variables")
 
+        ### TODO parse variables again to lookup types
         for fileData in @parsedFiles
             for variable in fileData.variables
                 if variable.typeNeedsParsing
                     console.log(variable.name + ":"+variable.type)
-
+        ###
 
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
