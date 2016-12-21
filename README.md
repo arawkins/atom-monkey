@@ -72,7 +72,7 @@ Once you have entered a path to your monkey installation (see Installation above
 the package will automatically parse your modules folder, as well as your local project tree for monkey2 files.
 It will then try to provide autocompletion suggestions based on what it finds.
 
-Currently it will ignore anything within a Private or Extern block. It also cannot parse the type
+Currently it will ignore anything within a Private or Extern block. It also cannot parse the type of
 variables assigned in the shorthand format `Local var:= Image.Load(...`, so to get autocompletion on
 your variables, define their type explicitly, eg. `Local var:Image = Image.Load(...`
 
