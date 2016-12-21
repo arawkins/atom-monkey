@@ -73,8 +73,8 @@ the package will automatically parse your modules folder, as well as your local 
 It will then try to provide autocompletion suggestions based on what it finds.
 
 Currently it will ignore anything within a Private or Extern block. It also cannot parse the type
-variables assigned in the format `Local var:= someval`, so to get autocompletion on
-your variables, define their type explicitly, eg. `Local var:Image = Image.Load(....`
+variables assigned in the shorthand format `Local var:= Image.Load(...`, so to get autocompletion on
+your variables, define their type explicitly, eg. `Local var:Image = Image.Load(...`
 
 ## TO DO
 
