@@ -3,6 +3,7 @@ fs = require 'fs'
 path = require 'path'
 readline = require 'readline'
 dir = require 'node-dir'
+spawnSync = require('child_process').spawnSync
 
 class MonkeyClass
 
@@ -114,7 +115,7 @@ module.exports =
 
     buildSuggestions: ->
         mPath = atom.config.get "language-monkey2.monkey2Path"
-        modsPath = path.join(mPath,'/modules/')
+        modsPath = path.join(mPath,'/modules/mojo')
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -126,6 +127,7 @@ module.exports =
                    return /.monkey2$/.test(file)
                 )
                 for file in files
+
                     @parseFile(file)
 
             )
@@ -140,9 +142,20 @@ module.exports =
             )
 
             for file in files
+                console.log(file)
+                fileOut = spawnSync "/home/arawkins/.local/share/monkey2/bin/mx2cc_linux", ['makeapp', '-parse', '-geninfo', file]
+                message = fileOut.output.toString()
+                #console.log(message)
+                if /.*Build\serror.*/.test(message)
+                    continue
+                else
+                    message = message.split('\n');
+                    message = message.splice(6);
+                    message.pop()
+                    message = message.join('\n');
+                    if message != ''
+                        console.log(JSON.parse(message))
                 @parseFile(file)
-
-
         )
 
     parseFile: (filePath) ->
@@ -349,6 +362,7 @@ module.exports =
                         thisStruct.hidden = true
                     fileData.structs.push(thisStruct)
                     scope.push(thisStruct)
+                    return
 
                 checkField = fieldRegex.exec(line)
                 if checkField != null
@@ -373,6 +387,7 @@ module.exports =
                         console.log "Could not find class for field " + thisVar.name
                         console.log filePath
                         console.log line
+                    return
 
                 checkGlobal = globalRegex.exec(line)
                 if checkGlobal != null
@@ -396,6 +411,7 @@ module.exports =
                         parentClass.globals.push(thisVar)
                     else
                         fileData.globals.push(thisVar)
+                    return
 
                 checkConst = constRegex.exec(line)
                 if checkConst != null
@@ -419,6 +435,7 @@ module.exports =
                         parentClass.constants.push(thisVar)
                     else
                         fileData.constants.push(thisVar)
+                    return
 
                 checkFunction = functionRegex.exec(line)
                 if checkFunction != null
@@ -542,15 +559,14 @@ module.exports =
                 if checkEnd != null
                     #console.log "Ending a scope"
                     #console.log checkEnd
+                    #console.log scope
                     scope.pop()
+                    #console.log scope
                     return
 
         #if this file has already been parsed, replace it's existing data
         for existingFileData, index in @parsedFiles
             if existingFileData.filePath == filePath
-                #console.log(index)
-                #console.log("updating autocomplete data for " + filePath)
-                #console.log fileData
                 @parsedFiles[index] = fileData
                 return
 
@@ -559,14 +575,8 @@ module.exports =
 
 
     reParseVariables: () ->
-        #console.log("reparse all of the broken variables")
+        return
 
-        ### TODO parse variables again to lookup types
-        for fileData in @parsedFiles
-            for variable in fileData.variables
-                if variable.typeNeedsParsing
-                    console.log(variable.name + ":"+variable.type)
-        ###
 
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
