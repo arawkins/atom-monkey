@@ -98,6 +98,9 @@ class MonkeyVariable
         @type = type
         @hidden = false
 
+
+
+
 module.exports =
     selector: '.source.monkey2'
     disableForSelector: '.source.monkey2 .comment'
@@ -112,10 +115,11 @@ module.exports =
     suggestionPriority: 2
 
     parsedFiles: []
+    parsedData: []
 
     buildSuggestions: ->
         mPath = atom.config.get "language-monkey2.monkey2Path"
-        modsPath = path.join(mPath,'/modules/mojo')
+        modsPath = path.join(mPath,'/modules')
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -154,7 +158,8 @@ module.exports =
                     message.pop()
                     message = message.join('\n');
                     if message != ''
-                        console.log(JSON.parse(message))
+                        #console.log(JSON.parse(message))
+                        @parsedData.push(JSON.parse(message))
                 @parseFile(file)
         )
 
@@ -598,7 +603,22 @@ module.exports =
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
+        #console.log @parsedData
 
+        for file in @parsedData
+            if file.members != undefined
+                for member in file.members
+                    if fullPrefix.toLowerCase().search("new") >=0
+                        if member.kind == "class" and member.members != undefined
+                            for classMember in member.members
+                                if classMember.kind == "method" and classMember.ident == "new"
+                                    if member.ident.toLowerCase().search(prefix.toLowerCase()) == 0
+                                        suggestion =
+                                            snippet: @buildConstructorSnippet(member.ident, classMember)
+                                            type: 'class'
+                                        shortlist.push(suggestion)
+                    
+        ###
         for fileData in @parsedFiles
 
             # If the word 'new' is in the prefix, search for class constructors
@@ -704,6 +724,40 @@ module.exports =
                             type: 'class'
                             description: c.description
                         shortlist.push(suggestion)
-
+        ###
         new Promise (resolve) ->
             resolve(shortlist)
+
+    buildConstructorSnippet : (className, methodObject) ->
+        snippet = className + "("
+
+        if methodObject != null and methodObject != undefined and methodObject.ident.toLowerCase() == 'new'
+
+            if methodObject.type.params != undefined and methodObject.type.params.length > 0
+                for paramObject, index in methodObject.type.params
+                    snippet += "${"+(index+1)+":"+paramObject.ident+":"+paramObject.type.ident+"}"
+                    if index < methodObject.type.params.length-1
+                        snippet += ","
+                    else
+                        snippet += ")$" + (index+2)
+            else
+                snippet = methodObject.ident + "()"
+
+            ###
+            if methodObject.parameters.length > 0
+                snippet = @name + "("
+                for param, index in methodObject.parameters
+                    if param != ''
+                        snippet += "${"+(index+1)+":"+param+"}"
+                    if index < constructorMethod.parameters.length-1
+                        snippet += ","
+                    else
+                        snippet += ")$" + (index+2)
+            else
+                snippet = @name + "()"
+        ###
+        else
+            snippet = @name
+
+
+        return snippet
