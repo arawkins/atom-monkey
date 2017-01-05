@@ -3,103 +3,7 @@ fs = require 'fs'
 path = require 'path'
 readline = require 'readline'
 dir = require 'node-dir'
-spawnSync = require('child_process').spawnSync
-
-class MonkeyClass
-
-    fileName: ''
-    description: ''
-    extends: 'none'
-    functions: []
-    globals: []
-    methods: []
-    fields: []
-    constants:[]
-    properties: []
-    hidden: false
-
-    constructor: (name) ->
-        @name = name
-        @functions = []
-        @methods = []
-        @globals = []
-        @fields = []
-        @properties = []
-        @constants = []
-        @hidden = false
-
-    getConstructorSnippet: () ->
-        snippet = ""
-        constructorMethod = @methods[0] # The constructor (New) method should be in the 0 position
-        if constructorMethod != null and constructorMethod != undefined and constructorMethod.name.toLowerCase() == 'new'
-            if constructorMethod.parameters.length > 0
-                snippet = @name + "("
-                for param, index in constructorMethod.parameters
-                    if param != ''
-                        snippet += "${"+(index+1)+":"+param+"}"
-                    if index < constructorMethod.parameters.length-1
-                        snippet += ","
-                    else
-                        snippet += ")$" + (index+2)
-            else
-                snippet = @name + "()"
-        else
-            snippet = @name
-        return snippet
-
-class MonkeyFunction
-
-    fileName: ''
-    parameters: []
-    returnType: ''
-    description: ''
-    hidden: false
-    isConstructor: false
-
-    constructor: (name) ->
-        @name = name
-        @parameters = []
-        @returnType = 'Void'
-        @hidden = false
-
-    getSnippet: () ->
-        functionSnippet = ''
-        if @parameters.length > 0
-            functionSnippet = @name + "("
-            for param, index in @parameters
-                # console.log index, param
-                if param != ''
-                    functionSnippet += "${"+(index+1)+":"+param+"}"
-                if index < @parameters.length-1
-                    functionSnippet += ","
-                else
-                    functionSnippet += ")$"+(index+2)
-        else
-            functionSnippet = @name + "()"
-        functionSnippet.description = @description
-
-        return functionSnippet
-
-class MonkeyVariable
-
-    fileName: ''
-    type: ''
-    description: ''
-    hidden: false
-
-    # sometimes we need to come back to variables and figure out their type
-    # later, since it can depend on the parsing of other stuff (ie. method return values)
-    # setting typeNeedsParsing to true will mark the variable to be checked again after
-    # the initial parsing
-    typeNeedsParsing = false
-
-    constructor: (name, type) ->
-        @name = name
-        @type = type
-        @hidden = false
-
-
-
+execFile = require('child_process').execFile
 
 module.exports =
     selector: '.source.monkey2'
@@ -115,7 +19,7 @@ module.exports =
     suggestionPriority: 2
 
     parsedFiles: []
-    parsedData: []
+    fileDataCache: {}
 
     buildSuggestions: ->
         mPath = atom.config.get "language-monkey2.monkey2Path"
@@ -146,437 +50,36 @@ module.exports =
             )
 
             for file in files
-                console.log(file)
-                fileOut = spawnSync "/home/arawkins/.local/share/monkey2/bin/mx2cc_linux", ['makeapp', '-parse', '-geninfo', file]
-                message = fileOut.output.toString()
+                @parseFile(file)
+                continue
+        )
+
+    parseFile: (filePath) ->
+        execFile "/home/arawkins/.local/share/monkey2/bin/mx2cc_linux",
+            ['makeapp', '-parse', '-geninfo', filePath],
+            {
+                maxBuffer: 2000 * 1024
+            },
+            (error, stdout, stderr) =>
+
+                message = stdout.toString()
                 #console.log(message)
                 if /.*Build\serror.*/.test(message)
-                    continue
+                    return
                 else
                     message = message.split('\n');
                     message = message.splice(6);
                     message.pop()
                     message = message.join('\n');
                     if message != ''
-                        #console.log(JSON.parse(message))
-                        @parsedData.push(JSON.parse(message))
-                @parseFile(file)
-        )
-
-    parseFile: (filePath) ->
-
-        #fileData gets filled in with all of the data, then returned
-        fileData =
-            filePath: filePath
-            classes: []
-            functions: []
-            globals: []
-            structs: []
-            constants: []
-            interfaces: []
-            variables: []
-
-        #console.log("parsing " + filePath)
-
-        classRegex = RegExp /^\s*Class\s+(\b[\w<>]+\b)(\s+Extends\s+(\b\w+\b))?.*$/, 'im'
-        structRegex = RegExp /^\s*Struct\s+\b([\w<>]+)\b.*$/, 'im'
-        statementRegex = RegExp /^\s*(If|For|Select|While).*$/, 'im'
-        methodRegex = RegExp /^\s*Method\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
-        functionRegex = RegExp /^\s*Function\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
-        fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
-        globalRegex = RegExp /^\s*Global\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
-        constRegex = RegExp /^\s*Const\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
-        propertyRegex = RegExp /^\s*Property\s+(.+):(.+)\(\).*$/, 'im'
-        commentRegex = RegExp /^\s*#rem monkeydoc(.*)/, 'im'
-        lambdaRegex = RegExp /Lambda/, 'im'
-        enumRegex = RegExp /Enum/, 'im'
-        operatorRegex = RegExp /Operator.*$/,'im'
-        interfaceRegex = RegExp /^\s*Interface\s+(.*)/, 'im'
-        endRegex = RegExp /^\s*((w?end(if)?)|Next)\s*$/, 'im'
-        privateRegex = RegExp /^\s*Private\s*$/,'im'
-        publicRegex = RegExp /^\s*Public\s*$/,'im'
-        externRegex = RegExp /^\s*Extern\s*$/,'im'
-        variableRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s+(.*)$/, 'im'
-        instanceRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s?New\s\b(\w+)\b.*$/, 'im'
-        namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
-
-
-
-
-        inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
-        inExtern = false # like inPrivate, ignore everything while in an extern
-        inClass = ""; # when inside a class definition, store the class here
-        scope = [] # tracks what scope we are inside of (class, if statement, method, etc.).
-        inNamespace = ""; # where the heck are we anyways?
-
-        nextComment = ""; # when a monkeydoc comment is found, store it here; tack it on to the next thing that is found
-
-        rl = readline.createInterface({
-            input: fs.createReadStream(filePath)
-        })
-
-        rl.on 'line', (line) =>
-            # let's look for namespace first, since it should be first
-            if inNamespace == ''
-                checkNamespace = namespaceRegex.exec(line)
-                if checkNamespace != null
-                    inNamespace = checkNamespace[1].trim()
-                    #console.log ("in namespace: " + inNamespace)
-                    return;
-
-            checkExtern = externRegex.exec(line)
-            if checkExtern != null
-                inExtern = true
-                return
-
-            # check for public/private
-            if inPrivate or inExtern
-                checkPublic = publicRegex.exec(line)
-                if checkPublic != null
-                    #console.log "back in public"
-                    inPrivate = false
-                    inExtern = false
-                    return;
-
-            checkPrivate = privateRegex.exec(line)
-            if checkPrivate != null
-                #console.log "inside private declaration"
-                inPrivate = true
-                inExtern = false
-                return;
-
-
-            # ok, if we're not in private, lets check first for a comment
-            if not inPrivate and not inExtern
-
-                checkComment = commentRegex.exec(line)
-                if checkComment != null
-                    #console.log "Found monkeydoc comment"
-                    #console.log checkComment
-                    nextComment = checkComment[1].trim()
-                    return
-
-                checkInstance = instanceRegex.exec(line)
-                if checkInstance != null
-
-                    instanceName = checkInstance[2].trim()
-                    instanceType = checkInstance[4].trim()
-                    thisInstance = new MonkeyVariable(instanceName, instanceType)
-                    thisInstance.fileName = filePath
-
-                    if nextComment != ''
-                        thisInstance.description = nextComment
-                        nextComment = ''
-                    if thisInstance.description.search('@hidden') == -1
-                        fileData.variables.push(thisInstance)
-
-                    return
-
-                checkVariable = variableRegex.exec(line)
-                if checkVariable != null
-                    #console.log "found variable"
-                    #console.log checkVariable
-                    parseLater = false
-                    variableName = checkVariable[2].trim()
-                    if checkVariable[3] != '='
-                        variableType = checkVariable[3].trim()
-                    else
-                        variableType = checkVariable[4].trim()
-                        parseLater = true
-                    thisVariable = new MonkeyVariable(variableName, variableType)
-                    thisVariable.typeNeedsParsing = parseLater
-                    thisVariable.fileName = filePath
-
-                    if nextComment != ''
-                        thisVariable.description = nextComment
-                        nextComment = ''
-                    if thisVariable.description.search('@hidden') == -1
-                        fileData.variables.push(thisVariable)
-                        #console.log(thisVariable)
-
-                    return
-
-                checkLambda = lambdaRegex.exec(line)
-                if checkLambda != null
-                    #console.log "Found lambda"
-                    #console.log checkLambda
-                    scope.push("Lambda")
-                    return
-
-                checkEnum = enumRegex.exec(line)
-                if checkEnum != null
-                    scope.push("Enum")
-                    return
-
-                checkOperator = operatorRegex.exec(line)
-                if checkOperator != null
-                    #console.log "Found operator"
-                    #console.log checkOperator
-                    scope.push("Operator")
-                    return
-
-                checkInterface = interfaceRegex.exec(line)
-                if checkInterface != null
-                    scope.push("Interface")
-                    #console.log "Found interface"
-                    #console.log checkInterface
-                    thisInterface = new MonkeyClass(checkInterface[1])
-
-                    if nextComment != ''
-                        thisInterface.description = nextComment
-                        nextComment = ''
-                    if thisInterface.description.search("@hidden") != -1
-                        thisInterface.hidden = true
-
-                    scope.push(thisInterface)
-                    fileData.interfaces.push(thisInterface)
-                    return
-
-                checkClass = classRegex.exec(line)
-                if checkClass != null
-                    #console.log "Found class"
-                    thisClassName = checkClass[1]
-                    thisClassExtends = checkClass[3]
-                    thisClass = new MonkeyClass(thisClassName)
-                    thisClass.fileName = filePath
-
-                    if thisClassExtends != undefined
-                        thisClass.extends = thisClassExtends
-
-                    if nextComment != ''
-                        thisClass.description = nextComment
-                        nextComment = ''
-                    if thisClass.description.search("@hidden") != -1
-                        thisClass.hidden = true
-
-                    scope.push(thisClass)
-                    fileData.classes.push(thisClass)
-                    return
-
-                checkStruct = structRegex.exec(line)
-                if checkStruct != null
-                    #console.log "Found struct"
-                    #console.log checkStruct
-                    thisStruct = new MonkeyClass(checkStruct[1])
-                    thisStruct.fileName = filePath
-
-                    if nextComment != ''
-                        thisStruct.description = nextComment
-                        nextComment = ''
-                    if thisStruct.description.search("@hidden") != -1
-                        thisStruct.hidden = true
-                    fileData.structs.push(thisStruct)
-                    scope.push(thisStruct)
-                    return
-
-                checkField = fieldRegex.exec(line)
-                if checkField != null
-                    #console.log "found field in " + filePath
-                    #console.log checkField
-                    thisVar = new MonkeyVariable(checkField[1], checkField[2])
-                    thisVar.fileName = filePath
-                    if nextComment != ''
-                        thisVar.description = nextComment
-                        nextComment = ''
-                    if thisVar.description.search("@hidden") != -1
-                        thisVar.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        parentClass.fields.push(thisVar)
-                    else
-                        console.log "Could not find class for field " + thisVar.name
-                        console.log filePath
-                        console.log line
-                    return
-
-                checkGlobal = globalRegex.exec(line)
-                if checkGlobal != null
-                    #console.log "found global in " + filePath
-                    #console.log checkGlobal
-                    thisVar = new MonkeyVariable(checkGlobal[1], checkGlobal[2])
-                    thisVar.fileName = filePath
-
-                    if nextComment != ''
-                        thisVar.description = nextComment
-                        nextComment = ''
-                    if thisVar.description.search("@hidden") != -1
-                        thisVar.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        parentClass.globals.push(thisVar)
-                    else
-                        fileData.globals.push(thisVar)
-                    return
-
-                checkConst = constRegex.exec(line)
-                if checkConst != null
-                    #console.log "found const in " + filePath
-                    #console.log checkConst
-                    thisVar = new MonkeyVariable(checkConst[1], checkConst[2])
-                    thisVar.fileName = filePath
-
-                    if nextComment != ''
-                        thisVar.description = nextComment
-                        nextComment = ''
-                    if thisVar.description.search("@hidden") != -1
-                        thisVar.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        parentClass.constants.push(thisVar)
-                    else
-                        fileData.constants.push(thisVar)
-                    return
-
-                checkFunction = functionRegex.exec(line)
-                if checkFunction != null
-
-                    #console.log "Found function"
-                    #console.log checkFunction
-                    thisFunction = new MonkeyFunction(checkFunction[1].trim())
-
-                    if checkFunction[2] != undefined
-                        thisFunction.returnType = checkFunction[2].trim()
-                        # Remove the : from the start of the return type
-                        if thisFunction.returnType.charAt(0) == ':'
-                            thisFunction.returnType = thisFunction.returnType.slice(1)
-                    else
-                        thisFunction.returnType = "Void"
-
-                    if checkFunction[3] != undefined and checkFunction[3] != ""
-                        params = checkFunction[3].split(',')
-                        for param in params
-                            thisFunction.parameters.push(param.trim())
-
-                    if nextComment != ''
-                        thisFunction.description = nextComment
-                        nextComment = ''
-                        if thisFunction.description.search("@hidden") != -1
-                            thisFunction.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        parentClass.functions.push(thisFunction)
-                    else
-                        fileData.functions.push(thisFunction)
-
-                    scope.push(thisFunction)
-                    return
-
-                checkMethod = methodRegex.exec(line)
-                if checkMethod != null
-                    #console.log "Found method"
-                    #console.log checkMethod
-                    thisMethod = new MonkeyFunction(checkMethod[1].trim())
-
-                    if checkMethod[2] != undefined
-                        thisMethod.returnType = checkMethod[2].trim()
-                        if thisMethod.returnType.charAt(0) == ':'
-                            thisMethod.returnType = thisMethod.returnType.slice(1)
-                    else
-                        thisMethod.returnType = "Void"
-
-                    if checkMethod[3] != undefined and checkMethod[3] != ""
-                        params = checkMethod[3].split(',')
-
-                        for param in params
-                            thisMethod.parameters.push(param.trim())
-
-                    if nextComment != ''
-                        thisMethod.description = nextComment
-                        nextComment = ''
-                        if thisMethod.description.search("@hidden") != -1
-                            thisMethod.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        # If it's a constructor, put it at the front of the methods array
-                        if thisMethod.name == 'new' or thisMethod.name == 'New'
-                            parentClass.methods.unshift(thisMethod)
-                            thisMethod.isConstructor = true
-                        else
-                            parentClass.methods.push(thisMethod)
-
-                        scope.push(thisMethod)
-                    else
-                        console.log("Could not find a class for method " + thisMethod.name)
-                        console.log scope
-                        console.log filePath
-                    return
-
-                checkProperty = propertyRegex.exec(line)
-                if checkProperty != null
-                    #console.log "found property"
-                    #console.log checkProperty
-
-                    thisProperty = new MonkeyVariable(checkProperty[1], checkProperty[2])
-
-                    if nextComment != ''
-                        thisProperty.description = nextComment
-                        nextComment = ''
-                        if thisProperty.description.search("@hidden") != -1
-                            thisProperty.hidden = true
-
-                    parentClass = null
-                    for scopeLevel in scope by -1
-                        if scopeLevel instanceof MonkeyClass
-                            parentClass = scopeLevel
-                            break
-                    if parentClass != null
-                        parentClass.properties.push(thisProperty)
-                    else
-                        console.log("Could not find a class for property " + thisProperty.name)
-                        #console.log scope
-                        #console.log filePath
-                    scope.push(thisProperty)
-                    return
-
-                checkStatement = statementRegex.exec(line)
-                if checkStatement != null
-                    #console.log "found statement"
-                    #console.log checkStatement
-                    scope.push("statement")
-                    return
-
-                checkEnd = endRegex.exec(line)
-                if checkEnd != null
-                    #console.log "Ending a scope"
-                    #console.log checkEnd
-                    #console.log scope
-                    scope.pop()
-                    #console.log scope
-                    return
-
-        #if this file has already been parsed, replace it's existing data
-        for existingFileData, index in @parsedFiles
-            if existingFileData.filePath == filePath
-                @parsedFiles[index] = fileData
-                return
-
-        #otherwise, it's new data, so add it to the parsedfiles array
-        @parsedFiles.push(fileData)
+                        fileData = JSON.parse(message)
+                        fileData.path = filePath
+                        for file, i in @parsedFiles
+                            if file.ident == fileData.ident
+                                @parsedFiles[i] = fileData
+                                return
+
+                        @parsedFiles.push(fileData)
 
 
     reParseVariables: () ->
@@ -603,12 +106,10 @@ module.exports =
         isAssignment = fullPrefix.search("=")
         isConstructor = fullPrefix.toLowerCase().search("new")
 
-        #console.log @parsedData
-
-        for file in @parsedData
-            if file.members != undefined
-                for member in file.members
-                    if fullPrefix.toLowerCase().search("new") >=0
+        if fullPrefix.toLowerCase().search("new") >=0
+            for file in @parsedFiles
+                if file.members != undefined
+                    for member in file.members
                         if member.kind == "class" and member.members != undefined
                             for classMember in member.members
                                 if classMember.kind == "method" and classMember.ident == "new"
@@ -617,7 +118,65 @@ module.exports =
                                             snippet: @buildConstructorSnippet(member.ident, classMember)
                                             type: 'class'
                                         shortlist.push(suggestion)
-                    
+        else if fullPrefix.search(/\./) >= 0
+            #First break the line apart by white space to try to find the furthest line segment with a period in it
+            segments = fullPrefix.split(' ')
+            segToUse = null
+            for seg in segments by -1
+                if seg.search(/\./) >= 0
+                    segToUse = seg
+                    break
+
+            if segToUse != null
+                segments = segToUse.split('.')
+                #console.log(segments)
+                segments.pop() # we don't need the last element; it's already in the prefix variable
+                previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
+                instanceType=null
+
+                for file in @parsedFiles
+                    if file.members != undefined
+                        for member in file.members
+                            if (member.kind == 'const' or member.kind == 'global') and member.ident == previousPrefix
+                                instanceType = member.type.ident
+                                break
+                            else if member.kind == 'class' and member.members != undefined
+                                for classMember in member.members
+                                    if (classMember.kind == 'field' or classMember.kind == 'property') and classMember.ident == previousPrefix
+                                        if classMember.kind == 'property'
+                                            instanceType = classMember.getFunc.type.retType.ident
+                                        else
+                                            instanceType = classMember.type.ident
+                                        break
+
+
+                if instanceType != null
+                    for file in @parsedFiles
+                        if file.members != undefined
+                            for member in file.members
+                                if member.kind == 'class' and member.ident == instanceType
+                                    if member.members != undefined
+                                        for classMember in member.members
+                                            if classMember.ident != 'new' and classMember.ident.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                                suggestion = @getSuggestion(classMember, member.ident)
+                                                if suggestion != null
+                                                    shortlist.push(suggestion)
+
+
+                else
+                    for file in @parsedFiles
+                        if file.members != undefined
+                            for member in file.members
+                                if member.kind == 'class' and member.ident == previousPrefix
+                                    if member.members != undefined
+                                        for classMember in member.members
+                                            if classMember.kind == 'function' or classMember.kind == 'global' or classMember.kind == 'const'
+                                                suggestion = @getSuggestion(classMember, member.ident)
+                                                if suggestion != null
+                                                    shortlist.push(suggestion)
+
+
+
         ###
         for fileData in @parsedFiles
 
@@ -727,6 +286,70 @@ module.exports =
         ###
         new Promise (resolve) ->
             resolve(shortlist)
+
+    getSuggestion: (parsedObject, className) ->
+        suggestion = null
+
+        switch parsedObject.kind
+            when "field", "global", "const"
+                suggestion =
+                    text: parsedObject.ident
+                    type: 'variable'
+                if parsedObject.type != undefined
+                    suggestion.leftLabel = parsedObject.type.ident
+            when "property"
+                suggestion =
+                    text: parsedObject.ident
+                    type: 'property'
+                if parsedObject.getFunc == undefined
+                    suggestion.rightLabel = "Write only"
+                else if parsedObject.setFunc == undefined
+                    suggestion.rightLabel = "Read only"
+                propType = ""
+                if parsedObject.getFunc != undefined
+                    suggestion.leftLabel = parsedObject.getFunc.type.retType.ident
+                else if parsedObject.setFunc != undefined
+                    suggestion.leftLabel = parsedObject.setFunc.type.retType.ident
+
+            when "method"
+                if parsedObject.ident == "new" and className != undefined
+                    suggestion =
+                        snippet: @buildConstructorSnippet(className, parsedObject)
+                        type: 'method'
+                        leftLabel: parsedObject.type.retType.ident
+                else
+                    suggestion =
+                        snippet: @buildSnippet(parsedObject)
+                        type: 'method'
+                        leftLabel: parsedObject.type.retType.ident
+
+            when "function"
+                suggestion =
+                    snippet: @buildSnippet(parsedObject)
+                    type: 'function'
+                    leftLabel: parsedObject.type.retType.ident
+
+
+
+        return suggestion
+
+
+    buildSnippet: (parsedObject) ->
+        snippet = ""
+
+        if parsedObject != null and parsedObject != undefined
+            if (parsedObject.kind == "method" or parsedObject.kind == "function") and parsedObject.type.params != undefined and parsedObject.type.params.length > 0
+                snippet = parsedObject.ident + "("
+                for paramObject, index in parsedObject.type.params
+                    snippet += "${"+(index+1)+":"+paramObject.ident+":"+paramObject.type.ident+"}"
+                    if index < parsedObject.type.params.length-1
+                        snippet += ","
+                    else
+                        snippet += ")$" + (index+2)
+            else
+                snippet = parsedObject.ident + "()"
+
+        return snippet
 
     buildConstructorSnippet : (className, methodObject) ->
         snippet = className + "("

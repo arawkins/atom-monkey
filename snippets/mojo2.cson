@@ -1,0 +1,1096 @@
+'.source.monkey':
+  'Texture.Filter':
+    prefix: 'Texture.Filter'
+    body: 'Texture.Filter$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.Mipmap':
+    prefix: 'Texture.Mipmap'
+    body: 'Texture.Mipmap$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.ClampS':
+    prefix: 'Texture.ClampS'
+    body: 'Texture.ClampS$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.ClampT':
+    prefix: 'Texture.ClampT'
+    body: 'Texture.ClampT$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.ClampST':
+    prefix: 'Texture.ClampST'
+    body: 'Texture.ClampST$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.RenderTarget':
+    prefix: 'Texture.RenderTarget'
+    body: 'Texture.RenderTarget$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.Managed':
+    prefix: 'Texture.Managed'
+    body: 'Texture.Managed$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Texture.New(width:Int, height:Int, format:Int, flags:Int)':
+    prefix: 'Texture.New(width:Int, height:Int, format:Int, flags:Int)'
+    body: '${1:object}.New(${2:width:Int}, ${3:height:Int}, ${4:format:Int}, ${5:flags:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Texture.Destroy()':
+    prefix: 'Texture.Destroy()'
+    body: '${1:object}.Destroy()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Texture.Validate()':
+    prefix: 'Texture.Validate()'
+    body: '${1:object}.Validate()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Texture.Width()':
+    prefix: 'Texture.Width()'
+    body: '${1:object}.Width()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.Height()':
+    prefix: 'Texture.Height()'
+    body: '${1:object}.Height()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.Format()':
+    prefix: 'Texture.Format()'
+    body: '${1:object}.Format()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.Flags()':
+    prefix: 'Texture.Flags()'
+    body: '${1:object}.Flags()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.WritePixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)':
+    prefix: 'Texture.WritePixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)'
+    body: '${1:object}.WritePixels(${2:x:Int}, ${3:y:Int}, ${4:width:Int}, ${5:height:Int}, ${6:data:DataBuffer}, ${7:dataOffset:Int=0}, ${8:dataPitch:Int=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Texture.UpdateMipmaps()':
+    prefix: 'Texture.UpdateMipmaps()'
+    body: '${1:object}.UpdateMipmaps()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Texture.Loading()':
+    prefix: 'Texture.Loading()'
+    body: '${1:object}.Loading()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool'
+  'Texture.GLTexture()':
+    prefix: 'Texture.GLTexture()'
+    body: '${1:object}.GLTexture()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.GLFramebuffer()':
+    prefix: 'Texture.GLFramebuffer()'
+    body: '${1:object}.GLFramebuffer()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Texture.TexturesLoading()':
+    prefix: 'Texture.TexturesLoading()'
+    body: 'Texture.TexturesLoading()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Int'
+  'Texture.Load(path:String, format:Int=4, flags:Int=Filter|Mipmap|ClampST)':
+    prefix: 'Texture.Load(path:String, format:Int=4, flags:Int=Filter|Mipmap|ClampST)'
+    body: 'Texture.Load(${2:path:String}, ${3:format:Int=4}, ${4:flags:Int=Filter|Mipmap|ClampST})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'Texture.Color(color:Int)':
+    prefix: 'Texture.Color(color:Int)'
+    body: 'Texture.Color(${2:color:Int})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'Texture.Black()':
+    prefix: 'Texture.Black()'
+    body: 'Texture.Black()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'Texture.White()':
+    prefix: 'Texture.White()'
+    body: 'Texture.White()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'Texture.Magenta()':
+    prefix: 'Texture.Magenta()'
+    body: 'Texture.Magenta()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'Texture.Flat()':
+    prefix: 'Texture.Flat()'
+    body: 'Texture.Flat()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Texture'
+  'GLProgram.New(program:Int, matuniforms:GLUniform[])':
+    prefix: 'GLProgram.New(program:Int, matuniforms:GLUniform[])'
+    body: '${1:object}.New(${2:program:Int}, ${3:matuniforms:GLUniform[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'GLProgram.Bind()':
+    prefix: 'GLProgram.Bind()'
+    body: '${1:object}.Bind()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Shader.New(source:String)':
+    prefix: 'Shader.New(source:String)'
+    body: '${1:object}.New(${2:source:String})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Shader.DefaultMaterial()':
+    prefix: 'Shader.DefaultMaterial()'
+    body: '${1:object}.DefaultMaterial()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Material'
+  'Shader.FastShader()':
+    prefix: 'Shader.FastShader()'
+    body: 'Shader.FastShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.BumpShader()':
+    prefix: 'Shader.BumpShader()'
+    body: 'Shader.BumpShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.MatteShader()':
+    prefix: 'Shader.MatteShader()'
+    body: 'Shader.MatteShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.ShadowShader()':
+    prefix: 'Shader.ShadowShader()'
+    body: 'Shader.ShadowShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.LightMapShader()':
+    prefix: 'Shader.LightMapShader()'
+    body: 'Shader.LightMapShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.DefaultShader()':
+    prefix: 'Shader.DefaultShader()'
+    body: 'Shader.DefaultShader()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Shader'
+  'Shader.SetDefaultShader(shader:Shader)':
+    prefix: 'Shader.SetDefaultShader(shader:Shader)'
+    body: 'Shader.SetDefaultShader(${2:shader:Shader})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Void'
+  'Shader.Build(source:String)':
+    prefix: 'Shader.Build(source:String)'
+    body: '${1:object}.Build(${2:source:String})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Shader.OnInitMaterial(material:Material)':
+    prefix: 'Shader.OnInitMaterial(material:Material)'
+    body: '${1:object}.OnInitMaterial(${2:material:Material})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Shader.OnLoadMaterial(material:Material, path:String, texFlags:Int)':
+    prefix: 'Shader.OnLoadMaterial(material:Material, path:String, texFlags:Int)'
+    body: '${1:object}.OnLoadMaterial(${2:material:Material}, ${3:path:String}, ${4:texFlags:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Material'
+  'Material.New(shader:Shader=Null)':
+    prefix: 'Material.New(shader:Shader=Null)'
+    body: '${1:object}.New(${2:shader:Shader=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Material.Destroy()':
+    prefix: 'Material.Destroy()'
+    body: '${1:object}.Destroy()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Material.Shader()':
+    prefix: 'Material.Shader()'
+    body: '${1:object}.Shader()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Shader'
+  'Material.ColorTexture()':
+    prefix: 'Material.ColorTexture()'
+    body: '${1:object}.ColorTexture()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Texture'
+  'Material.Width()':
+    prefix: 'Material.Width()'
+    body: '${1:object}.Width()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Material.Height()':
+    prefix: 'Material.Height()'
+    body: '${1:object}.Height()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Material.SetScalar(param:String, scalar:Float)':
+    prefix: 'Material.SetScalar(param:String, scalar:Float)'
+    body: '${1:object}.SetScalar(${2:param:String}, ${3:scalar:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Material.GetScalar(param:String, defValue:Float=1.0)':
+    prefix: 'Material.GetScalar(param:String, defValue:Float=1.0)'
+    body: '${1:object}.GetScalar(${2:param:String}, ${3:defValue:Float=1.0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Material.SetVector(param:String, vector:Float[])':
+    prefix: 'Material.SetVector(param:String, vector:Float[])'
+    body: '${1:object}.SetVector(${2:param:String}, ${3:vector:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Material.GetVector(param:String, defValue:Float[]=[1.0, 1.0:Int, 1.0:Int, 1.0]:Int)':
+    prefix: 'Material.GetVector(param:String, defValue:Float[]=[1.0, 1.0:Int, 1.0:Int, 1.0]:Int)'
+    body: '${1:object}.GetVector(${2:param:String}, ${3:defValue:Float[]=[1.0}, ${4:1.0:Int}, ${5:1.0:Int}, ${6:1.0]:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Material.SetTexture(param:String, texture:Texture)':
+    prefix: 'Material.SetTexture(param:String, texture:Texture)'
+    body: '${1:object}.SetTexture(${2:param:String}, ${3:texture:Texture})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Material.GetTexture(param:String, defValue:Texture=Null)':
+    prefix: 'Material.GetTexture(param:String, defValue:Texture=Null)'
+    body: '${1:object}.GetTexture(${2:param:String}, ${3:defValue:Texture=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Texture'
+  'Material.Loading()':
+    prefix: 'Material.Loading()'
+    body: '${1:object}.Loading()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool'
+  'Material.Load(path:String, texFlags:Int, shader:Shader)':
+    prefix: 'Material.Load(path:String, texFlags:Int, shader:Shader)'
+    body: 'Material.Load(${2:path:String}, ${3:texFlags:Int}, ${4:shader:Shader})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Material'
+  'Image.Filter':
+    prefix: 'Image.Filter'
+    body: 'Image.Filter$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Image.Mipmap':
+    prefix: 'Image.Mipmap'
+    body: 'Image.Mipmap$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Image.Managed':
+    prefix: 'Image.Managed'
+    body: 'Image.Managed$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Image.New(width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter)':
+    prefix: 'Image.New(width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter)'
+    body: '${1:object}.New(${2:width:Int}, ${3:height:Int}, ${4:xhandle:Float=.5}, ${5:yhandle:Float=.5}, ${6:flags:Int=Image.Filter})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.New(image:Image, x:Int, y:Int, width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5)':
+    prefix: 'Image.New(image:Image, x:Int, y:Int, width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5)'
+    body: '${1:object}.New(${2:image:Image}, ${3:x:Int}, ${4:y:Int}, ${5:width:Int}, ${6:height:Int}, ${7:xhandle:Float=.5}, ${8:yhandle:Float=.5})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.New(material:Material, xhandle:Float=.5, yhandle:Float=.5)':
+    prefix: 'Image.New(material:Material, xhandle:Float=.5, yhandle:Float=.5)'
+    body: '${1:object}.New(${2:material:Material}, ${3:xhandle:Float=.5}, ${4:yhandle:Float=.5})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.New(material:Material, x:Int, y:Int, width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5)':
+    prefix: 'Image.New(material:Material, x:Int, y:Int, width:Int, height:Int, xhandle:Float=.5, yhandle:Float=.5)'
+    body: '${1:object}.New(${2:material:Material}, ${3:x:Int}, ${4:y:Int}, ${5:width:Int}, ${6:height:Int}, ${7:xhandle:Float=.5}, ${8:yhandle:Float=.5})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.Discard()':
+    prefix: 'Image.Discard()'
+    body: '${1:object}.Discard()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.Material()':
+    prefix: 'Image.Material()'
+    body: '${1:object}.Material()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Material'
+  'Image.X0()':
+    prefix: 'Image.X0()'
+    body: '${1:object}.X0()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.Y0()':
+    prefix: 'Image.Y0()'
+    body: '${1:object}.Y0()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.X1()':
+    prefix: 'Image.X1()'
+    body: '${1:object}.X1()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.Y1()':
+    prefix: 'Image.Y1()'
+    body: '${1:object}.Y1()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.Width()':
+    prefix: 'Image.Width()'
+    body: '${1:object}.Width()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Image.Height()':
+    prefix: 'Image.Height()'
+    body: '${1:object}.Height()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Image.HandleX()':
+    prefix: 'Image.HandleX()'
+    body: '${1:object}.HandleX()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.HandleY()':
+    prefix: 'Image.HandleY()'
+    body: '${1:object}.HandleY()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Image.WritePixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)':
+    prefix: 'Image.WritePixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)'
+    body: '${1:object}.WritePixels(${2:x:Int}, ${3:y:Int}, ${4:width:Int}, ${5:height:Int}, ${6:data:DataBuffer}, ${7:dataOffset:Int=0}, ${8:dataPitch:Int=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.SetHandle(xhandle:Float, yhandle:Float)':
+    prefix: 'Image.SetHandle(xhandle:Float, yhandle:Float)'
+    body: '${1:object}.SetHandle(${2:xhandle:Float}, ${3:yhandle:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.SetShadowCaster(shadowCaster:ShadowCaster)':
+    prefix: 'Image.SetShadowCaster(shadowCaster:ShadowCaster)'
+    body: '${1:object}.SetShadowCaster(${2:shadowCaster:ShadowCaster})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Image.ShadowCaster()':
+    prefix: 'Image.ShadowCaster()'
+    body: '${1:object}.ShadowCaster()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'ShadowCaster'
+  'Image.Loading()':
+    prefix: 'Image.Loading()'
+    body: '${1:object}.Loading()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool'
+  'Image.ImagesLoading()':
+    prefix: 'Image.ImagesLoading()'
+    body: 'Image.ImagesLoading()$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Bool'
+  'Image.Load(path:String, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter|Image.Mipmap, shader:Shader=Null)':
+    prefix: 'Image.Load(path:String, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter|Image.Mipmap, shader:Shader=Null)'
+    body: 'Image.Load(${2:path:String}, ${3:xhandle:Float=.5}, ${4:yhandle:Float=.5}, ${5:flags:Int=Image.Filter|Image.Mipmap}, ${6:shader:Shader=Null})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Image'
+  'Image.LoadFrames(path:String, numFrames:Int, padded:Bool=False, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter|Image.Mipmap, shader:Shader=Null)':
+    prefix: 'Image.LoadFrames(path:String, numFrames:Int, padded:Bool=False, xhandle:Float=.5, yhandle:Float=.5, flags:Int=Image.Filter|Image.Mipmap, shader:Shader=Null)'
+    body: 'Image.LoadFrames(${2:path:String}, ${3:numFrames:Int}, ${4:padded:Bool=False}, ${5:xhandle:Float=.5}, ${6:yhandle:Float=.5}, ${7:flags:Int=Image.Filter|Image.Mipmap}, ${8:shader:Shader=Null})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Image[]'
+  'Font.New(glyphs:Glyph[], firstChar:Int, height:Float)':
+    prefix: 'Font.New(glyphs:Glyph[], firstChar:Int, height:Float)'
+    body: '${1:object}.New(${2:glyphs:Glyph[]}, ${3:firstChar:Int}, ${4:height:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Font.GetGlyph(char:Int)':
+    prefix: 'Font.GetGlyph(char:Int)'
+    body: '${1:object}.GetGlyph(${2:char:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Glyph'
+  'Font.TextWidth(text:String)':
+    prefix: 'Font.TextWidth(text:String)'
+    body: '${1:object}.TextWidth(${2:text:String})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Font.TextHeight(text:String)':
+    prefix: 'Font.TextHeight(text:String)'
+    body: '${1:object}.TextHeight(${2:text:String})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Font.Load(path:String, firstChar:Int, numChars:Int, padded:Bool)':
+    prefix: 'Font.Load(path:String, firstChar:Int, numChars:Int, padded:Bool)'
+    body: 'Font.Load(${2:path:String}, ${3:firstChar:Int}, ${4:numChars:Int}, ${5:padded:Bool})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Font'
+  'Font.Load(path:String, cellWidth:Int, cellHeight:Int, glyphX:Int, glyphY:Int, glyphWidth:Int, glyphHeight:Int, firstChar:Int, numChars:Int)':
+    prefix: 'Font.Load(path:String, cellWidth:Int, cellHeight:Int, glyphX:Int, glyphY:Int, glyphWidth:Int, glyphHeight:Int, firstChar:Int, numChars:Int)'
+    body: 'Font.Load(${2:path:String}, ${3:cellWidth:Int}, ${4:cellHeight:Int}, ${5:glyphX:Int}, ${6:glyphY:Int}, ${7:glyphWidth:Int}, ${8:glyphHeight:Int}, ${9:firstChar:Int}, ${10:numChars:Int})$0'
+    leftLabelHTML: '<span class="monkey-function">f</span>'
+    rightLabelHTML: 'Font'
+  'BlendMode.Opaque':
+    prefix: 'BlendMode.Opaque'
+    body: 'BlendMode.Opaque$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'BlendMode.Alpha':
+    prefix: 'BlendMode.Alpha'
+    body: 'BlendMode.Alpha$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'BlendMode.Additive':
+    prefix: 'BlendMode.Additive'
+    body: 'BlendMode.Additive$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'BlendMode.Multiply':
+    prefix: 'BlendMode.Multiply'
+    body: 'BlendMode.Multiply$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'BlendMode.Multiply2':
+    prefix: 'BlendMode.Multiply2'
+    body: 'BlendMode.Multiply2$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'DrawList.New()':
+    prefix: 'DrawList.New()'
+    body: '${1:object}.New()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetBlendMode(blend:Int)':
+    prefix: 'DrawList.SetBlendMode(blend:Int)'
+    body: '${1:object}.SetBlendMode(${2:blend:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.BlendMode()':
+    prefix: 'DrawList.BlendMode()'
+    body: '${1:object}.BlendMode()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'DrawList.SetColor(r:Float, g:Float, b:Float)':
+    prefix: 'DrawList.SetColor(r:Float, g:Float, b:Float)'
+    body: '${1:object}.SetColor(${2:r:Float}, ${3:g:Float}, ${4:b:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetColor(r:Float, g:Float, b:Float, a:Float)':
+    prefix: 'DrawList.SetColor(r:Float, g:Float, b:Float, a:Float)'
+    body: '${1:object}.SetColor(${2:r:Float}, ${3:g:Float}, ${4:b:Float}, ${5:a:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetAlpha(a:Float)':
+    prefix: 'DrawList.SetAlpha(a:Float)'
+    body: '${1:object}.SetAlpha(${2:a:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Color()':
+    prefix: 'DrawList.Color()'
+    body: '${1:object}.Color()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'DrawList.GetColor(color:Float[])':
+    prefix: 'DrawList.GetColor(color:Float[])'
+    body: '${1:object}.GetColor(${2:color:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Alpha()':
+    prefix: 'DrawList.Alpha()'
+    body: '${1:object}.Alpha()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'DrawList.ResetMatrix()':
+    prefix: 'DrawList.ResetMatrix()'
+    body: '${1:object}.ResetMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetMatrix(ix:Float, iy:Float, jx:Float, jy:Float, tx:Float, ty:Float)':
+    prefix: 'DrawList.SetMatrix(ix:Float, iy:Float, jx:Float, jy:Float, tx:Float, ty:Float)'
+    body: '${1:object}.SetMatrix(${2:ix:Float}, ${3:iy:Float}, ${4:jx:Float}, ${5:jy:Float}, ${6:tx:Float}, ${7:ty:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.GetMatrix(matrix:Float[])':
+    prefix: 'DrawList.GetMatrix(matrix:Float[])'
+    body: '${1:object}.GetMatrix(${2:matrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Transform(ix:Float, iy:Float, jx:Float, jy:Float, tx:Float, ty:Float)':
+    prefix: 'DrawList.Transform(ix:Float, iy:Float, jx:Float, jy:Float, tx:Float, ty:Float)'
+    body: '${1:object}.Transform(${2:ix:Float}, ${3:iy:Float}, ${4:jx:Float}, ${5:jy:Float}, ${6:tx:Float}, ${7:ty:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Translate(tx:Float, ty:Float)':
+    prefix: 'DrawList.Translate(tx:Float, ty:Float)'
+    body: '${1:object}.Translate(${2:tx:Float}, ${3:ty:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Rotate(rz:Float)':
+    prefix: 'DrawList.Rotate(rz:Float)'
+    body: '${1:object}.Rotate(${2:rz:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Scale(sx:Float, sy:Float)':
+    prefix: 'DrawList.Scale(sx:Float, sy:Float)'
+    body: '${1:object}.Scale(${2:sx:Float}, ${3:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.TranslateRotate(tx:Float, ty:Float, rz:Float)':
+    prefix: 'DrawList.TranslateRotate(tx:Float, ty:Float, rz:Float)'
+    body: '${1:object}.TranslateRotate(${2:tx:Float}, ${3:ty:Float}, ${4:rz:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.RotateScale(rz:Float, sx:Float, sy:Float)':
+    prefix: 'DrawList.RotateScale(rz:Float, sx:Float, sy:Float)'
+    body: '${1:object}.RotateScale(${2:rz:Float}, ${3:sx:Float}, ${4:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.TranslateScale(tx:Float, ty:Float, sx:Float, sy:Float)':
+    prefix: 'DrawList.TranslateScale(tx:Float, ty:Float, sx:Float, sy:Float)'
+    body: '${1:object}.TranslateScale(${2:tx:Float}, ${3:ty:Float}, ${4:sx:Float}, ${5:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.TranslateRotateScale(tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)':
+    prefix: 'DrawList.TranslateRotateScale(tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)'
+    body: '${1:object}.TranslateRotateScale(${2:tx:Float}, ${3:ty:Float}, ${4:rz:Float}, ${5:sx:Float}, ${6:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetMatrixStackCapacity(capacity:Int)':
+    prefix: 'DrawList.SetMatrixStackCapacity(capacity:Int)'
+    body: '${1:object}.SetMatrixStackCapacity(${2:capacity:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.MatrixStackCapacity()':
+    prefix: 'DrawList.MatrixStackCapacity()'
+    body: '${1:object}.MatrixStackCapacity()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'DrawList.PushMatrix()':
+    prefix: 'DrawList.PushMatrix()'
+    body: '${1:object}.PushMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.PopMatrix()':
+    prefix: 'DrawList.PopMatrix()'
+    body: '${1:object}.PopMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.SetFont(font:Font)':
+    prefix: 'DrawList.SetFont(font:Font)'
+    body: '${1:object}.SetFont(${2:font:Font})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Font()':
+    prefix: 'DrawList.Font()'
+    body: '${1:object}.Font()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Font'
+  'DrawList.SetDefaultMaterial(material:Material)':
+    prefix: 'DrawList.SetDefaultMaterial(material:Material)'
+    body: '${1:object}.SetDefaultMaterial(${2:material:Material})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DefaultMaterial()':
+    prefix: 'DrawList.DefaultMaterial()'
+    body: '${1:object}.DefaultMaterial()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Material'
+  'DrawList.DrawPoint(x0:Float, y0:Float, material:Material=Null, s0:Float=0, t0:Float=0)':
+    prefix: 'DrawList.DrawPoint(x0:Float, y0:Float, material:Material=Null, s0:Float=0, t0:Float=0)'
+    body: '${1:object}.DrawPoint(${2:x0:Float}, ${3:y0:Float}, ${4:material:Material=Null}, ${5:s0:Float=0}, ${6:t0:Float=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawLine(x0:Float, y0:Float, x1:Float, y1:Float, material:Material=Null, s0:Float=0, t0:Float=0, s1:Float=1, t1:Float=0)':
+    prefix: 'DrawList.DrawLine(x0:Float, y0:Float, x1:Float, y1:Float, material:Material=Null, s0:Float=0, t0:Float=0, s1:Float=1, t1:Float=0)'
+    body: '${1:object}.DrawLine(${2:x0:Float}, ${3:y0:Float}, ${4:x1:Float}, ${5:y1:Float}, ${6:material:Material=Null}, ${7:s0:Float=0}, ${8:t0:Float=0}, ${9:s1:Float=1}, ${10:t1:Float=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawTriangle(x0:Float, y0:Float, x1:Float, y1:Float, x2:Float, y2:Float, material:Material=Null, s0:Float=.5, t0:Float=0, s1:Float=1, t1:Float=1, s2:Float=0, t2:Float=1)':
+    prefix: 'DrawList.DrawTriangle(x0:Float, y0:Float, x1:Float, y1:Float, x2:Float, y2:Float, material:Material=Null, s0:Float=.5, t0:Float=0, s1:Float=1, t1:Float=1, s2:Float=0, t2:Float=1)'
+    body: '${1:object}.DrawTriangle(${2:x0:Float}, ${3:y0:Float}, ${4:x1:Float}, ${5:y1:Float}, ${6:x2:Float}, ${7:y2:Float}, ${8:material:Material=Null}, ${9:s0:Float=.5}, ${10:t0:Float=0}, ${11:s1:Float=1}, ${12:t1:Float=1}, ${13:s2:Float=0}, ${14:t2:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawQuad(x0:Float, y0:Float, x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, material:Material=Null, s0:Float=.5, t0:Float=0, s1:Float=1, t1:Float=1, s2:Float=0, t2:Float=1)':
+    prefix: 'DrawList.DrawQuad(x0:Float, y0:Float, x1:Float, y1:Float, x2:Float, y2:Float, x3:Float, y3:Float, material:Material=Null, s0:Float=.5, t0:Float=0, s1:Float=1, t1:Float=1, s2:Float=0, t2:Float=1)'
+    body: '${1:object}.DrawQuad(${2:x0:Float}, ${3:y0:Float}, ${4:x1:Float}, ${5:y1:Float}, ${6:x2:Float}, ${7:y2:Float}, ${8:x3:Float}, ${9:y3:Float}, ${10:material:Material=Null}, ${11:s0:Float=.5}, ${12:t0:Float=0}, ${13:s1:Float=1}, ${14:t1:Float=1}, ${15:s2:Float=0}, ${16:t2:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawOval(x:Float, y:Float, width:Float, height:Float, material:Material=Null)':
+    prefix: 'DrawList.DrawOval(x:Float, y:Float, width:Float, height:Float, material:Material=Null)'
+    body: '${1:object}.DrawOval(${2:x:Float}, ${3:y:Float}, ${4:width:Float}, ${5:height:Float}, ${6:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawEllipse(x:Float, y:Float, xr:Float, yr:Float, material:Material=Null)':
+    prefix: 'DrawList.DrawEllipse(x:Float, y:Float, xr:Float, yr:Float, material:Material=Null)'
+    body: '${1:object}.DrawEllipse(${2:x:Float}, ${3:y:Float}, ${4:xr:Float}, ${5:yr:Float}, ${6:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawCircle(x:Float, y:Float, r:Float, material:Material=Null)':
+    prefix: 'DrawList.DrawCircle(x:Float, y:Float, r:Float, material:Material=Null)'
+    body: '${1:object}.DrawCircle(${2:x:Float}, ${3:y:Float}, ${4:r:Float}, ${5:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawPoly(vertices:Float[], material:Material=Null)':
+    prefix: 'DrawList.DrawPoly(vertices:Float[], material:Material=Null)'
+    body: '${1:object}.DrawPoly(${2:vertices:Float[]}, ${3:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawPrimitives(order:Int, count:Int, vertices:Float[], material:Material=Null)':
+    prefix: 'DrawList.DrawPrimitives(order:Int, count:Int, vertices:Float[], material:Material=Null)'
+    body: '${1:object}.DrawPrimitives(${2:order:Int}, ${3:count:Int}, ${4:vertices:Float[]}, ${5:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawPrimitives(order:Int, count:Int, vertices:Float[], texcoords:Float[], material:Material=Null)':
+    prefix: 'DrawList.DrawPrimitives(order:Int, count:Int, vertices:Float[], texcoords:Float[], material:Material=Null)'
+    body: '${1:object}.DrawPrimitives(${2:order:Int}, ${3:count:Int}, ${4:vertices:Float[]}, ${5:texcoords:Float[]}, ${6:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawIndexedPrimitives(order:Int, count:Int, vertices:Float[], indices:Int[], material:Material=Null)':
+    prefix: 'DrawList.DrawIndexedPrimitives(order:Int, count:Int, vertices:Float[], indices:Int[], material:Material=Null)'
+    body: '${1:object}.DrawIndexedPrimitives(${2:order:Int}, ${3:count:Int}, ${4:vertices:Float[]}, ${5:indices:Int[]}, ${6:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawIndexedPrimitives(order:Int, count:Int, vertices:Float[], texcoords:Float[], indices:Int[], material:Material=Null)':
+    prefix: 'DrawList.DrawIndexedPrimitives(order:Int, count:Int, vertices:Float[], texcoords:Float[], indices:Int[], material:Material=Null)'
+    body: '${1:object}.DrawIndexedPrimitives(${2:order:Int}, ${3:count:Int}, ${4:vertices:Float[]}, ${5:texcoords:Float[]}, ${6:indices:Int[]}, ${7:material:Material=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, material:Material=Null, s0:Float=0, t0:Float=0, s1:Float=1, t1:Float=1)':
+    prefix: 'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, material:Material=Null, s0:Float=0, t0:Float=0, s1:Float=1, t1:Float=1)'
+    body: '${1:object}.DrawRect(${2:x0:Float}, ${3:y0:Float}, ${4:width:Float}, ${5:height:Float}, ${6:material:Material=Null}, ${7:s0:Float=0}, ${8:t0:Float=0}, ${9:s1:Float=1}, ${10:t1:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, image:Image)':
+    prefix: 'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, image:Image)'
+    body: '${1:object}.DrawRect(${2:x0:Float}, ${3:y0:Float}, ${4:width:Float}, ${5:height:Float}, ${6:image:Image})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawRect(x:Float, y:Float, image:Image, sourceX:Int, sourceY:Int, sourceWidth:Int, sourceHeight:Int)':
+    prefix: 'DrawList.DrawRect(x:Float, y:Float, image:Image, sourceX:Int, sourceY:Int, sourceWidth:Int, sourceHeight:Int)'
+    body: '${1:object}.DrawRect(${2:x:Float}, ${3:y:Float}, ${4:image:Image}, ${5:sourceX:Int}, ${6:sourceY:Int}, ${7:sourceWidth:Int}, ${8:sourceHeight:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, image:Image, sourceX:Int, sourceY:Int, sourceWidth:Int, sourceHeight:Int)':
+    prefix: 'DrawList.DrawRect(x0:Float, y0:Float, width:Float, height:Float, image:Image, sourceX:Int, sourceY:Int, sourceWidth:Int, sourceHeight:Int)'
+    body: '${1:object}.DrawRect(${2:x0:Float}, ${3:y0:Float}, ${4:width:Float}, ${5:height:Float}, ${6:image:Image}, ${7:sourceX:Int}, ${8:sourceY:Int}, ${9:sourceWidth:Int}, ${10:sourceHeight:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawGradientRect(x0:Float, y0:Float, width:Float, height:Float, r0:Float, g0:Float, b0:Float, a0:Float, r1:Float, g1:Float, b1:Float, a1:Float, axis:Int)':
+    prefix: 'DrawList.DrawGradientRect(x0:Float, y0:Float, width:Float, height:Float, r0:Float, g0:Float, b0:Float, a0:Float, r1:Float, g1:Float, b1:Float, a1:Float, axis:Int)'
+    body: '${1:object}.DrawGradientRect(${2:x0:Float}, ${3:y0:Float}, ${4:width:Float}, ${5:height:Float}, ${6:r0:Float}, ${7:g0:Float}, ${8:b0:Float}, ${9:a0:Float}, ${10:r1:Float}, ${11:g1:Float}, ${12:b1:Float}, ${13:a1:Float}, ${14:axis:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawImage(image:Image)':
+    prefix: 'DrawList.DrawImage(image:Image)'
+    body: '${1:object}.DrawImage(${2:image:Image})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawImage(image:Image, tx:Float, ty:Float)':
+    prefix: 'DrawList.DrawImage(image:Image, tx:Float, ty:Float)'
+    body: '${1:object}.DrawImage(${2:image:Image}, ${3:tx:Float}, ${4:ty:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawImage(image:Image, tx:Float, ty:Float, rz:Float)':
+    prefix: 'DrawList.DrawImage(image:Image, tx:Float, ty:Float, rz:Float)'
+    body: '${1:object}.DrawImage(${2:image:Image}, ${3:tx:Float}, ${4:ty:Float}, ${5:rz:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawImage(image:Image, tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)':
+    prefix: 'DrawList.DrawImage(image:Image, tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)'
+    body: '${1:object}.DrawImage(${2:image:Image}, ${3:tx:Float}, ${4:ty:Float}, ${5:rz:Float}, ${6:sx:Float}, ${7:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawText(text:String, x:Float, y:Float, xhandle:Float=0, yhandle:Float=0)':
+    prefix: 'DrawList.DrawText(text:String, x:Float, y:Float, xhandle:Float=0, yhandle:Float=0)'
+    body: '${1:object}.DrawText(${2:text:String}, ${3:x:Float}, ${4:y:Float}, ${5:xhandle:Float=0}, ${6:yhandle:Float=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.DrawShadow(lx:Float, ly:Float, x0:Float, y0:Float, x1:Float, y1:Float)':
+    prefix: 'DrawList.DrawShadow(lx:Float, ly:Float, x0:Float, y0:Float, x1:Float, y1:Float)'
+    body: '${1:object}.DrawShadow(${2:lx:Float}, ${3:ly:Float}, ${4:x0:Float}, ${5:y0:Float}, ${6:x1:Float}, ${7:y1:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool'
+  'DrawList.DrawShadows(x0:Float, y0:Float, drawList:DrawList)':
+    prefix: 'DrawList.DrawShadows(x0:Float, y0:Float, drawList:DrawList)'
+    body: '${1:object}.DrawShadows(${2:x0:Float}, ${3:y0:Float}, ${4:drawList:DrawList})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.AddShadowCaster(caster:ShadowCaster)':
+    prefix: 'DrawList.AddShadowCaster(caster:ShadowCaster)'
+    body: '${1:object}.AddShadowCaster(${2:caster:ShadowCaster})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float)':
+    prefix: 'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float)'
+    body: '${1:object}.AddShadowCaster(${2:caster:ShadowCaster}, ${3:tx:Float}, ${4:ty:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float, rz:Float)':
+    prefix: 'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float, rz:Float)'
+    body: '${1:object}.AddShadowCaster(${2:caster:ShadowCaster}, ${3:tx:Float}, ${4:ty:Float}, ${5:rz:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)':
+    prefix: 'DrawList.AddShadowCaster(caster:ShadowCaster, tx:Float, ty:Float, rz:Float, sx:Float, sy:Float)'
+    body: '${1:object}.AddShadowCaster(${2:caster:ShadowCaster}, ${3:tx:Float}, ${4:ty:Float}, ${5:rz:Float}, ${6:sx:Float}, ${7:sy:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.IsEmpty()':
+    prefix: 'DrawList.IsEmpty()'
+    body: '${1:object}.IsEmpty()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool'
+  'DrawList.Compact()':
+    prefix: 'DrawList.Compact()'
+    body: '${1:object}.Compact()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Render(op:DrawOp, index:Int, count:Int)':
+    prefix: 'DrawList.Render(op:DrawOp, index:Int, count:Int)'
+    body: '${1:object}.Render(${2:op:DrawOp}, ${3:index:Int}, ${4:count:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Render()':
+    prefix: 'DrawList.Render()'
+    body: '${1:object}.Render()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Reset()':
+    prefix: 'DrawList.Reset()'
+    body: '${1:object}.Reset()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'DrawList.Flush()':
+    prefix: 'DrawList.Flush()'
+    body: '${1:object}.Flush()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'LightMatrix()':
+    prefix: 'LightMatrix()'
+    body: 'LightMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'LightType()':
+    prefix: 'LightType()'
+    body: 'LightType()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'LightColor()':
+    prefix: 'LightColor()'
+    body: 'LightColor()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'LightRange()':
+    prefix: 'LightRange()'
+    body: 'LightRange()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'LightImage()':
+    prefix: 'LightImage()'
+    body: 'LightImage()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Image'
+  'LayerMatrix()':
+    prefix: 'LayerMatrix()'
+    body: 'LayerMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'LayerFogColor()':
+    prefix: 'LayerFogColor()'
+    body: 'LayerFogColor()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'LayerLightMaskImage()':
+    prefix: 'LayerLightMaskImage()'
+    body: 'LayerLightMaskImage()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Image'
+  'EnumLayerLights(lights:Stack<ILight>)':
+    prefix: 'EnumLayerLights(lights:Stack<ILight>)'
+    body: 'EnumLayerLights(${2:lights:Stack<ILight>})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'OnRenderLayer(drawLists:Stack<DrawList>)':
+    prefix: 'OnRenderLayer(drawLists:Stack<DrawList>)'
+    body: 'OnRenderLayer(${2:drawLists:Stack<DrawList>})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.New()':
+    prefix: 'Renderer.New()'
+    body: '${1:object}.New()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetRenderTarget(image:Image)':
+    prefix: 'Renderer.SetRenderTarget(image:Image)'
+    body: '${1:object}.SetRenderTarget(${2:image:Image})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetViewport(x:Int, y:Int, width:Int, height:Int)':
+    prefix: 'Renderer.SetViewport(x:Int, y:Int, width:Int, height:Int)'
+    body: '${1:object}.SetViewport(${2:x:Int}, ${3:y:Int}, ${4:width:Int}, ${5:height:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetClearMode(clearMode:Int)':
+    prefix: 'Renderer.SetClearMode(clearMode:Int)'
+    body: '${1:object}.SetClearMode(${2:clearMode:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetClearColor(clearColor:Float[])':
+    prefix: 'Renderer.SetClearColor(clearColor:Float[])'
+    body: '${1:object}.SetClearColor(${2:clearColor:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetAmbientLight(ambientLight:Float[])':
+    prefix: 'Renderer.SetAmbientLight(ambientLight:Float[])'
+    body: '${1:object}.SetAmbientLight(${2:ambientLight:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetCameraMatrix(cameraMatrix:Float[])':
+    prefix: 'Renderer.SetCameraMatrix(cameraMatrix:Float[])'
+    body: '${1:object}.SetCameraMatrix(${2:cameraMatrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.SetProjectionMatrix(projectionMatrix:Float[])':
+    prefix: 'Renderer.SetProjectionMatrix(projectionMatrix:Float[])'
+    body: '${1:object}.SetProjectionMatrix(${2:projectionMatrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Renderer.Layers()':
+    prefix: 'Renderer.Layers()'
+    body: '${1:object}.Layers()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Stack<ILayer>'
+  'Renderer.Render()':
+    prefix: 'Renderer.Render()'
+    body: '${1:object}.Render()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.MaxLights':
+    prefix: 'Canvas.MaxLights'
+    body: 'Canvas.MaxLights$0'
+    leftLabelHTML: '<span class="monkey-const">c</span>'
+    rightLabelHTML: ''
+  'Canvas.New(image:Image=Null)':
+    prefix: 'Canvas.New(image:Image=Null)'
+    body: '${1:object}.New(${2:image:Image=Null})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.Discard()':
+    prefix: 'Canvas.Discard()'
+    body: '${1:object}.Discard()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.SetRenderTarget(image:Image)':
+    prefix: 'Canvas.SetRenderTarget(image:Image)'
+    body: '${1:object}.SetRenderTarget(${2:image:Image})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.RenderTarget()':
+    prefix: 'Canvas.RenderTarget()'
+    body: '${1:object}.RenderTarget()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Image'
+  'Canvas.RenderTexture()':
+    prefix: 'Canvas.RenderTexture()'
+    body: '${1:object}.RenderTexture()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Texture'
+  'Canvas.Width()':
+    prefix: 'Canvas.Width()'
+    body: '${1:object}.Width()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Canvas.Height()':
+    prefix: 'Canvas.Height()'
+    body: '${1:object}.Height()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Canvas.SetColorMask(r:Bool, g:Bool, b:Bool, a:Bool)':
+    prefix: 'Canvas.SetColorMask(r:Bool, g:Bool, b:Bool, a:Bool)'
+    body: '${1:object}.SetColorMask(${2:r:Bool}, ${3:g:Bool}, ${4:b:Bool}, ${5:a:Bool})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ColorMask()':
+    prefix: 'Canvas.ColorMask()'
+    body: '${1:object}.ColorMask()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Bool[]'
+  'Canvas.SetViewport(x:Int, y:Int, w:Int, h:Int)':
+    prefix: 'Canvas.SetViewport(x:Int, y:Int, w:Int, h:Int)'
+    body: '${1:object}.SetViewport(${2:x:Int}, ${3:y:Int}, ${4:w:Int}, ${5:h:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.Viewport()':
+    prefix: 'Canvas.Viewport()'
+    body: '${1:object}.Viewport()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int[]'
+  'Canvas.SetScissor(x:Int, y:Int, w:Int, h:Int)':
+    prefix: 'Canvas.SetScissor(x:Int, y:Int, w:Int, h:Int)'
+    body: '${1:object}.SetScissor(${2:x:Int}, ${3:y:Int}, ${4:w:Int}, ${5:h:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.Scissor()':
+    prefix: 'Canvas.Scissor()'
+    body: '${1:object}.Scissor()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int[]'
+  'Canvas.SetProjectionMatrix(projMatrix:Float[])':
+    prefix: 'Canvas.SetProjectionMatrix(projMatrix:Float[])'
+    body: '${1:object}.SetProjectionMatrix(${2:projMatrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.SetProjection2d(left:Float, right:Float, top:Float, bottom:Float, znear:Float=-1, zfar:Float=1)':
+    prefix: 'Canvas.SetProjection2d(left:Float, right:Float, top:Float, bottom:Float, znear:Float=-1, zfar:Float=1)'
+    body: '${1:object}.SetProjection2d(${2:left:Float}, ${3:right:Float}, ${4:top:Float}, ${5:bottom:Float}, ${6:znear:Float=-1}, ${7:zfar:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ProjectionMatrix()':
+    prefix: 'Canvas.ProjectionMatrix()'
+    body: '${1:object}.ProjectionMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetViewMatrix(viewMatrix:Float[])':
+    prefix: 'Canvas.SetViewMatrix(viewMatrix:Float[])'
+    body: '${1:object}.SetViewMatrix(${2:viewMatrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ViewMatrix()':
+    prefix: 'Canvas.ViewMatrix()'
+    body: '${1:object}.ViewMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetModelMatrix(modelMatrix:Float[])':
+    prefix: 'Canvas.SetModelMatrix(modelMatrix:Float[])'
+    body: '${1:object}.SetModelMatrix(${2:modelMatrix:Float[]})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ModelMatrix()':
+    prefix: 'Canvas.ModelMatrix()'
+    body: '${1:object}.ModelMatrix()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetAmbientLight(r:Float, g:Float, b:Float, a:Float=1)':
+    prefix: 'Canvas.SetAmbientLight(r:Float, g:Float, b:Float, a:Float=1)'
+    body: '${1:object}.SetAmbientLight(${2:r:Float}, ${3:g:Float}, ${4:b:Float}, ${5:a:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.AmbientLight()':
+    prefix: 'Canvas.AmbientLight()'
+    body: '${1:object}.AmbientLight()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetFogColor(r:Float, g:Float, b:Float, a:Float)':
+    prefix: 'Canvas.SetFogColor(r:Float, g:Float, b:Float, a:Float)'
+    body: '${1:object}.SetFogColor(${2:r:Float}, ${3:g:Float}, ${4:b:Float}, ${5:a:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.FogColor()':
+    prefix: 'Canvas.FogColor()'
+    body: '${1:object}.FogColor()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetLightType(index:Int, type:Int)':
+    prefix: 'Canvas.SetLightType(index:Int, type:Int)'
+    body: '${1:object}.SetLightType(${2:index:Int}, ${3:type:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.GetLightType(index:Int)':
+    prefix: 'Canvas.GetLightType(index:Int)'
+    body: '${1:object}.GetLightType(${2:index:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Int'
+  'Canvas.SetLightColor(index:Int, r:Float, g:Float, b:Float, a:Float=1)':
+    prefix: 'Canvas.SetLightColor(index:Int, r:Float, g:Float, b:Float, a:Float=1)'
+    body: '${1:object}.SetLightColor(${2:index:Int}, ${3:r:Float}, ${4:g:Float}, ${5:b:Float}, ${6:a:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.GetLightColor(index:Int)':
+    prefix: 'Canvas.GetLightColor(index:Int)'
+    body: '${1:object}.GetLightColor(${2:index:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetLightPosition(index:Int, x:Float, y:Float, z:Float)':
+    prefix: 'Canvas.SetLightPosition(index:Int, x:Float, y:Float, z:Float)'
+    body: '${1:object}.SetLightPosition(${2:index:Int}, ${3:x:Float}, ${4:y:Float}, ${5:z:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.GetLightPosition(index:Int)':
+    prefix: 'Canvas.GetLightPosition(index:Int)'
+    body: '${1:object}.GetLightPosition(${2:index:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas.SetLightRange(index:Int, range:Float)':
+    prefix: 'Canvas.SetLightRange(index:Int, range:Float)'
+    body: '${1:object}.SetLightRange(${2:index:Int}, ${3:range:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.GetLightRange(index:Int)':
+    prefix: 'Canvas.GetLightRange(index:Int)'
+    body: '${1:object}.GetLightRange(${2:index:Int})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Canvas.SetShadowMap(image:Image)':
+    prefix: 'Canvas.SetShadowMap(image:Image)'
+    body: '${1:object}.SetShadowMap(${2:image:Image})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ShadowMap()':
+    prefix: 'Canvas.ShadowMap()'
+    body: '${1:object}.ShadowMap()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Image'
+  'Canvas.SetLineWidth(lineWidth:Float)':
+    prefix: 'Canvas.SetLineWidth(lineWidth:Float)'
+    body: '${1:object}.SetLineWidth(${2:lineWidth:Float})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.LineWidth()':
+    prefix: 'Canvas.LineWidth()'
+    body: '${1:object}.LineWidth()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Float'
+  'Canvas.Clear(r:Float=0, g:Float=0, b:Float=0, a:Float=1)':
+    prefix: 'Canvas.Clear(r:Float=0, g:Float=0, b:Float=0, a:Float=1)'
+    body: '${1:object}.Clear(${2:r:Float=0}, ${3:g:Float=0}, ${4:b:Float=0}, ${5:a:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.ReadPixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)':
+    prefix: 'Canvas.ReadPixels(x:Int, y:Int, width:Int, height:Int, data:DataBuffer, dataOffset:Int=0, dataPitch:Int=0)'
+    body: '${1:object}.ReadPixels(${2:x:Int}, ${3:y:Int}, ${4:width:Int}, ${5:height:Int}, ${6:data:DataBuffer}, ${7:dataOffset:Int=0}, ${8:dataPitch:Int=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.RenderDrawList(drawbuf:DrawList)':
+    prefix: 'Canvas.RenderDrawList(drawbuf:DrawList)'
+    body: '${1:object}.RenderDrawList(${2:drawbuf:DrawList})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.RenderDrawList(drawList:DrawList, tx:Float, ty:Float, rz:Float=0, sx:Float=1, sy:Float=1)':
+    prefix: 'Canvas.RenderDrawList(drawList:DrawList, tx:Float, ty:Float, rz:Float=0, sx:Float=1, sy:Float=1)'
+    body: '${1:object}.RenderDrawList(${2:drawList:DrawList}, ${3:tx:Float}, ${4:ty:Float}, ${5:rz:Float=0}, ${6:sx:Float=1}, ${7:sy:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.RenderDrawListEx(drawbuf:DrawList, tx:Float=0, ty:Float=0, rz:Float=0, sx:Float=1, sy:Float=1)':
+    prefix: 'Canvas.RenderDrawListEx(drawbuf:DrawList, tx:Float=0, ty:Float=0, rz:Float=0, sx:Float=1, sy:Float=1)'
+    body: '${1:object}.RenderDrawListEx(${2:drawbuf:DrawList}, ${3:tx:Float=0}, ${4:ty:Float=0}, ${5:rz:Float=0}, ${6:sx:Float=1}, ${7:sy:Float=1})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas.Flush()':
+    prefix: 'Canvas.Flush()'
+    body: '${1:object}.Flush()$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'
+  'Canvas._tformInvProj':
+    prefix: 'Canvas._tformInvProj'
+    body: 'Canvas._tformInvProj$0'
+    leftLabelHTML: '<span class="monkey-global">g</span>'
+    rightLabelHTML: 'Float[16]'
+  'Canvas._tformT':
+    prefix: 'Canvas._tformT'
+    body: 'Canvas._tformT$0'
+    leftLabelHTML: '<span class="monkey-global">g</span>'
+    rightLabelHTML: 'Float[]'
+  'Canvas._tformP':
+    prefix: 'Canvas._tformP'
+    body: 'Canvas._tformP$0'
+    leftLabelHTML: '<span class="monkey-global">g</span>'
+    rightLabelHTML: 'Float[4]'
+  'Canvas.TransformCoords(coords_in:Float[], coords_out:Float[], mode:Int=0)':
+    prefix: 'Canvas.TransformCoords(coords_in:Float[], coords_out:Float[], mode:Int=0)'
+    body: '${1:object}.TransformCoords(${2:coords_in:Float[]}, ${3:coords_out:Float[]}, ${4:mode:Int=0})$0'
+    leftLabelHTML: '<span class="monkey-method">m</span>'
+    rightLabelHTML: 'Void'

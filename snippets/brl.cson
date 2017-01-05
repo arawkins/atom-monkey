@@ -1,0 +1,1456 @@
+'.source.monkey':
+    'BoolObject.New(value:Bool)':
+        prefix: 'BoolObject.New(value:Bool)'
+        body: '${1:object}.New(${2:value:Bool})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'BoolObject.ToBool()':
+        prefix: 'BoolObject.ToBool()'
+        body: '${1:object}.ToBool()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'BoolObject.Equals(box:BoolObject)':
+        prefix: 'BoolObject.Equals(box:BoolObject)'
+        body: '${1:object}.Equals(${2:box:BoolObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'IntObject.New(value:Int)':
+        prefix: 'IntObject.New(value:Int)'
+        body: '${1:object}.New(${2:value:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'IntObject.New(value:Float)':
+        prefix: 'IntObject.New(value:Float)'
+        body: '${1:object}.New(${2:value:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'IntObject.ToInt()':
+        prefix: 'IntObject.ToInt()'
+        body: '${1:object}.ToInt()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'IntObject.ToFloat()':
+        prefix: 'IntObject.ToFloat()'
+        body: '${1:object}.ToFloat()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Float'
+    'IntObject.ToString()':
+        prefix: 'IntObject.ToString()'
+        body: '${1:object}.ToString()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'String'
+    'IntObject.Equals(box:IntObject)':
+        prefix: 'IntObject.Equals(box:IntObject)'
+        body: '${1:object}.Equals(${2:box:IntObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'IntObject.Compare(box:IntObject)':
+        prefix: 'IntObject.Compare(box:IntObject)'
+        body: '${1:object}.Compare(${2:box:IntObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatObject.New(value:Int)':
+        prefix: 'FloatObject.New(value:Int)'
+        body: '${1:object}.New(${2:value:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatObject.New(value:Float)':
+        prefix: 'FloatObject.New(value:Float)'
+        body: '${1:object}.New(${2:value:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatObject.ToInt()':
+        prefix: 'FloatObject.ToInt()'
+        body: '${1:object}.ToInt()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'FloatObject.ToFloat()':
+        prefix: 'FloatObject.ToFloat()'
+        body: '${1:object}.ToFloat()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Float'
+    'FloatObject.ToString()':
+        prefix: 'FloatObject.ToString()'
+        body: '${1:object}.ToString()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'String'
+    'FloatObject.Equals(box:FloatObject)':
+        prefix: 'FloatObject.Equals(box:FloatObject)'
+        body: '${1:object}.Equals(${2:box:FloatObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'FloatObject.Compare(box:FloatObject)':
+        prefix: 'FloatObject.Compare(box:FloatObject)'
+        body: '${1:object}.Compare(${2:box:FloatObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringObject.New(value:Int)':
+        prefix: 'StringObject.New(value:Int)'
+        body: '${1:object}.New(${2:value:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringObject.New(value:Float)':
+        prefix: 'StringObject.New(value:Float)'
+        body: '${1:object}.New(${2:value:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringObject.New(value:String)':
+        prefix: 'StringObject.New(value:String)'
+        body: '${1:object}.New(${2:value:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringObject.ToString()':
+        prefix: 'StringObject.ToString()'
+        body: '${1:object}.ToString()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'String'
+    'StringObject.Equals(box:StringObject)':
+        prefix: 'StringObject.Equals(box:StringObject)'
+        body: '${1:object}.Equals(${2:box:StringObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'StringObject.Compare(box:StringObject)':
+        prefix: 'StringObject.Compare(box:StringObject)'
+        body: '${1:object}.Compare(${2:box:StringObject})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'ArrayObject<T>.New(value:T[])':
+        prefix: 'ArrayObject<T>.New(value:T[])'
+        body: '${1:object}.New(${2:value:T[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'ArrayObject<T>.ToArray()':
+        prefix: 'ArrayObject<T>.ToArray()'
+        body: '${1:object}.ToArray()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T[]'
+    'ArrayBoxer<T>.Box(value:T[])':
+        prefix: 'ArrayBoxer<T>.Box(value:T[])'
+        body: 'ArrayBoxer<T>.Box(${2:value:T[]})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Object'
+    'ArrayBoxer<T>.Unbox(box:Object)':
+        prefix: 'ArrayBoxer<T>.Unbox(box:Object)'
+        body: 'ArrayBoxer<T>.Unbox(${2:box:Object})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'T[]'
+    'BoxBool(value:Bool)':
+        prefix: 'BoxBool(value:Bool)'
+        body: 'BoxBool(${2:value:Bool})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Object'
+    'BoxInt(value:Int)':
+        prefix: 'BoxInt(value:Int)'
+        body: 'BoxInt(${2:value:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Object'
+    'BoxFloat(value:Float)':
+        prefix: 'BoxFloat(value:Float)'
+        body: 'BoxFloat(${2:value:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Object'
+    'BoxString(value:String)':
+        prefix: 'BoxString(value:String)'
+        body: 'BoxString(${2:value:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Object'
+    'UnboxBool(box:Object)':
+        prefix: 'UnboxBool(box:Object)'
+        body: 'UnboxBool(${2:box:Object})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Bool'
+    'UnboxInt(box:Object)':
+        prefix: 'UnboxInt(box:Object)'
+        body: 'UnboxInt(${2:box:Object})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'UnboxFloat(box:Object)':
+        prefix: 'UnboxFloat(box:Object)'
+        body: 'UnboxFloat(${2:box:Object})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'UnboxString(box:Object)':
+        prefix: 'UnboxString(box:Object)'
+        body: 'UnboxString(${2:box:Object})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'Deque<T>.New()':
+        prefix: 'Deque<T>.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.New(arr:T[])':
+        prefix: 'Deque<T>.New(arr:T[])'
+        body: '${1:object}.New(${2:arr:T[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.Clear()':
+        prefix: 'Deque<T>.Clear()'
+        body: '${1:object}.Clear()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.Length()':
+        prefix: 'Deque<T>.Length()'
+        body: '${1:object}.Length()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Deque<T>.IsEmpty()':
+        prefix: 'Deque<T>.IsEmpty()'
+        body: '${1:object}.IsEmpty()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Deque<T>.ToArray()':
+        prefix: 'Deque<T>.ToArray()'
+        body: '${1:object}.ToArray()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T[]'
+    'Deque<T>.ObjectEnumerator()':
+        prefix: 'Deque<T>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Enumerator<T>'
+    'Deque<T>.Get(index:Int)':
+        prefix: 'Deque<T>.Get(index:Int)'
+        body: '${1:object}.Get(${2:index:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Deque<T>.Set(index:Int, value:T)':
+        prefix: 'Deque<T>.Set(index:Int, value:T)'
+        body: '${1:object}.Set(${2:index:Int}, ${3:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.PushFirst(value:T)':
+        prefix: 'Deque<T>.PushFirst(value:T)'
+        body: '${1:object}.PushFirst(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.PushLast(value:T)':
+        prefix: 'Deque<T>.PushLast(value:T)'
+        body: '${1:object}.PushLast(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Deque<T>.PopFirst()':
+        prefix: 'Deque<T>.PopFirst()'
+        body: '${1:object}.PopFirst()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Deque<T>.PopLast()':
+        prefix: 'Deque<T>.PopLast()'
+        body: '${1:object}.PopLast()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Deque<T>.First()':
+        prefix: 'Deque<T>.First()'
+        body: '${1:object}.First()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Deque<T>.Last()':
+        prefix: 'Deque<T>.Last()'
+        body: '${1:object}.Last()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'IntDeque.New()':
+        prefix: 'IntDeque.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'IntDeque.New(data:Int[])':
+        prefix: 'IntDeque.New(data:Int[])'
+        body: '${1:object}.New(${2:data:Int[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatDeque.New()':
+        prefix: 'FloatDeque.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatDeque.New(data:Float[])':
+        prefix: 'FloatDeque.New(data:Float[])'
+        body: '${1:object}.New(${2:data:Float[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringDeque.New()':
+        prefix: 'StringDeque.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringDeque.New(data:String[])':
+        prefix: 'StringDeque.New(data:String[])'
+        body: '${1:object}.New(${2:data:String[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.New()':
+        prefix: 'List<T>.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.New(data:T[])':
+        prefix: 'List<T>.New(data:T[])'
+        body: '${1:object}.New(${2:data:T[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.ToArray()':
+        prefix: 'List<T>.ToArray()'
+        body: '${1:object}.ToArray()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T[]'
+    'List<T>.Equals(lhs:T, rhs:T)':
+        prefix: 'List<T>.Equals(lhs:T, rhs:T)'
+        body: '${1:object}.Equals(${2:lhs:T}, ${3:rhs:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'List<T>.Compare(lhs:T, rhs:T)':
+        prefix: 'List<T>.Compare(lhs:T, rhs:T)'
+        body: '${1:object}.Compare(${2:lhs:T}, ${3:rhs:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.Clear()':
+        prefix: 'List<T>.Clear()'
+        body: '${1:object}.Clear()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.Count()':
+        prefix: 'List<T>.Count()'
+        body: '${1:object}.Count()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.IsEmpty()':
+        prefix: 'List<T>.IsEmpty()'
+        body: '${1:object}.IsEmpty()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'List<T>.Contains(value:T)':
+        prefix: 'List<T>.Contains(value:T)'
+        body: '${1:object}.Contains(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'List<T>.FirstNode()':
+        prefix: 'List<T>.FirstNode()'
+        body: '${1:object}.FirstNode()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.LastNode()':
+        prefix: 'List<T>.LastNode()'
+        body: '${1:object}.LastNode()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.First()':
+        prefix: 'List<T>.First()'
+        body: '${1:object}.First()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'List<T>.Last()':
+        prefix: 'List<T>.Last()'
+        body: '${1:object}.Last()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'List<T>.RemoveFirst()':
+        prefix: 'List<T>.RemoveFirst()'
+        body: '${1:object}.RemoveFirst()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'List<T>.RemoveLast()':
+        prefix: 'List<T>.RemoveLast()'
+        body: '${1:object}.RemoveLast()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'List<T>.AddFirst(data:T)':
+        prefix: 'List<T>.AddFirst(data:T)'
+        body: '${1:object}.AddFirst(${2:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.AddLast(data:T)':
+        prefix: 'List<T>.AddLast(data:T)'
+        body: '${1:object}.AddLast(${2:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.Find(value:T)':
+        prefix: 'List<T>.Find(value:T)'
+        body: '${1:object}.Find(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.Find(value:T, start:Node<T>)':
+        prefix: 'List<T>.Find(value:T, start:Node<T>)'
+        body: '${1:object}.Find(${2:value:T}, ${3:start:Node<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.FindLast(value:T)':
+        prefix: 'List<T>.FindLast(value:T)'
+        body: '${1:object}.FindLast(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.FindLast(value:T, start:Node<T>)':
+        prefix: 'List<T>.FindLast(value:T, start:Node<T>)'
+        body: '${1:object}.FindLast(${2:value:T}, ${3:start:Node<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.Remove(value:T)':
+        prefix: 'List<T>.Remove(value:T)'
+        body: '${1:object}.Remove(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.RemoveFirst(value:T)':
+        prefix: 'List<T>.RemoveFirst(value:T)'
+        body: '${1:object}.RemoveFirst(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.RemoveLast(value:T)':
+        prefix: 'List<T>.RemoveLast(value:T)'
+        body: '${1:object}.RemoveLast(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.RemoveEach(value:T)':
+        prefix: 'List<T>.RemoveEach(value:T)'
+        body: '${1:object}.RemoveEach(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.InsertBefore(where:T, data:T)':
+        prefix: 'List<T>.InsertBefore(where:T, data:T)'
+        body: '${1:object}.InsertBefore(${2:where:T}, ${3:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.InsertAfter(where:T, data:T)':
+        prefix: 'List<T>.InsertAfter(where:T, data:T)'
+        body: '${1:object}.InsertAfter(${2:where:T}, ${3:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<T>'
+    'List<T>.InsertBeforeEach(where:T, data:T)':
+        prefix: 'List<T>.InsertBeforeEach(where:T, data:T)'
+        body: '${1:object}.InsertBeforeEach(${2:where:T}, ${3:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.InsertAfterEach(where:T, data:T)':
+        prefix: 'List<T>.InsertAfterEach(where:T, data:T)'
+        body: '${1:object}.InsertAfterEach(${2:where:T}, ${3:data:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'List<T>.ObjectEnumerator()':
+        prefix: 'List<T>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Enumerator<T>'
+    'List<T>.Backwards()':
+        prefix: 'List<T>.Backwards()'
+        body: '${1:object}.Backwards()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'BackwardsList<T>'
+    'List<T>.Sort(ascending:Int=True)':
+        prefix: 'List<T>.Sort(ascending:Int=True)'
+        body: '${1:object}.Sort(${2:ascending:Int=True})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Enumerator<T>.New(list:List<T>)':
+        prefix: 'Enumerator<T>.New(list:List<T>)'
+        body: '${1:object}.New(${2:list:List<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Enumerator<T>.HasNext()':
+        prefix: 'Enumerator<T>.HasNext()'
+        body: '${1:object}.HasNext()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Enumerator<T>.NextObject()':
+        prefix: 'Enumerator<T>.NextObject()'
+        body: '${1:object}.NextObject()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'BackwardsEnumerator<T>.New(list:List<T>)':
+        prefix: 'BackwardsEnumerator<T>.New(list:List<T>)'
+        body: '${1:object}.New(${2:list:List<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'BackwardsEnumerator<T>.HasNext()':
+        prefix: 'BackwardsEnumerator<T>.HasNext()'
+        body: '${1:object}.HasNext()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'BackwardsEnumerator<T>.NextObject()':
+        prefix: 'BackwardsEnumerator<T>.NextObject()'
+        body: '${1:object}.NextObject()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'FloatList.New(data:Float[])':
+        prefix: 'FloatList.New(data:Float[])'
+        body: '${1:object}.New(${2:data:Float[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatList.Equals(lhs:Float, rhs:Float)':
+        prefix: 'FloatList.Equals(lhs:Float, rhs:Float)'
+        body: '${1:object}.Equals(${2:lhs:Float}, ${3:rhs:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'FloatList.Compare(lhs:Float, rhs:Float)':
+        prefix: 'FloatList.Compare(lhs:Float, rhs:Float)'
+        body: '${1:object}.Compare(${2:lhs:Float}, ${3:rhs:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringList.New(data:String[])':
+        prefix: 'StringList.New(data:String[])'
+        body: '${1:object}.New(${2:data:String[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringList.Join(separator:String="")':
+        prefix: 'StringList.Join(separator:String="")'
+        body: '${1:object}.Join(${2:separator:String=""})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'String'
+    'StringList.Equals(lhs:String, rhs:String)':
+        prefix: 'StringList.Equals(lhs:String, rhs:String)'
+        body: '${1:object}.Equals(${2:lhs:String}, ${3:rhs:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'StringList.Compare(lhs:String, rhs:String)':
+        prefix: 'StringList.Compare(lhs:String, rhs:String)'
+        body: '${1:object}.Compare(${2:lhs:String}, ${3:rhs:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Map<K,V>.Compare(lhs:K, rhs:K)':
+        prefix: 'Map<K,V>.Compare(lhs:K, rhs:K)'
+        body: '${1:object}.Compare(${2:lhs:K}, ${3:rhs:K})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Map<K,V>.Clear()':
+        prefix: 'Map<K,V>.Clear()'
+        body: '${1:object}.Clear()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Map<K,V>.Count()':
+        prefix: 'Map<K,V>.Count()'
+        body: '${1:object}.Count()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Map<K,V>.IsEmpty()':
+        prefix: 'Map<K,V>.IsEmpty()'
+        body: '${1:object}.IsEmpty()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.Contains(key:K)':
+        prefix: 'Map<K,V>.Contains(key:K)'
+        body: '${1:object}.Contains(${2:key:K})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.Set(key:K, value:V)':
+        prefix: 'Map<K,V>.Set(key:K, value:V)'
+        body: '${1:object}.Set(${2:key:K}, ${3:value:V})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.Add(key:K, value:V)':
+        prefix: 'Map<K,V>.Add(key:K, value:V)'
+        body: '${1:object}.Add(${2:key:K}, ${3:value:V})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.Update(key:K, value:V)':
+        prefix: 'Map<K,V>.Update(key:K, value:V)'
+        body: '${1:object}.Update(${2:key:K}, ${3:value:V})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.Get(key:K)':
+        prefix: 'Map<K,V>.Get(key:K)'
+        body: '${1:object}.Get(${2:key:K})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'V'
+    'Map<K,V>.Remove(key:K)':
+        prefix: 'Map<K,V>.Remove(key:K)'
+        body: '${1:object}.Remove(${2:key:K})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Map<K,V>.Keys()':
+        prefix: 'Map<K,V>.Keys()'
+        body: '${1:object}.Keys()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'MapKeys<K,V>'
+    'Map<K,V>.Values()':
+        prefix: 'Map<K,V>.Values()'
+        body: '${1:object}.Values()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'MapValues<K,V>'
+    'Map<K,V>.ObjectEnumerator()':
+        prefix: 'Map<K,V>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'NodeEnumerator<K,V>'
+    'Map<K,V>.FirstNode()':
+        prefix: 'Map<K,V>.FirstNode()'
+        body: '${1:object}.FirstNode()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<K,V>'
+    'Map<K,V>.LastNode()':
+        prefix: 'Map<K,V>.LastNode()'
+        body: '${1:object}.LastNode()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Node<K,V>'
+    'Map<K,V>.Insert(key:K, value:V)':
+        prefix: 'Map<K,V>.Insert(key:K, value:V)'
+        body: '${1:object}.Insert(${2:key:K}, ${3:value:V})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Map<K,V>.ValueForKey(key:K)':
+        prefix: 'Map<K,V>.ValueForKey(key:K)'
+        body: '${1:object}.ValueForKey(${2:key:K})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'V'
+    'KeyEnumerator<K,V>.New(node:Node<K, V>:Int)':
+        prefix: 'KeyEnumerator<K,V>.New(node:Node<K, V>:Int)'
+        body: '${1:object}.New(${2:node:Node<K}, ${3:V>:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'KeyEnumerator<K,V>.HasNext()':
+        prefix: 'KeyEnumerator<K,V>.HasNext()'
+        body: '${1:object}.HasNext()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'KeyEnumerator<K,V>.NextObject()':
+        prefix: 'KeyEnumerator<K,V>.NextObject()'
+        body: '${1:object}.NextObject()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'K'
+    'ValueEnumerator<K,V>.New(node:Node<K, V>:Int)':
+        prefix: 'ValueEnumerator<K,V>.New(node:Node<K, V>:Int)'
+        body: '${1:object}.New(${2:node:Node<K}, ${3:V>:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'ValueEnumerator<K,V>.HasNext()':
+        prefix: 'ValueEnumerator<K,V>.HasNext()'
+        body: '${1:object}.HasNext()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'ValueEnumerator<K,V>.NextObject()':
+        prefix: 'ValueEnumerator<K,V>.NextObject()'
+        body: '${1:object}.NextObject()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'V'
+    'MapKeys<K,V>.New(map:Map<K, V>:Int)':
+        prefix: 'MapKeys<K,V>.New(map:Map<K, V>:Int)'
+        body: '${1:object}.New(${2:map:Map<K}, ${3:V>:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'MapKeys<K,V>.ObjectEnumerator()':
+        prefix: 'MapKeys<K,V>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'KeyEnumerator<K,V>'
+    'MapValues<K,V>.New(map:Map<K, V>:Int)':
+        prefix: 'MapValues<K,V>.New(map:Map<K, V>:Int)'
+        body: '${1:object}.New(${2:map:Map<K}, ${3:V>:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'MapValues<K,V>.ObjectEnumerator()':
+        prefix: 'MapValues<K,V>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'ValueEnumerator<K,V>'
+    'IntMap<V>.Compare(lhs:Int, rhs:Int)':
+        prefix: 'IntMap<V>.Compare(lhs:Int, rhs:Int)'
+        body: '${1:object}.Compare(${2:lhs:Int}, ${3:rhs:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatMap<V>.Compare(lhs:Float, rhs:Float)':
+        prefix: 'FloatMap<V>.Compare(lhs:Float, rhs:Float)'
+        body: '${1:object}.Compare(${2:lhs:Float}, ${3:rhs:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringMap<V>.Compare(lhs:String, rhs:String)':
+        prefix: 'StringMap<V>.Compare(lhs:String, rhs:String)'
+        body: '${1:object}.Compare(${2:lhs:String}, ${3:rhs:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'PI':
+        prefix: 'PI'
+        body: 'PI$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Float'
+    'TWOPI':
+        prefix: 'TWOPI'
+        body: 'TWOPI$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Float'
+    'HALFPI':
+        prefix: 'HALFPI'
+        body: 'HALFPI$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Float'
+    'Sin(n:Float)':
+        prefix: 'Sin(n:Float)'
+        body: 'Sin(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Cos(n:Float)':
+        prefix: 'Cos(n:Float)'
+        body: 'Cos(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Tan(n:Float)':
+        prefix: 'Tan(n:Float)'
+        body: 'Tan(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ASin(n:Float)':
+        prefix: 'ASin(n:Float)'
+        body: 'ASin(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ACos(n:Float)':
+        prefix: 'ACos(n:Float)'
+        body: 'ACos(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ATan(n:Float)':
+        prefix: 'ATan(n:Float)'
+        body: 'ATan(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ATan2(x:Float, y:Float)':
+        prefix: 'ATan2(x:Float, y:Float)'
+        body: 'ATan2(${2:x:Float}, ${3:y:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Sinr(n:Float)':
+        prefix: 'Sinr(n:Float)'
+        body: 'Sinr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Cosr(n:Float)':
+        prefix: 'Cosr(n:Float)'
+        body: 'Cosr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Tanr(n:Float)':
+        prefix: 'Tanr(n:Float)'
+        body: 'Tanr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ASinr(n:Float)':
+        prefix: 'ASinr(n:Float)'
+        body: 'ASinr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ACosr(n:Float)':
+        prefix: 'ACosr(n:Float)'
+        body: 'ACosr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ATanr(n:Float)':
+        prefix: 'ATanr(n:Float)'
+        body: 'ATanr(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'ATan2r(x:Float, y:Float)':
+        prefix: 'ATan2r(x:Float, y:Float)'
+        body: 'ATan2r(${2:x:Float}, ${3:y:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Sqrt(n:Float)':
+        prefix: 'Sqrt(n:Float)'
+        body: 'Sqrt(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Floor(n:Float)':
+        prefix: 'Floor(n:Float)'
+        body: 'Floor(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Ceil(n:Float)':
+        prefix: 'Ceil(n:Float)'
+        body: 'Ceil(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Log(n:Float)':
+        prefix: 'Log(n:Float)'
+        body: 'Log(${2:n:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Pow(x:Float, y:Float)':
+        prefix: 'Pow(x:Float, y:Float)'
+        body: 'Pow(${2:x:Float}, ${3:y:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Exp(x:Float)':
+        prefix: 'Exp(x:Float)'
+        body: 'Exp(${2:x:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Sgn(x:Int)':
+        prefix: 'Sgn(x:Int)'
+        body: 'Sgn(${2:x:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'Abs(x:Int)':
+        prefix: 'Abs(x:Int)'
+        body: 'Abs(${2:x:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'Min(x:Int, y:Int)':
+        prefix: 'Min(x:Int, y:Int)'
+        body: 'Min(${2:x:Int}, ${3:y:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'Max(x:Int, y:Int)':
+        prefix: 'Max(x:Int, y:Int)'
+        body: 'Max(${2:x:Int}, ${3:y:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'Clamp(n:Int, min:Int, max:Int)':
+        prefix: 'Clamp(n:Int, min:Int, max:Int)'
+        body: 'Clamp(${2:n:Int}, ${3:min:Int}, ${4:max:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'Sgn(x:Float)':
+        prefix: 'Sgn(x:Float)'
+        body: 'Sgn(${2:x:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Abs(x:Float)':
+        prefix: 'Abs(x:Float)'
+        body: 'Abs(${2:x:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Min(x:Float, y:Float)':
+        prefix: 'Min(x:Float, y:Float)'
+        body: 'Min(${2:x:Float}, ${3:y:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Max(x:Float, y:Float)':
+        prefix: 'Max(x:Float, y:Float)'
+        body: 'Max(${2:x:Float}, ${3:y:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Clamp(n:Float, min:Float, max:Float)':
+        prefix: 'Clamp(n:Float, min:Float, max:Float)'
+        body: 'Clamp(${2:n:Float}, ${3:min:Float}, ${4:max:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Seed':
+        prefix: 'Seed'
+        body: 'Seed$0'
+        leftLabelHTML: '<span class="monkey-global">g</span>'
+        rightLabelHTML: 'Int'
+    'Rnd()':
+        prefix: 'Rnd()'
+        body: 'Rnd()$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Rnd(range:Float)':
+        prefix: 'Rnd(range:Float)'
+        body: 'Rnd(${2:range:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Rnd(low:Float, high:Float)':
+        prefix: 'Rnd(low:Float, high:Float)'
+        body: 'Rnd(${2:low:Float}, ${3:high:Float})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Float'
+    'Set<T>.New(map:Map<T, Object>:Int)':
+        prefix: 'Set<T>.New(map:Map<T, Object>:Int)'
+        body: '${1:object}.New(${2:map:Map<T}, ${3:Object>:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Set<T>.Clear()':
+        prefix: 'Set<T>.Clear()'
+        body: '${1:object}.Clear()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Set<T>.Count()':
+        prefix: 'Set<T>.Count()'
+        body: '${1:object}.Count()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Set<T>.IsEmpty()':
+        prefix: 'Set<T>.IsEmpty()'
+        body: '${1:object}.IsEmpty()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Set<T>.Contains(value:T)':
+        prefix: 'Set<T>.Contains(value:T)'
+        body: '${1:object}.Contains(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Set<T>.Insert(value:T)':
+        prefix: 'Set<T>.Insert(value:T)'
+        body: '${1:object}.Insert(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Set<T>.Remove(value:T)':
+        prefix: 'Set<T>.Remove(value:T)'
+        body: '${1:object}.Remove(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Set<T>.ObjectEnumerator()':
+        prefix: 'Set<T>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'KeyEnumerator<T,Object>'
+    'IntSet.New()':
+        prefix: 'IntSet.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatSet.New()':
+        prefix: 'FloatSet.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringSet.New()':
+        prefix: 'StringSet.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.New()':
+        prefix: 'Stack<T>.New()'
+        body: '${1:object}.New()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.New(data:T[])':
+        prefix: 'Stack<T>.New(data:T[])'
+        body: '${1:object}.New(${2:data:T[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.ToArray()':
+        prefix: 'Stack<T>.ToArray()'
+        body: '${1:object}.ToArray()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T[]'
+    'Stack<T>.Equals(lhs:T, rhs:T)':
+        prefix: 'Stack<T>.Equals(lhs:T, rhs:T)'
+        body: '${1:object}.Equals(${2:lhs:T}, ${3:rhs:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Stack<T>.Compare(lhs:T, rhs:T)':
+        prefix: 'Stack<T>.Compare(lhs:T, rhs:T)'
+        body: '${1:object}.Compare(${2:lhs:T}, ${3:rhs:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Stack<T>.Clear()':
+        prefix: 'Stack<T>.Clear()'
+        body: '${1:object}.Clear()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Data()':
+        prefix: 'Stack<T>.Data()'
+        body: '${1:object}.Data()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T[]'
+    'Stack<T>.Length(newlength:Int)':
+        prefix: 'Stack<T>.Length(newlength:Int)'
+        body: '${1:object}.Length(${2:newlength:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Length()':
+        prefix: 'Stack<T>.Length()'
+        body: '${1:object}.Length()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Stack<T>.IsEmpty()':
+        prefix: 'Stack<T>.IsEmpty()'
+        body: '${1:object}.IsEmpty()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Stack<T>.Contains(value:T)':
+        prefix: 'Stack<T>.Contains(value:T)'
+        body: '${1:object}.Contains(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'Stack<T>.Push(value:T)':
+        prefix: 'Stack<T>.Push(value:T)'
+        body: '${1:object}.Push(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Push(values:T[], offset:Int=0)':
+        prefix: 'Stack<T>.Push(values:T[], offset:Int=0)'
+        body: '${1:object}.Push(${2:values:T[]}, ${3:offset:Int=0})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Push(values:T[], offset:Int, count:Int)':
+        prefix: 'Stack<T>.Push(values:T[], offset:Int, count:Int)'
+        body: '${1:object}.Push(${2:values:T[]}, ${3:offset:Int}, ${4:count:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Pop()':
+        prefix: 'Stack<T>.Pop()'
+        body: '${1:object}.Pop()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Stack<T>.Top()':
+        prefix: 'Stack<T>.Top()'
+        body: '${1:object}.Top()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Stack<T>.Set(index:Int, value:T)':
+        prefix: 'Stack<T>.Set(index:Int, value:T)'
+        body: '${1:object}.Set(${2:index:Int}, ${3:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Get(index:Int)':
+        prefix: 'Stack<T>.Get(index:Int)'
+        body: '${1:object}.Get(${2:index:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'Stack<T>.Find(value:T, start:Int=0)':
+        prefix: 'Stack<T>.Find(value:T, start:Int=0)'
+        body: '${1:object}.Find(${2:value:T}, ${3:start:Int=0})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Stack<T>.FindLast(value:T)':
+        prefix: 'Stack<T>.FindLast(value:T)'
+        body: '${1:object}.FindLast(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Stack<T>.FindLast(value:T, start:Int)':
+        prefix: 'Stack<T>.FindLast(value:T, start:Int)'
+        body: '${1:object}.FindLast(${2:value:T}, ${3:start:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'Stack<T>.Insert(index:Int, value:T)':
+        prefix: 'Stack<T>.Insert(index:Int, value:T)'
+        body: '${1:object}.Insert(${2:index:Int}, ${3:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Remove(index:Int)':
+        prefix: 'Stack<T>.Remove(index:Int)'
+        body: '${1:object}.Remove(${2:index:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.RemoveFirst(value:T)':
+        prefix: 'Stack<T>.RemoveFirst(value:T)'
+        body: '${1:object}.RemoveFirst(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.RemoveLast(value:T)':
+        prefix: 'Stack<T>.RemoveLast(value:T)'
+        body: '${1:object}.RemoveLast(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.RemoveEach(value:T)':
+        prefix: 'Stack<T>.RemoveEach(value:T)'
+        body: '${1:object}.RemoveEach(${2:value:T})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.Sort(ascending:Bool=True)':
+        prefix: 'Stack<T>.Sort(ascending:Bool=True)'
+        body: '${1:object}.Sort(${2:ascending:Bool=True})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'Stack<T>.ObjectEnumerator()':
+        prefix: 'Stack<T>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Enumerator<T>'
+    'Stack<T>.Backwards()':
+        prefix: 'Stack<T>.Backwards()'
+        body: '${1:object}.Backwards()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'BackwardsStack<T>'
+    'BackwardsStack<T>.New(stack:Stack<T>)':
+        prefix: 'BackwardsStack<T>.New(stack:Stack<T>)'
+        body: '${1:object}.New(${2:stack:Stack<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'BackwardsStack<T>.ObjectEnumerator()':
+        prefix: 'BackwardsStack<T>.ObjectEnumerator()'
+        body: '${1:object}.ObjectEnumerator()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'BackwardsEnumerator<T>'
+    'BackwardsEnumerator<T>.New(stack:Stack<T>)':
+        prefix: 'BackwardsEnumerator<T>.New(stack:Stack<T>)'
+        body: '${1:object}.New(${2:stack:Stack<T>})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'BackwardsEnumerator<T>.HasNext()':
+        prefix: 'BackwardsEnumerator<T>.HasNext()'
+        body: '${1:object}.HasNext()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'BackwardsEnumerator<T>.NextObject()':
+        prefix: 'BackwardsEnumerator<T>.NextObject()'
+        body: '${1:object}.NextObject()$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'T'
+    'IntStack.New(data:Int[])':
+        prefix: 'IntStack.New(data:Int[])'
+        body: '${1:object}.New(${2:data:Int[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'IntStack.Equals(lhs:Int, rhs:Int)':
+        prefix: 'IntStack.Equals(lhs:Int, rhs:Int)'
+        body: '${1:object}.Equals(${2:lhs:Int}, ${3:rhs:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'IntStack.Compare(lhs:Int, rhs:Int)':
+        prefix: 'IntStack.Compare(lhs:Int, rhs:Int)'
+        body: '${1:object}.Compare(${2:lhs:Int}, ${3:rhs:Int})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'FloatStack.New(data:Float[])':
+        prefix: 'FloatStack.New(data:Float[])'
+        body: '${1:object}.New(${2:data:Float[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'FloatStack.Equals(lhs:Float, rhs:Float)':
+        prefix: 'FloatStack.Equals(lhs:Float, rhs:Float)'
+        body: '${1:object}.Equals(${2:lhs:Float}, ${3:rhs:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'FloatStack.Compare(lhs:Float, rhs:Float)':
+        prefix: 'FloatStack.Compare(lhs:Float, rhs:Float)'
+        body: '${1:object}.Compare(${2:lhs:Float}, ${3:rhs:Float})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'StringStack.New(data:String[])':
+        prefix: 'StringStack.New(data:String[])'
+        body: '${1:object}.New(${2:data:String[]})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Void'
+    'StringStack.Join(separator:String="")':
+        prefix: 'StringStack.Join(separator:String="")'
+        body: '${1:object}.Join(${2:separator:String=""})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'String'
+    'StringStack.Equals(lhs:String, rhs:String)':
+        prefix: 'StringStack.Equals(lhs:String, rhs:String)'
+        body: '${1:object}.Equals(${2:lhs:String}, ${3:rhs:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Bool'
+    'StringStack.Compare(lhs:String, rhs:String)':
+        prefix: 'StringStack.Compare(lhs:String, rhs:String)'
+        body: '${1:object}.Compare(${2:lhs:String}, ${3:rhs:String})$0'
+        leftLabelHTML: '<span class="monkey-method">m</span>'
+        rightLabelHTML: 'Int'
+    'HostOS()':
+        prefix: 'HostOS()'
+        body: 'HostOS()$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'AppPath()':
+        prefix: 'AppPath()'
+        body: 'AppPath()$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'AppArgs()':
+        prefix: 'AppArgs()'
+        body: 'AppArgs()$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String[]'
+    'RealPath(path:String)':
+        prefix: 'RealPath(path:String)'
+        body: 'RealPath(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'FileType(path:String)':
+        prefix: 'FileType(path:String)'
+        body: 'FileType(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'FileSize(path:String)':
+        prefix: 'FileSize(path:String)'
+        body: 'FileSize(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'FileTime(path:String)':
+        prefix: 'FileTime(path:String)'
+        body: 'FileTime(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'CopyFile(src:String, dst:String)':
+        prefix: 'CopyFile(src:String, dst:String)'
+        body: 'CopyFile(${2:src:String}, ${3:dst:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'DeleteFile(path:String)':
+        prefix: 'DeleteFile(path:String)'
+        body: 'DeleteFile(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'LoadString(path:String)':
+        prefix: 'LoadString(path:String)'
+        body: 'LoadString(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'SaveString(str:String, path:String)':
+        prefix: 'SaveString(str:String, path:String)'
+        body: 'SaveString(${2:str:String}, ${3:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'LoadDir(path:String)':
+        prefix: 'LoadDir(path:String)'
+        body: 'LoadDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String[]'
+    'CreateDir(path:String)':
+        prefix: 'CreateDir(path:String)'
+        body: 'CreateDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'DeleteDir(path:String)':
+        prefix: 'DeleteDir(path:String)'
+        body: 'DeleteDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'ChangeDir(path:String)':
+        prefix: 'ChangeDir(path:String)'
+        body: 'ChangeDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'CurrentDir()':
+        prefix: 'CurrentDir()'
+        body: 'CurrentDir()$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'SetEnv(name:String, value:String)':
+        prefix: 'SetEnv(name:String, value:String)'
+        body: 'SetEnv(${2:name:String}, ${3:value:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'GetEnv(name:String)':
+        prefix: 'GetEnv(name:String)'
+        body: 'GetEnv(${2:name:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'Execute(cmd:String)':
+        prefix: 'Execute(cmd:String)'
+        body: 'Execute(${2:cmd:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'ExitApp(retcode:Int)':
+        prefix: 'ExitApp(retcode:Int)'
+        body: 'ExitApp(${2:retcode:Int})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Int'
+    'FILETYPE_NONE':
+        prefix: 'FILETYPE_NONE'
+        body: 'FILETYPE_NONE$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Int'
+    'FILETYPE_FILE':
+        prefix: 'FILETYPE_FILE'
+        body: 'FILETYPE_FILE$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Int'
+    'FILETYPE_DIR':
+        prefix: 'FILETYPE_DIR'
+        body: 'FILETYPE_DIR$0'
+        leftLabelHTML: '<span class="monkey-const">c</span>'
+        rightLabelHTML: 'Int'
+    'LoadDir(path:String, recursive:Bool, hidden:Bool=False)':
+        prefix: 'LoadDir(path:String, recursive:Bool, hidden:Bool=False)'
+        body: 'LoadDir(${2:path:String}, ${3:recursive:Bool}, ${4:hidden:Bool=False})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String[]'
+    'CopyDir(srcpath:String, dstpath:String, recursive:Bool=True, hidden:Bool=False)':
+        prefix: 'CopyDir(srcpath:String, dstpath:String, recursive:Bool=True, hidden:Bool=False)'
+        body: 'CopyDir(${2:srcpath:String}, ${3:dstpath:String}, ${4:recursive:Bool=True}, ${5:hidden:Bool=False})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'DeleteDir(path:String, recursive:Bool)':
+        prefix: 'DeleteDir(path:String, recursive:Bool)'
+        body: 'DeleteDir(${2:path:String}, ${3:recursive:Bool})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'Void'
+    'StripDir(path:String)':
+        prefix: 'StripDir(path:String)'
+        body: 'StripDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'ExtractDir(path:String)':
+        prefix: 'ExtractDir(path:String)'
+        body: 'ExtractDir(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'StripExt(path:String)':
+        prefix: 'StripExt(path:String)'
+        body: 'StripExt(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'ExtractExt(path:String)':
+        prefix: 'ExtractExt(path:String)'
+        body: 'ExtractExt(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'StripAll(path:String)':
+        prefix: 'StripAll(path:String)'
+        body: 'StripAll(${2:path:String})$0'
+        leftLabelHTML: '<span class="monkey-function">f</span>'
+        rightLabelHTML: 'String'
+    'JsonValue.BoolValue()':
+      prefix: 'JsonValue.BoolValue()'
+      body: '${1:object}.BoolValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Bool'
+    'JsonValue.IntValue()':
+      prefix: 'JsonValue.IntValue()'
+      body: '${1:object}.IntValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Int'
+    'JsonValue.FloatValue()':
+      prefix: 'JsonValue.FloatValue()'
+      body: '${1:object}.FloatValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Float'
+    'JsonValue.StringValue()':
+      prefix: 'JsonValue.StringValue()'
+      body: '${1:object}.StringValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonValue.ToJson()':
+      prefix: 'JsonValue.ToJson()'
+      body: '${1:object}.ToJson()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonValue.PushJson(buf:StringStack)':
+      prefix: 'JsonValue.PushJson(buf:StringStack)'
+      body: '${1:object}.PushJson(${2:buf:StringStack})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.New()':
+      prefix: 'JsonObject.New()'
+      body: '${1:object}.New()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.New(json:String)':
+      prefix: 'JsonObject.New(json:String)'
+      body: '${1:object}.New(${2:json:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.New(data:StringMap<JsonValue>)':
+      prefix: 'JsonObject.New(data:StringMap<JsonValue>)'
+      body: '${1:object}.New(${2:data:StringMap<JsonValue>})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.Contains(key:String)':
+      prefix: 'JsonObject.Contains(key:String)'
+      body: '${1:object}.Contains(${2:key:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Bool'
+    'JsonObject.Set(key:String, value:JsonValue)':
+      prefix: 'JsonObject.Set(key:String, value:JsonValue)'
+      body: '${1:object}.Set(${2:key:String}, ${3:value:JsonValue})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.SetBool(key:String, value:Bool)':
+      prefix: 'JsonObject.SetBool(key:String, value:Bool)'
+      body: '${1:object}.SetBool(${2:key:String}, ${3:value:Bool})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.SetInt(key:String, value:Int)':
+      prefix: 'JsonObject.SetInt(key:String, value:Int)'
+      body: '${1:object}.SetInt(${2:key:String}, ${3:value:Int})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.SetFloat(key:String, value:Float)':
+      prefix: 'JsonObject.SetFloat(key:String, value:Float)'
+      body: '${1:object}.SetFloat(${2:key:String}, ${3:value:Float})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.SetString(key:String, value:String)':
+      prefix: 'JsonObject.SetString(key:String, value:String)'
+      body: '${1:object}.SetString(${2:key:String}, ${3:value:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonObject.Get(key:String, defval:JsonValue=Null)':
+      prefix: 'JsonObject.Get(key:String, defval:JsonValue=Null)'
+      body: '${1:object}.Get(${2:key:String}, ${3:defval:JsonValue=Null})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'JsonValue'
+    'JsonObject.GetBool(key:String, defval:Bool=False)':
+      prefix: 'JsonObject.GetBool(key:String, defval:Bool=False)'
+      body: '${1:object}.GetBool(${2:key:String}, ${3:defval:Bool=False})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Bool'
+    'JsonObject.GetInt(key:String, defval:Int=0)':
+      prefix: 'JsonObject.GetInt(key:String, defval:Int=0)'
+      body: '${1:object}.GetInt(${2:key:String}, ${3:defval:Int=0})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Int'
+    'JsonObject.GetFloat(key:String, defval:Float=0)':
+      prefix: 'JsonObject.GetFloat(key:String, defval:Float=0)'
+      body: '${1:object}.GetFloat(${2:key:String}, ${3:defval:Float=0})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Float'
+    'JsonObject.GetString(key:String, defval:String="")':
+      prefix: 'JsonObject.GetString(key:String, defval:String="")'
+      body: '${1:object}.GetString(${2:key:String}, ${3:defval:String=""})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonObject.GetData()':
+      prefix: 'JsonObject.GetData()'
+      body: '${1:object}.GetData()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'StringMap<JsonValue>'
+    'JsonObject.PushJson(buf:StringStack)':
+      prefix: 'JsonObject.PushJson(buf:StringStack)'
+      body: '${1:object}.PushJson(${2:buf:StringStack})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonBool.New(value:Bool)':
+      prefix: 'JsonBool.New(value:Bool)'
+      body: '${1:object}.New(${2:value:Bool})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonBool.BoolValue()':
+      prefix: 'JsonBool.BoolValue()'
+      body: '${1:object}.BoolValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Bool'
+    'JsonBool.ToJson()':
+      prefix: 'JsonBool.ToJson()'
+      body: '${1:object}.ToJson()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonBool.Instance(value:Bool)':
+      prefix: 'JsonBool.Instance(value:Bool)'
+      body: 'JsonBool.Instance(${2:value:Bool})$0'
+      leftLabelHTML: '<span class="monkey-function">f</span>'
+      rightLabelHTML: 'JsonBool'
+    'JsonString.New(value:String)':
+      prefix: 'JsonString.New(value:String)'
+      body: '${1:object}.New(${2:value:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonString.StringValue()':
+      prefix: 'JsonString.StringValue()'
+      body: '${1:object}.StringValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonString.ToJson()':
+      prefix: 'JsonString.ToJson()'
+      body: '${1:object}.ToJson()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonString.Instance(value:String)':
+      prefix: 'JsonString.Instance(value:String)'
+      body: 'JsonString.Instance(${2:value:String})$0'
+      leftLabelHTML: '<span class="monkey-function">f</span>'
+      rightLabelHTML: 'JsonString'
+    'JsonNumber.New(value:String)':
+      prefix: 'JsonNumber.New(value:String)'
+      body: '${1:object}.New(${2:value:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonNumber.IntValue()':
+      prefix: 'JsonNumber.IntValue()'
+      body: '${1:object}.IntValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Int'
+    'JsonNumber.FloatValue()':
+      prefix: 'JsonNumber.FloatValue()'
+      body: '${1:object}.FloatValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Float'
+    'JsonNumber.ToJson()':
+      prefix: 'JsonNumber.ToJson()'
+      body: '${1:object}.ToJson()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'String'
+    'JsonNumber.Instance(value:String)':
+      prefix: 'JsonNumber.Instance(value:String)'
+      body: 'JsonNumber.Instance(${2:value:String})$0'
+      leftLabelHTML: '<span class="monkey-function">f</span>'
+      rightLabelHTML: 'JsonNumber'
+    'JsonParser.New(json:String)':
+      prefix: 'JsonParser.New(json:String)'
+      body: '${1:object}.New(${2:json:String})$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'Void'
+    'JsonParser.ParseValue()':
+      prefix: 'JsonParser.ParseValue()'
+      body: '${1:object}.ParseValue()$0'
+      leftLabelHTML: '<span class="monkey-method">m</span>'
+      rightLabelHTML: 'JsonValue'

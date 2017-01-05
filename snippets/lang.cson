@@ -1,0 +1,97 @@
+".source.monkey":
+
+    "if":
+        prefix: "if"
+        body: """
+        If ${1:condition}
+            $0
+        End
+        """
+
+    "for":
+        prefix: "for"
+        body: """
+        For Local ${1:i:Int} = 0 Until ${2:number}
+            $0
+        End
+        """
+
+    "foreach":
+        prefix: "foreach"
+        body: """
+        For ${1:object} = EachIn ${2:collection}
+            $0
+        End
+        """
+
+    "while":
+        prefix: "while"
+        body: """
+        While ${1:condition}
+            $0
+        End
+        """
+
+    "repeat":
+        prefix: "repeat"
+        body: """
+        Repeat
+            $0
+        Until ${1:condition}
+        """
+
+    "class":
+        prefix: "class"
+        body: """
+        Class ${1:name}
+            $0
+        End
+        """
+
+    "interface":
+        prefix: "interface"
+        body: """
+        Interface ${1:name}
+            $0
+        End
+        """
+
+    "function":
+        prefix: "function"
+        body: """
+        Function ${1:name}:${2:Void}(${3:arguments})
+            $0
+        End
+        """
+
+    "method":
+        prefix: "method"
+        body: """
+        Method ${1:name}:${2:Void}(${3:arguments})
+            $0
+        End
+        """
+
+    "local":
+        prefix: "local"
+        body: "Local ${1:name}:${2:type}"
+
+    "global":
+        prefix: "global"
+        body: "Global ${1:name}:${2:type}"
+
+    "field":
+        prefix: "field"
+        body: "Field ${1:name}:${2:type}"
+
+    "const":
+        prefix: "const"
+        body: "Const ${1:NAME}:${2:type} = ${3:value}"
+
+    "++":
+        prefix: "++"
+        body: " += 1"
+
+    "--":
+        prefix: "--"
+        body: " -= 1"
