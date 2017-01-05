@@ -11,13 +11,14 @@
     "basic"
   ],
   "repository": "https://github.com/arawkins/atom-monkey",
-  "license": "MIT",
+  "license": "GPL",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "activationCommands": {
-    "atom-workspace": "monkey:buildDefault",
-    ".file.selected": "monkey:setCompilationTarget"
+    "atom-workspace": "language-monkey2:buildDefault",
+    "atom-workspace": "language-monkey2:buildAutocompleteDatabase",
+    ".file.selected": "language-monkey2:setCompilationTarget"
   },
   "activationHooks": [
     "language-monkey2:grammar-used"

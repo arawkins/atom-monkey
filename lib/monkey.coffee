@@ -68,30 +68,34 @@ module.exports = Monkey =
         @subscriptions = new CompositeDisposable
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:build': => @build(self.getCompilationTarget())
+            'language-monkey2:build': => @build(self.getCompilationTarget())
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:buildDefault': => @buildDefault()
+            'language-monkey2:buildDefault': => @buildDefault()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:buildCurrent': => @buildCurrent()
+            'language-monkey2:buildCurrent': => @buildCurrent()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:hideOutput': => @hideOutput()
+            'language-monkey2:hideOutput': => @hideOutput()
 
         @subscriptions.add atom.commands.add 'atom-workspace',
-            'monkey2:toggleOutput': => @toggleOutput()
+            'language-monkey2:toggleOutput': => @toggleOutput()
+
+        @subscriptions.add atom.commands.add 'atom-workspace',
+            'language-monkey2:buildAutocompleteDatabase': => @buildAutocompleteDatabase()
 
         @subscriptions.add atom.commands.add '.file.selected',
-            'monkey2:setCompilationTarget': (event) ->
+            'language-monkey2:setCompilationTarget': (event) ->
                 self.setCompilationTarget(event.target)
 
         @subscriptions.add atom.commands.add '.file.selected',
-            'monkey2:clearCompilationTarget': => @clearCompilationTarget()
+            'language-monkey2:clearCompilationTarget': => @clearCompilationTarget()
 
         @subscriptions.add atom.commands.add '.file.selected',
-            'monkey2:buildSelected': (event) ->
+            'language-monkey2:buildSelected': (event) ->
                 self.build(event.target.getAttribute('data-path'))
+
 
         @projectNamespace = atom.project.getPaths()[0]
         @projects = state.projects

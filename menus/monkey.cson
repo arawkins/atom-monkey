@@ -6,19 +6,19 @@
             'submenu': [
                 {
                     'label': 'Build Default'
-                    'command': 'monkey2:buildDefault'
+                    'command': 'language-monkey2:buildDefault'
                 },
                 {
                     'label': 'Build Current'
-                    'command': 'monkey2:buildCurrent'
+                    'command': 'language-monkey2:buildCurrent'
                 },
                 {
                     'label': 'Toggle Output'
-                    'command': 'monkey2:toggleOutput'
+                    'command': 'language-monkey2:toggleOutput'
                 },
                 {
                     'label': 'Rebuild Autocomplete Database'
-                    'command': 'monkey2:buildAutocompleteDatabase'
+                    'command': 'language-monkey2:buildAutocompleteDatabase'
                 }
             ]
         ]
@@ -32,9 +32,9 @@
         {
             label: 'Monkey2',
             submenu: [
-                {label: 'Set Default Target', command: 'monkey2:setCompilationTarget'}
-                {label: 'Clear Default Target', command: 'monkey2:clearCompilationTarget'}
-                {label: 'Build Selected', command: 'monkey2:buildSelected'}
+                {label: 'Set Default Target', command: 'language-monkey2:setCompilationTarget'}
+                {label: 'Clear Default Target', command: 'language-monkey2:clearCompilationTarget'}
+                {label: 'Build Selected', command: 'language-monkey2:buildSelected'}
             ]
         },
         {
@@ -50,15 +50,15 @@
             submenu: [
                 {
                     'label': 'Build Default'
-                    'command': 'monkey2:buildDefault'
+                    'command': 'language-monkey2:buildDefault'
                 },
                 {
                     'label': 'Build Current'
-                    'command': 'monkey2:buildCurrent'
+                    'command': 'language-monkey2:buildCurrent'
                 },
                 {
                     'label': 'Toggle Output'
-                    'command': 'monkey2:toggleOutput'
+                    'command': 'language-monkey2:toggleOutput'
                 }
             ]
         },
