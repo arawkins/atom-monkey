@@ -2,7 +2,7 @@
   "name": "language-monkey2",
   "version": "1.1.1",
   "main": "./lib/monkey",
-  "description": "Syntax highlighting and compiler integration for the Monkey2 programming language.",
+  "description": "Syntax highlighting, autocompletion, and compiler integration for the Monkey2 programming language.",
   "keywords": [
     "monkey",
     "monkey2",

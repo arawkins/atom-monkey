@@ -15,6 +15,10 @@
                 {
                     'label': 'Toggle Output'
                     'command': 'monkey2:toggleOutput'
+                },
+                {
+                    'label': 'Rebuild Autocomplete Database'
+                    'command': 'monkey2:buildAutocompleteDatabase'
                 }
             ]
         ]

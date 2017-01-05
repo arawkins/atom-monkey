@@ -1,4 +1,5 @@
 MonkeyView = require './monkey-view'
+MonkeyProvider = require './monkey-provider'
 $ = require 'jquery'
 
 exec = require('child_process').exec
@@ -20,25 +21,28 @@ module.exports = Monkey =
             type: 'boolean'
             default: true
     monkeyViewState: null
+    monkeyViewProvider: null
     modalPanel: null
     subscriptions: null
     compilationTarget: ''
     projects: {}
     projectNamespace: ''
-    provider: null
     self: this
 
     provide: ->
-        @provider
+        @monkeyProviderState
 
     activate: (state) ->
         self = @
         @monkeyViewState = new MonkeyView(state.monkeyViewState)
+        @monkeyProviderState = new MonkeyProvider(state.monkeyProviderState)
         @panel = atom.workspace.addBottomPanel(item: @monkeyViewState.getElement(), visible: true)
         @outputPanel = atom.workspace.addBottomPanel(item: @monkeyViewState.getOutput(), visible: false)
-        @provider = require './provider'
-        @provider.buildSuggestions()
-        setTimeout((()=>@provider.reParseVariables()),2000)
+
+        if @monkeyProviderState.needsRefresh()
+            @monkeyProviderState.suggestRefresh()
+
+        setTimeout((()=>@monkeyProviderState.reParseVariables()),2000)
 
         # Enable view event handlers
         $(@monkeyViewState.playBtn).on 'click', (event) =>
@@ -111,20 +115,20 @@ module.exports = Monkey =
         @subscriptions.add atom.workspace.observeTextEditors (editor) =>
             if /.monkey2$/.test(editor.getPath())
                 @subscriptions.add editor.onDidStopChanging () =>
-                    @provider.parseFile(editor.getPath())
+                    @monkeyProviderState.parseFile(editor.getPath())
 
 
     deactivate: ->
         @subscriptions.dispose()
         @monkeyViewState.destroy()
+        @monkeyProviderState.dispose()
 
     serialize: ->
         monkeyViewState: @monkeyViewState.serialize()
+        monkeyProviderState: @monkeyProviderState.serialize()
         projects: @projects
 
     observeTextEditors: (editor) =>
-
-
 
     setCompilationTarget: (fileNode)->
         @clearCompilationTarget()
@@ -159,6 +163,10 @@ module.exports = Monkey =
 
     toggleOutput: ->
         if @outputPanel.isVisible() then @outputPanel.hide() else @outputPanel.show()
+
+    buildAutocompleteDatabase: ->
+        console.log("go go go ")
+        @monkeyProviderState.buildSuggestions()
 
     buildCurrent: ->
         currentEditor = atom.workspace.getActiveTextEditor()

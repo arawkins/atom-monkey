@@ -6,6 +6,9 @@ dir = require 'node-dir'
 execFile = require('child_process').execFile
 
 module.exports =
+class MonkeyProvider
+
+    parsedFiles: []
     selector: '.source.monkey2'
     disableForSelector: '.source.monkey2 .comment'
 
@@ -18,12 +21,62 @@ module.exports =
     # This will be suggested before the default provider, which has a suggestionPriority of 1.
     suggestionPriority: 2
 
-    parsedFiles: []
-    fileDataCache: {}
+    # reference to rebuild notification alert, used for dismissal
+    rebuildNotification: null
 
-    buildSuggestions: ->
+    constructor: (serializedState) ->
+        if serializedState != undefined and serializedState.parsedFiles != undefined and serializedState.parsedFiles != null and serializedState.parsedFiles.length > 0
+            @parsedFiles = serializedState.parsedFiles
+            #console.log "skip state restore on provider for now (fix this)"
+
+    suggestRefresh: ()->
+        @rebuildNotification = atom.notifications.addInfo "The autocomplete database appears to be out of date. Rebuild?",
+        {
+            buttons: [
+                {
+                    text: 'yes'
+                    onDidClick: () =>
+                        @rebuildNotification.dismiss()
+                        @buildSuggestions()
+                },
+                {
+                    text: 'no'
+                    onDidClick: () =>
+                        @rebuildNotification.dismiss()
+
+                }
+            ],
+            dismissable: true,
+            icon: 'sync'
+        }
+
+    needsRefresh: () ->
+        if @parsedFiles == undefined or @parsedFiles == null or @parsedFiles.length == 0
+            return true
+
+        # let's see if there is a mismatch in file count across the modules folder
         mPath = atom.config.get "language-monkey2.monkey2Path"
         modsPath = path.join(mPath,'/modules')
+        fileCount = 0
+
+        dir.files(path.join(modsPath, '/'), (err, files) =>
+            if (err)
+                console.log err
+                return
+            files = files.filter((file) ->
+               return /.monkey2$/.test(file)
+            )
+            fileCount = files.length
+
+            if @parsedFiles.length != fileCount
+                return true
+        )
+
+    buildSuggestions: ->
+        atom.notifications.addInfo("Rebuilding autocomplete database...", {dismissable:true})
+        mPath = atom.config.get "language-monkey2.monkey2Path"
+        modsPath = path.join(mPath,'/modules')
+        @parsedFiles = []
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -35,7 +88,6 @@ module.exports =
                    return /.monkey2$/.test(file)
                 )
                 for file in files
-
                     @parseFile(file)
 
             )
@@ -51,10 +103,12 @@ module.exports =
 
             for file in files
                 @parseFile(file)
-                continue
         )
 
+
+
     parseFile: (filePath) ->
+
         execFile "/home/arawkins/.local/share/monkey2/bin/mx2cc_linux",
             ['makeapp', '-parse', '-geninfo', filePath],
             {
@@ -74,17 +128,17 @@ module.exports =
                     if message != ''
                         fileData = JSON.parse(message)
                         fileData.path = filePath
-                        for file, i in @parsedFiles
-                            if file.ident == fileData.ident
-                                @parsedFiles[i] = fileData
-                                return
-
                         @parsedFiles.push(fileData)
 
 
     reParseVariables: () ->
         return
 
+    serialize: () ->
+        { parsedFiles: @parsedFiles }
+
+    dispose: () ->
+        return
 
     # Required: Return a promise, an array of suggestions, or null.
     getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix, activatedManually}) ->
@@ -174,6 +228,8 @@ module.exports =
                                                 suggestion = @getSuggestion(classMember, member.ident)
                                                 if suggestion != null
                                                     shortlist.push(suggestion)
+
+
 
 
 
@@ -365,20 +421,6 @@ module.exports =
                         snippet += ")$" + (index+2)
             else
                 snippet = methodObject.ident + "()"
-
-            ###
-            if methodObject.parameters.length > 0
-                snippet = @name + "("
-                for param, index in methodObject.parameters
-                    if param != ''
-                        snippet += "${"+(index+1)+":"+param+"}"
-                    if index < constructorMethod.parameters.length-1
-                        snippet += ","
-                    else
-                        snippet += ")$" + (index+2)
-            else
-                snippet = @name + "()"
-        ###
         else
             snippet = @name
 
