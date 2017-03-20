@@ -16,6 +16,7 @@ class MonkeyClass
     constants:[]
     properties: []
     hidden: false
+    private :false
 
     constructor: (name) ->
         @name = name
@@ -26,6 +27,7 @@ class MonkeyClass
         @properties = []
         @constants = []
         @hidden = false
+        @private = false
 
     getConstructorSnippet: () ->
         snippet = ""
@@ -54,12 +56,14 @@ class MonkeyFunction
     description: ''
     hidden: false
     isConstructor: false
+    private: false
 
     constructor: (name) ->
         @name = name
         @parameters = []
         @returnType = 'Void'
         @hidden = false
+        @private = false
 
     getSnippet: () ->
         functionSnippet = ''
@@ -85,6 +89,7 @@ class MonkeyVariable
     type: ''
     description: ''
     hidden: false
+    private: false
 
     # sometimes we need to come back to variables and figure out their type
     # later, since it can depend on the parsing of other stuff (ie. method return values)
@@ -96,6 +101,7 @@ class MonkeyVariable
         @name = name
         @type = type
         @hidden = false
+        @private= false
 
 module.exports =
     selector: '.source.monkey2'
@@ -114,7 +120,7 @@ module.exports =
 
     buildSuggestions: ->
         mPath = atom.config.get "language-monkey2.monkey2Path"
-        modsPath = path.join(mPath,'/modules/')
+        modsPath = path.join(mPath,'/modules')
 
         for projectPath in atom.project.getPaths()
             dir.files(projectPath, (err, files) =>
@@ -162,7 +168,9 @@ module.exports =
 
         classRegex = RegExp /^\s*Class\s+(\b[\w<>]+\b)(\s+Extends\s+(\b\w+\b))?.*$/, 'im'
         structRegex = RegExp /^\s*Struct\s+\b([\w<>]+)\b.*$/, 'im'
-        statementRegex = RegExp /^\s*(If|For|Select|While).*$/, 'im'
+        statementRegex = RegExp /^\s*(For|Select|While).*$/, 'im'
+        ifRegex = RegExp /^\s*\bIf\b\s+.*$/, 'im'
+        ifThenRegex = RegExp /^\s*\bIf\b\s+.*\bThen\b.*$/, 'im'
         methodRegex = RegExp /^\s*Method\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         functionRegex = RegExp /^\s*Function\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
@@ -182,14 +190,20 @@ module.exports =
         instanceRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s?New\s\b(\w+)\b.*$/, 'im'
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
 
-
+        tabRegex = RegExp /^(\s*)\w+.*$/, 'im'
 
 
         inPrivate = false # when the parser hits a private declaration, it will skip everything until it hits a public again
+        privateIndent = -1
         inExtern = false # like inPrivate, ignore everything while in an extern
         inClass = ""; # when inside a class definition, store the class here
+        lastLineWasIf = false
+
+
         scope = [] # tracks what scope we are inside of (class, if statement, method, etc.).
         inNamespace = ""; # where the heck are we anyways?
+        previousIndent = -1;
+        currentIndent = -1;
 
         nextComment = ""; # when a monkeydoc comment is found, store it here; tack it on to the next thing that is found
 
@@ -198,6 +212,21 @@ module.exports =
         })
 
         rl.on 'line', (line) =>
+
+            # checkTabs is used to help detect one line if statements
+            # if we are following an if statement, and the tab spacing hasn't changed,
+            # we're going to assume the if statement was a one liner
+            checkTabs = tabRegex.exec(line)
+            if checkTabs != null
+                previousIndent = currentIndent
+                currentIndent = checkTabs[1].length
+                if lastLineWasIf and previousIndent == currentIndent
+                    #console.log("one line if statement, detected by tabspace")
+                    #console.log(line)
+                    scope.pop()
+
+            lastLineWasIf = false
+
             # let's look for namespace first, since it should be first
             if inNamespace == ''
                 checkNamespace = namespaceRegex.exec(line)
@@ -225,11 +254,13 @@ module.exports =
                 #console.log "inside private declaration"
                 inPrivate = true
                 inExtern = false
+                privateIndent = currentIndent
+                #console.log("entering private at indent " + privateIndent)
                 return;
 
 
             # ok, if we're not in private, lets check first for a comment
-            if not inPrivate and not inExtern
+            if not inExtern
 
                 checkComment = commentRegex.exec(line)
                 if checkComment != null
@@ -245,6 +276,7 @@ module.exports =
                     instanceType = checkInstance[4].trim()
                     thisInstance = new MonkeyVariable(instanceName, instanceType)
                     thisInstance.fileName = filePath
+                    thisInstance.private = inPrivate
 
                     if nextComment != ''
                         thisInstance.description = nextComment
@@ -268,6 +300,7 @@ module.exports =
                     thisVariable = new MonkeyVariable(variableName, variableType)
                     thisVariable.typeNeedsParsing = parseLater
                     thisVariable.fileName = filePath
+                    thisVariable.private = inPrivate
 
                     if nextComment != ''
                         thisVariable.description = nextComment
@@ -330,7 +363,8 @@ module.exports =
                         nextComment = ''
                     if thisClass.description.search("@hidden") != -1
                         thisClass.hidden = true
-
+                    thisClass.type= "Class"
+                    thisClass.private = inPrivate
                     scope.push(thisClass)
                     fileData.classes.push(thisClass)
                     return
@@ -347,6 +381,7 @@ module.exports =
                         nextComment = ''
                     if thisStruct.description.search("@hidden") != -1
                         thisStruct.hidden = true
+                    thisStruct.private = inPrivate
                     fileData.structs.push(thisStruct)
                     scope.push(thisStruct)
 
@@ -356,6 +391,8 @@ module.exports =
                     #console.log checkField
                     thisVar = new MonkeyVariable(checkField[1], checkField[2])
                     thisVar.fileName = filePath
+                    thisVar.private = inPrivate
+
                     if nextComment != ''
                         thisVar.description = nextComment
                         nextComment = ''
@@ -380,7 +417,7 @@ module.exports =
                     #console.log checkGlobal
                     thisVar = new MonkeyVariable(checkGlobal[1], checkGlobal[2])
                     thisVar.fileName = filePath
-
+                    thisVar.private = inPrivate
                     if nextComment != ''
                         thisVar.description = nextComment
                         nextComment = ''
@@ -403,7 +440,7 @@ module.exports =
                     #console.log checkConst
                     thisVar = new MonkeyVariable(checkConst[1], checkConst[2])
                     thisVar.fileName = filePath
-
+                    thisVar.private = inPrivate
                     if nextComment != ''
                         thisVar.description = nextComment
                         nextComment = ''
@@ -445,7 +482,7 @@ module.exports =
                         nextComment = ''
                         if thisFunction.description.search("@hidden") != -1
                             thisFunction.hidden = true
-
+                    thisFunction.private = inPrivate
                     parentClass = null
                     for scopeLevel in scope by -1
                         if scopeLevel instanceof MonkeyClass
@@ -464,7 +501,7 @@ module.exports =
                     #console.log "Found method"
                     #console.log checkMethod
                     thisMethod = new MonkeyFunction(checkMethod[1].trim())
-
+                    thisMethod.private = inPrivate
                     if checkMethod[2] != undefined
                         thisMethod.returnType = checkMethod[2].trim()
                         if thisMethod.returnType.charAt(0) == ':'
@@ -510,7 +547,7 @@ module.exports =
                     #console.log checkProperty
 
                     thisProperty = new MonkeyVariable(checkProperty[1], checkProperty[2])
-
+                    thisProperty.private = inPrivate
                     if nextComment != ''
                         thisProperty.description = nextComment
                         nextComment = ''
@@ -531,8 +568,21 @@ module.exports =
                     scope.push(thisProperty)
                     return
 
+                checkIfThen = ifThenRegex.exec(line)
+                if checkIfThen != null
+                    #console.log("hit an if then, do nothing!")
+                    return
+
+                if checkIf = ifRegex.exec(line)
+                    if checkIf != null
+                        scope.push("if")
+                        lastLineWasIf = true
+                        return
+
+
                 checkStatement = statementRegex.exec(line)
                 if checkStatement != null
+
                     #console.log "found statement"
                     #console.log checkStatement
                     scope.push("statement")
@@ -540,11 +590,19 @@ module.exports =
 
                 checkEnd = endRegex.exec(line)
                 if checkEnd != null
-                    #console.log "Ending a scope"
+
                     #console.log checkEnd
-                    scope.pop()
+
+                    lastScope = scope.pop()
+                    #console.log("ending scope at " + currentIndent)
+                    #console.log privateIndent
+                    if inPrivate and privateIndent > currentIndent
+                        inPrivate = false
+                        privateIndent = -1
+                        #console.log("ending private at indent " + privateIndent)
                     return
 
+        #console.log("finished", fileData)
         #if this file has already been parsed, replace it's existing data
         for existingFileData, index in @parsedFiles
             if existingFileData.filePath == filePath
@@ -594,7 +652,7 @@ module.exports =
             # If the word 'new' is in the prefix, search for class constructors
             if fullPrefix.toLowerCase().search("new") >=0
                 for c in fileData.classes
-                    if c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    if not c.private and not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
                         suggestion =
                             snippet: c.getConstructorSnippet()
                             type: 'class'
@@ -626,7 +684,7 @@ module.exports =
                                 for c2 in fileData2.classes
                                     if instanceType.toLowerCase() == c2.name.toLowerCase()
                                         for cm in c2.methods
-                                            if !cm.isConstructor and cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                            if not cm.private and not cm.hidden and !cm.isConstructor and cm.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                                 suggestion =
                                                     snippet: cm.getSnippet()
                                                     type: 'method'
@@ -634,7 +692,7 @@ module.exports =
                                                     leftLabel: cm.returnType
                                                 shortlist.push(suggestion)
                                         for cp in c2.properties
-                                            if cp.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                            if not cp.private and not cp.hidden and cp.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                                 suggestion =
                                                     text: cp.name
                                                     type: 'property'
@@ -642,7 +700,7 @@ module.exports =
                                                     leftLabel: cp.type
                                                 shortlist.push(suggestion)
                                         for cf in c2.fields
-                                            if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                            if not cf.private and not cf.hidden and cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                                 suggestion =
                                                     text: cf.name
                                                     type: 'property'
@@ -655,7 +713,7 @@ module.exports =
 
                         if c.name == previousPrefix
                             for cf in c.functions
-                                if cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                if not cf.private and not cf.hidden and cf.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                     suggestion =
                                         snippet: cf.getSnippet()
                                         type: 'function'
@@ -663,7 +721,7 @@ module.exports =
                                         leftLabel: cf.returnType
                                     shortlist.push(suggestion)
                             for cConst in c.constants
-                                if cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                if not cConst.private and not cConst.hidden cConst.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                     suggestion =
                                         text: cConst.name
                                         type: 'constant'
@@ -671,7 +729,7 @@ module.exports =
                                         leftLabel: cConst.type
                                     shortlist.push(suggestion)
                             for cGlobal in c.globals
-                                if cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
+                                if not cGlobal.private and not cGlobal.hidden and cGlobal.name.toLowerCase().search(prefix.toLowerCase()) >= 0
                                     suggestion =
                                         text: cGlobal.name
                                         type: 'variable'
@@ -680,7 +738,7 @@ module.exports =
                                     shortlist.push(suggestion)
             else
                 for f in fileData.functions
-                    if not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    if not f.private and not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
                         suggestion =
                             snippet: f.getSnippet()
                             type : 'function'
@@ -688,7 +746,7 @@ module.exports =
                             leftLabel: f.returnType
                         shortlist.push(suggestion)
                 for c in fileData.classes
-                    if not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                    if not c.private and not c.hidden and c.name.toLowerCase().search(prefix.toLowerCase()) == 0
                         suggestion =
                             text: c.name
                             type: 'class'
