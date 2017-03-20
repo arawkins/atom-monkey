@@ -20,7 +20,7 @@ class MonkeyView
         message.textContent = "Monkey2"
         message.classList.add('inline-block')
         message.classList.add('monkey2Logo')
-        
+
         compilerControls.appendChild(message)
 
 
@@ -148,10 +148,12 @@ class MonkeyView
         @output
 
     outputMessage: (message) ->
-        messageNode = document.createElement('li')
-        messageNode.textContent = message
-        @outputMessages.appendChild(messageNode)
-        @outputMessages.scrollTop = @outputMessages.scrollHeight
+        messageLines = message.split('\n')
+        for line in messageLines
+            messageNode = document.createElement('li')
+            messageNode.textContent = line
+            @outputMessages.appendChild(messageNode)
+            @outputMessages.scrollTop = @outputMessages.scrollHeight
 
     hideOutput: ->
         ###

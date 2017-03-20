@@ -19,6 +19,10 @@ module.exports = Monkey =
             title: 'Automatically show output on build'
             type: 'boolean'
             default: true
+        saveOnBuild:
+            title: 'Save files on build'
+            type: 'boolean'
+            default: true
     monkeyViewState: null
     modalPanel: null
     subscriptions: null
@@ -163,6 +167,7 @@ module.exports = Monkey =
     buildCurrent: ->
         currentEditor = atom.workspace.getActiveTextEditor()
         if currentEditor != '' and currentEditor != undefined
+            #currentEditor.save()
             @build(currentEditor.getPath())
 
     buildDefault: ->
@@ -178,6 +183,12 @@ module.exports = Monkey =
         extension = targetPath.substr(targetPath.lastIndexOf('.')+1)
         mPath = ''
         buildOut = null
+
+        # save current files
+        if atom.config.get "language-monkey2.saveOnBuild"
+            for editor in atom.workspace.getTextEditors()
+                if editor != '' and editor != undefined
+                    editor.save()
 
         if extension == 'monkey2'
             mPath = atom.config.get "language-monkey2.monkey2Path"
