@@ -675,10 +675,15 @@ module.exports =
                     segments.pop() # we don't need the last element; it's already in the prefix variable
                     previousPrefix = segments.pop() # this is the first bit before the period. This should be the instance name
                     instanceType=null
-                    for variable in fileData.variables
+                    allVariables = fileData.variables.concat(fileData.globals)
+                    allVariables = allVariables.concat(fileData.constants)
+
+                    for variable in allVariables
+
                         if variable.name == previousPrefix
                             instanceType = variable.type
-                            # console.log "found instance of type: " + instanceType
+
+                            #console.log "found instance of type: " + instanceType
                             # TODO Nested loop to look through all other files for class data for instance type. ug.
                             for fileData2 in @parsedFiles
                                 for c2 in fileData2.classes
@@ -737,6 +742,14 @@ module.exports =
                                         leftLabel: cGlobal.type
                                     shortlist.push(suggestion)
             else
+                for g in fileData.globals
+                    if not g.private and not g.hidden and g.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                        suggestion =
+                            text: g.name
+                            type: 'variable'
+                            description: g.description
+                            leftLabel: g.type
+                        shortlist.push(suggestion)
                 for f in fileData.functions
                     if not f.private and not f.hidden and f.name.toLowerCase().search(prefix.toLowerCase()) == 0
                         suggestion =
