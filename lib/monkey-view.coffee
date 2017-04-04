@@ -148,10 +148,68 @@ class MonkeyView
         @output
 
     outputMessage: (message) ->
+        titleRegex = RegExp /^(Mx2cc)\s(version)\s(.*)$/
+        errorRegex = RegExp /^(.*)\s\[([0-9]+)\]\s:\sError\s:\s(.*)$/
+        stepRegex = RegExp /^(Parsing\.\.\.|Semanting\.\.\.|Translating\.\.\.|Compiling\.\.\.|Linking|Running).*$/
+        #errorRegex = RegExp /^(.*)Error(.*)$/
+
         messageLines = message.split('\n')
         for line in messageLines
             messageNode = document.createElement('li')
-            messageNode.textContent = line
+            checkErrorRegex = errorRegex.exec(line)
+            checkTitleRegex = titleRegex.exec(line)
+            checkStepRegex = stepRegex.exec(line)
+
+            if checkTitleRegex != null
+                titleElement = document.createElement('span')
+                titleElement.classList.add('title')
+                titleElement.textContent = line
+                messageNode.appendChild(titleElement)
+            else if checkStepRegex != null
+                stepElement = document.createElement('span')
+                stepElement.classList.add('step')
+                #stepElement.textContent = line
+                stepElement.textContent = checkStepRegex[1]
+
+
+                messageNode.appendChild(stepElement)
+            else if checkErrorRegex != null
+
+                messageNode.classList.add('error')
+
+                errorLabel = document.createElement('span')
+                errorLabel.classList.add('label')
+                errorLabel.textContent = "Error "
+
+                fileName = document.createElement('span')
+                fileName.classList.add('file')
+                fileName.dataset.lineNumber = checkErrorRegex[2]
+                fileName.textContent = checkErrorRegex[1]
+                fileName.addEventListener "click", (e) =>
+
+                    fileToOpen = e.target.textContent
+                    lineToView = Number(e.target.dataset.lineNumber)
+                    lineToView -= 1
+                    atom.workspace.open fileToOpen, {"initialLine": lineToView}
+
+
+                lineNumber = document.createElement('span')
+                lineNumber.classList.add('lineNumber')
+                lineNumber.textContent = " Line "+checkErrorRegex[2]+" "
+
+                errorMessage = document.createElement('span')
+                errorMessage.classList.add('message')
+                errorMessage.textContent = checkErrorRegex[3]
+
+                messageNode.appendChild(errorLabel)
+                messageNode.appendChild(fileName)
+                messageNode.appendChild(lineNumber)
+
+                messageNode.appendChild(errorMessage)
+
+            else
+                messageNode.textContent = line
+
             @outputMessages.appendChild(messageNode)
             @outputMessages.scrollTop = @outputMessages.scrollHeight
 

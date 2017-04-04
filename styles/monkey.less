@@ -1,3 +1,5 @@
+@import 'ui-variables';
+
 autocomplete-suggestion-list .icon-container:empty {
     width: 0;
 }
@@ -88,6 +90,39 @@ autocomplete-suggestion-list .icon-container:empty {
         li {
 
         }
+    }
+
+    .title {
+        color:#FFF;
+        font-weight:bold;
+        font-size:1em;
+    }
+
+    .step {
+    }
+
+    .error {
+
+        .file {
+            color: @text-color-info;
+            cursor: pointer;
+        }
+
+        .file:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            font-weight: bold;
+            color:#FFF;
+        }
+
+        .label {
+            font-weight: bold;
+            color:@text-color-error;
+        }
+
+
     }
 }
 
