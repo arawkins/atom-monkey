@@ -148,8 +148,8 @@ class MonkeyView
         @output
 
     outputMessage: (message) ->
-        titleRegex = RegExp /^(Mx2cc)\s(version)\s(.*)$/
-        errorRegex = RegExp /^(.*)\s\[([0-9]+)\]\s:\sError\s:\s(.*)$/
+        titleRegex = RegExp /^(Mx2cc)\s(version)\s(.*)$/, 'm'
+        errorRegex = RegExp /^(.*)\s\[([0-9]+)\]\s:\sError\s:\s(.*)$/, 'm'
         stepRegex = RegExp /^(Parsing\.\.\.|Semanting\.\.\.|Translating\.\.\.|Compiling\.\.\.|Linking|Running).*$/
         #errorRegex = RegExp /^(.*)Error(.*)$/
 
