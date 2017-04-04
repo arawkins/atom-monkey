@@ -1,3 +1,7 @@
+## 1.2
+* Linked error messages in output panel
+* Output panel coloring
+
 ## 1.1.3
 * Bug fix: improved parsing of one line if statements
 * Bug fix: improved private block parsing
