@@ -150,7 +150,6 @@ class MonkeyView
     outputMessage: (message) ->
         titleRegex = RegExp /^(Mx2cc)\s(version)\s(.*)$/, 'm'
         errorRegex = RegExp /^(.*)\s\[([0-9]+)\]\s:\sError\s:\s(.*)$/, 'm'
-        stepRegex = RegExp /^(Parsing\.\.\.|Semanting\.\.\.|Translating\.\.\.|Compiling\.\.\.|Linking|Running).*$/
         #errorRegex = RegExp /^(.*)Error(.*)$/
 
         messageLines = message.split('\n')
@@ -158,21 +157,13 @@ class MonkeyView
             messageNode = document.createElement('li')
             checkErrorRegex = errorRegex.exec(line)
             checkTitleRegex = titleRegex.exec(line)
-            checkStepRegex = stepRegex.exec(line)
 
             if checkTitleRegex != null
                 titleElement = document.createElement('span')
                 titleElement.classList.add('title')
                 titleElement.textContent = line
                 messageNode.appendChild(titleElement)
-            else if checkStepRegex != null
-                stepElement = document.createElement('span')
-                stepElement.classList.add('step')
-                #stepElement.textContent = line
-                stepElement.textContent = checkStepRegex[1]
 
-
-                messageNode.appendChild(stepElement)
             else if checkErrorRegex != null
 
                 messageNode.classList.add('error')
