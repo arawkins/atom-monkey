@@ -47,6 +47,9 @@ patterns: [
         include: "#mnky_function"
     }
     {
+        include: "#mnky_lambda"
+    }
+    {
         include: "#mnky_method"
     }
     {
@@ -141,6 +144,9 @@ patterns: [
             }
             {
                 include: "#mnky_function"
+            }
+            {
+                include: "#mnky_lambda"
             }
             {
                 include: "#mnky_method"
@@ -412,7 +418,7 @@ repository:
         match: "\\b(CHAR_(TAB|BACKSPACE|ENTER|ESCAPE|PAGE(UP|DOWN)|END|HOME|LEFT|UP|RIGHT|DOWN|INSERT|DELETE))\\b"
         name: "constant.language.char.monkey2"
     mnky_commands:
-        match: "(?i)\\b(A(bstract|Cos|Sin|Tan|Tan2|bs|ccel(X|Y|Z)|dd(First|Last)|pp|rray)|B(ackwards|ool)|C(ase|eil|hannelState|l(amp|s)|o(mpare|nst|nt(ains|inue)|py|s|unt)|lear)|D(e(faultFlags|vice(Height|Width))|iscard|raw(Circle|Ellipse|Image|ImageRect|Line|Oval|Point|Poly|Rect|Text))|E(achin|xt(ends|ern)|nd|ndsWith|rror|xit)|F(alse|i(eld|nd|ndLast|rst)|loat(Map|Set)|loor|or(ever)|rames|romChar)|G(et|et(Alpha|Blend|Char|Color|Font|Matrix|Scissor)|lobal|rabImage)|H(andle(X|Y)|eight)|I(m(age|p(lements|ort))|n(clude|line|t(erface|Map|Set))|sEmpty)|Jo(in|y(Down|Hit|X|Y|Z))|Key|Key(Down|Hit|s)|L(ast|ength|ist|o(g|ad(Image|Sound|State|String)|cal))|M(ap|ax|ethod|i(llisecs|n)|o(d(ule)|use(Down|Hit|X|Y))|in)|N(ative|e(w|xt)|o(de)|ull)|O(bject(Enumerator)|n(Create|Loading|Render|Resume|Suspend|Update))|P(laySound|o(pMatrix|w)|r(i(nt|vate)|operty)|u(blic|shMatrix))|R(e(move|move(Each|First|Last)|p(eat|lace)|turn)|nd|otate)|S(aveState|cale|e(ed|lf|t(Alpha|Blend|Channel(Pan|Rate|Volume)|Default|Color|Font|Handle|Image|List|Matrix|Scissor|UpdateRate))|gn|h(l|r)|in|ound|plit|qrt|t(artsWith|ep|opChannel|ri(ct|ng(Map|Set)))|uper)|T(an|hen|o(Lower|Upper|uch(Down|Hit|X|Y))|r(ans(form|late)|im|ue))|Until|V(alue|alue(ForKey|s)|oid)|Width)\\b"
+        match: "(?i)\\b(A(bstract|Cos|Sin|Tan|Tan2|bs|ccel(X|Y|Z)|dd(First|Last)|pp|rray)|B(ackwards|ool)|C(ase|eil|hannelState|l(amp|s)|o(mpare|nst|nt(ains|inue)|py|s|unt)|lear)|D(e(faultFlags|vice(Height|Width))|iscard|raw(Circle|Ellipse|Image|ImageRect|Line|Oval|Point|Poly|Rect|Text))|E(achin|xt(ends|ern)|nd|ndsWith|rror|xit)|F(alse|i(eld|nd|ndLast|rst)|loat(Map|Set)|loor|or(ever)|rames|romChar)|G(et|et(Alpha|Blend|Char|Color|Font|Matrix|Scissor)|lobal|rabImage)|H(andle(X|Y)|eight)|I(m(age|p(lements|ort))|n(clude|line|t(erface|Map|Set))|sEmpty)|Jo(in|y(Down|Hit|X|Y|Z))|Key|Key(Down|Hit|s)|L(ast|ength|ist|o(g|ad(Image|Sound|State|String)|cal))|M(ap|ax|ethod|i(llisecs|n)|o(d(ule)|use(Down|Hit|X|Y))|in)|N(ative|e(w|xt)|o(de)|ull)|O(bject(Enumerator)|n(Create|Loading|Render|Resume|Suspend|Update))|P(laySound|o(pMatrix|w)|r(i(nt|vate)|operty)|u(blic|shMatrix))|R(e(move|move(Each|First|Last)|p(eat|lace)|turn)|nd|otate)|S(aveState|cale|e(ed|lf|t(Alpha|Blend|Channel(Pan|Rate|Volume)|Default|Color|Font|Handle|Image|List|Matrix|Scissor|UpdateRate))|gn|h(l|r)|in|ound|plit|qrt|t(artsWith|ep|opChannel|ri(ct|ng(Map|Set)))|uper)|T(ypeOf|an|hen|o(Lower|Upper|uch(Down|Hit|X|Y))|r(ans(form|late)|im|ue))|Until|V(alue|alue(ForKey|s)|oid)|Width)\\b"
         name: "keyword.other.commands.monkey2"
     mnky_comment_block:
         begin: "(?i)(?<=\\s|^|;)\\#rem\\b"
@@ -499,6 +505,21 @@ repository:
                 include: "$self"
             }
         ]
+    mnky_lambda:
+        begin: "(?i)\\b(lambda)\\b"
+        beginCaptures:
+            "1":
+                name: "storage.type.function.lambda.monkey2"
+
+        end: "(?i)\\b(end(\\s?lambda)?)\\b"
+        endCaptures:
+            "1":
+                name: "storage.type.function.lambda.monkey2"
+        patterns: [
+            {
+                include: "$self"
+            }
+        ]
     mnky_global_variable:
         captures:
             "1":
@@ -558,7 +579,7 @@ repository:
 
         name:
             "property.setter.monkey2"
-        
+
     mnky_mouse:
         match: "\\bMOUSE_(LEFT|RIGHT|MIDDLE)\\b"
         name: "constant.language.mouse.monkey2"
@@ -622,7 +643,7 @@ repository:
         match: "(?xi)(?: \\: \\s* ([a-zA-Z_]\\w*) | ([!#%]|@{1,2}|\\$[zw]?) )"
         name: "typename.monkey2"
     mnky_types:
-        match: "(?i)\\b(ptr|array|bool|int|uint|short|ushort|byte|ubyte|long|ulong|float|double|string)\\b"
+        match: "(?i)\\b(ptr|array|bool|int|uint|short|ushort|byte|ubyte|long|ulong|float|double|string|variant|lambda)\\b"
         name: "storage.type.monkey2"
     mnky_url_content:
         match: "[a-zA-Z_]\\w*://[^ \"'()\\[\\]]*(?=$|\\b)"
