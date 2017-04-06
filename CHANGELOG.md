@@ -1,3 +1,8 @@
+## 1.3
+* Added new build options to compiler toolbar
+* Added code folding for property/setter
+* Fixed syntax highlighting for property/setter
+
 ## 1.2
 * Linked error messages in output panel
 * Output panel coloring

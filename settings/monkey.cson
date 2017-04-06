@@ -10,7 +10,7 @@
     increaseIndentPattern: '''
       (?xi)
       	^\\s*(
-      		(?<!end|end\\s)(function|method|type|select|while|try|if(?!.*Then.*)) |
+      		(?<!end|end\\s)(function|method|type|select|while|setter|property|try|if(?!.*Then.*)) |
       		else|else\\s*if |
       		for | repeat
       	)\\b
@@ -22,6 +22,6 @@
       		end\\s* |
       	# else/if
       		else | else\\s*if |
-      		catch | wend | until | forever | next
+      		catch | wend | until | forever | next | setter
       	)\\b
     '''

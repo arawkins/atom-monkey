@@ -4,7 +4,7 @@ fileTypes: [
 foldingStartMarker: '''
                       (?xi)
                           ^\\s*(
-                              (?<!end|end\\s)(function|class|interface|method|select|while|if|lambda) |
+                              (?<!end|end\\s)(function|class|interface|method|select|while|if|lambda|property) |
                               \\#rem | for | repeat | '\\#region
                           )\\b
                     '''
@@ -12,7 +12,7 @@ foldingStopMarker: '''
                      (?xi)
                          ^\\s*(
                          # end <keyword>
-                             end\\s?(function|class|method|select|while|lambda) |
+                             end\\s?(function|class|method|select|while|lambda|property) |
                              \\#end|'\\#end\\s?region|end
                          )\\b
                    '''
@@ -48,6 +48,12 @@ patterns: [
     }
     {
         include: "#mnky_method"
+    }
+    {
+        include: "#mnky_property"
+    }
+    {
+        include: "#mnky_setter"
     }
     {
         captures:
@@ -138,6 +144,12 @@ patterns: [
             }
             {
                 include: "#mnky_method"
+            }
+            {
+                include: "#mnky_property"
+            }
+            {
+                include: "#mnky_setter"
             }
             {
                 include: "#mnky_field"
@@ -305,7 +317,7 @@ patterns: [
         name: "keyword.operator.monkey2"
     }
     {
-        match: "(?i)\\b(private|public|virtual|override|final|property)\\b"
+        match: "(?i)\\b(private|public|virtual|override|final)\\b"
         name: "keyword.other.scope.monkey2"
     }
     {
@@ -516,6 +528,37 @@ repository:
                 include: "$self"
             }
         ]
+    mnky_property:
+        begin: "(?i)\\b(property)\\s+([a-zA-Z_]\\w*)\\b"
+        beginCaptures:
+            "1":
+                name: "storage.type.property.monkey2"
+            "2":
+                name: "entity.name.property.monkey2"
+        end: "(?i)\\b(end(\\s?property)?)\\b"
+        endCaptures:
+            "1":
+                name: "storage.type.property.monkey2"
+            "2":
+                name: "entity.name.property.monkey2"
+        name:
+            "property.monkey2"
+        patterns: [
+            {
+                include: "$self"
+            }
+        ]
+    mnky_setter:
+        match:"(?i)\\b(setter)\(.*\)"
+        captures:
+            "1":
+                name: "storage.type.property.setter.monkey2"
+            "2":
+                name: "entity.name.property.setter.monkey2"
+
+        name:
+            "property.setter.monkey2"
+        
     mnky_mouse:
         match: "\\bMOUSE_(LEFT|RIGHT|MIDDLE)\\b"
         name: "constant.language.mouse.monkey2"
