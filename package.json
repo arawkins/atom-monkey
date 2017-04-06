@@ -2,7 +2,7 @@
   "name": "language-monkey2",
   "version": "1.3.0",
   "main": "./lib/monkey",
-  "description": "Syntax highlighting and compiler integration for the Monkey2 programming language.",
+  "description": "Support for the Monkey2 language in Atom.",
   "keywords": [
     "monkey",
     "monkey2",
