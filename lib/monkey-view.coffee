@@ -39,13 +39,11 @@ class MonkeyView
         @targetSelector.classList.add('input-select')
         @targetSelector.classList.add('inline-block')
 
-        target1 = document.createElement('option')
-        target1.textContent = "desktop"
-        @targetSelector.appendChild(target1)
-
-        target2 = document.createElement('option')
-        target2.textContent = "emscripten"
-        @targetSelector.appendChild(target2)
+        targets = ["desktop", "emscripten", "ios", "android", "wasm", "windows", "macos", "linux"]
+        for target in targets
+            targetEl = document.createElement('option')
+            targetEl.textContent = target
+            @targetSelector.appendChild(targetEl)
 
         @configSelector = document.createElement('select')
         @configSelector.classList.add('input-select')
