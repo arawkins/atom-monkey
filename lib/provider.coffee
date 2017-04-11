@@ -90,6 +90,7 @@ class MonkeyVariable
     description: ''
     hidden: false
     private: false
+    value: null
 
     # sometimes we need to come back to variables and figure out their type
     # later, since it can depend on the parsing of other stuff (ie. method return values)
@@ -102,6 +103,21 @@ class MonkeyVariable
         @type = type
         @hidden = false
         @private= false
+        @value = null
+
+class MonkeyEnum
+
+    fileName: ''
+    description: ''
+    hidden: false
+    private: false
+    type: ''
+    variables: []
+
+    constructor: (name) ->
+        @name = name
+        @variables = []
+        @type = "Enum"
 
 module.exports =
     selector: '.source.monkey2'
@@ -136,7 +152,6 @@ module.exports =
 
             )
 
-
         dir.files(path.join(modsPath, '/'), (err, files) =>
             if (err)
                 console.log err
@@ -163,6 +178,7 @@ module.exports =
             constants: []
             interfaces: []
             variables: []
+            enums: []
 
         #console.log("parsing " + filePath)
 
@@ -176,13 +192,15 @@ module.exports =
         fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
         globalRegex = RegExp /^\s*Global\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
         constRegex = RegExp /^\s*Const\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
-        propertyRegex = RegExp /^\s*Property\s+(.+):(.+)\(\).*$/, 'im'
+        propertyRegex = RegExp /^\s*Property\s+(.+):(.+)\((\w+:\w+)?\).*$/, 'im'
         commentRegex = RegExp /^\s*#rem monkeydoc(.*)/, 'im'
         lambdaRegex = RegExp /Lambda/, 'im'
-        enumRegex = RegExp /Enum/, 'im'
+        enumRegex = RegExp /^\s*Enum\s+\b(\w+)\b\s*$/, 'im'
+        enumValueRegex = RegExp /^\s*(\w+)\s*=\s*([0-9]+)\s*$/, 'im'
+        enumValueListRegex = RegExp /^\s*((\w+\s?,?\s?)+)\s*$/, 'im'
         operatorRegex = RegExp /Operator.*$/,'im'
         interfaceRegex = RegExp /^\s*Interface\s+(.*)/, 'im'
-        endRegex = RegExp /^\s*((w?end(if)?)|Next)\s*$/, 'im'
+        endRegex = RegExp /^\s*((w?end(if)?)|Next|end\s\b\w+\b)\s*$/, 'im'
         privateRegex = RegExp /^\s*Private\s*$/,'im'
         publicRegex = RegExp /^\s*Public\s*$/,'im'
         externRegex = RegExp /^\s*Extern\s*$/,'im'
@@ -197,6 +215,7 @@ module.exports =
         privateIndent = -1
         inExtern = false # like inPrivate, ignore everything while in an extern
         inClass = ""; # when inside a class definition, store the class here
+        inEnum = null
         lastLineWasIf = false
 
 
@@ -262,6 +281,23 @@ module.exports =
             # ok, if we're not in private, lets check first for a comment
             if not inExtern
 
+                checkEnd = endRegex.exec(line)
+                if checkEnd != null
+
+                    lastScope = scope.pop()
+                    if lastScope instanceof MonkeyEnum
+                        #console.log "finishing enum:", inEnum
+                        inEnum = null
+
+                    #console.log("ending scope at " + currentIndent)
+                    #console.log privateIndent
+                    if inPrivate and privateIndent > currentIndent
+                        inPrivate = false
+                        privateIndent = -1
+                        #console.log("ending private at indent " + privateIndent)
+                    return
+
+
                 checkComment = commentRegex.exec(line)
                 if checkComment != null
                     #console.log "Found monkeydoc comment"
@@ -320,8 +356,48 @@ module.exports =
 
                 checkEnum = enumRegex.exec(line)
                 if checkEnum != null
-                    scope.push("Enum")
+                    enumName = checkEnum[1].trim()
+                    thisEnum = new MonkeyEnum(enumName)
+                    thisEnum.fileName = filePath
+                    thisEnum.private = inPrivate
+
+                    if nextComment != ''
+                        thisEnum.description = nextComment
+                        nextComment = ''
+                    if thisEnum.description.search("@hidden") != -1
+                        thisEnum.hidden = true
+
+                    scope.push(thisEnum)
+                    fileData.enums.push(thisEnum)
+
+                    inEnum = thisEnum
                     return
+
+                if inEnum != null
+                    #console.log "I'm in an enum"
+                    checkEnumValue = enumValueRegex.exec(line)
+
+                    if checkEnumValue != null
+                        #console.log checkEnumValue
+                        thisEnumVar= checkEnumValue[1].trim()
+                        thisEnumVarValue= Number(checkEnumValue[2].trim())
+                        thisVar = new MonkeyVariable(thisEnumVar, "Int")
+                        thisVar.value = thisEnumVarValue
+                        thisVar.description = "Member of Enum " + inEnum.name
+                        inEnum.variables.push(thisVar)
+                        return
+                        #console.log(inEnum)
+                    else
+                        checkEnumValue = enumValueListRegex.exec(line)
+                        if checkEnumValue != null
+                            thisEnumValues = checkEnumValue[1].split(',')
+                            for value in thisEnumValues
+                                thisVar = new MonkeyVariable(value, "Int")
+                                thisVar.description = "Member of Enum " + inEnum.name
+                                inEnum.variables.push(thisVar)
+                            return
+
+
 
                 checkOperator = operatorRegex.exec(line)
                 if checkOperator != null
@@ -588,19 +664,7 @@ module.exports =
                     scope.push("statement")
                     return
 
-                checkEnd = endRegex.exec(line)
-                if checkEnd != null
 
-                    #console.log checkEnd
-
-                    lastScope = scope.pop()
-                    #console.log("ending scope at " + currentIndent)
-                    #console.log privateIndent
-                    if inPrivate and privateIndent > currentIndent
-                        inPrivate = false
-                        privateIndent = -1
-                        #console.log("ending private at indent " + privateIndent)
-                    return
 
         #console.log("finished", fileData)
         #if this file has already been parsed, replace it's existing data
@@ -741,6 +805,18 @@ module.exports =
                                         description: cGlobal.description
                                         leftLabel: cGlobal.type
                                     shortlist.push(suggestion)
+
+                    for e in fileData.enums
+                        if e.name == previousPrefix
+                            for enumVar in e.variables
+                                suggestion =
+                                    text: enumVar.name
+                                    type: 'variable'
+                                    description: enumVar.description
+                                    leftLabel: enumVar.type
+                                    rightLabel: enumVar.value
+                                shortlist.push(suggestion)
+
             else
                 for g in fileData.globals
                     if not g.private and not g.hidden and g.name.toLowerCase().search(prefix.toLowerCase()) == 0
@@ -764,6 +840,13 @@ module.exports =
                             text: c.name
                             type: 'class'
                             description: c.description
+                        shortlist.push(suggestion)
+                for e in fileData.enums
+                    if not e.private and not e.hidden and e.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                        suggestion =
+                            text: e.name
+                            type: 'type'
+                            rightLabel: 'Enum'
                         shortlist.push(suggestion)
 
         new Promise (resolve) ->
