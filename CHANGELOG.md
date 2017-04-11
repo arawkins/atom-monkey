@@ -1,3 +1,6 @@
+## 1.4
+* Added enum syntax highlighting
+
 ## 1.3
 * Added new build options to compiler toolbar
 * Added code folding for property/setter
