@@ -163,6 +163,9 @@ patterns: [
             {
                 include: "#mnky_constructor"
             }
+            {
+                include: "#mnky_enum"
+            }
         ]
     }
     {
@@ -358,6 +361,9 @@ patterns: [
     }
     {
         include: "#mnky_typename"
+    }
+    {
+        include: "#mnky_enum"
     }
 ]
 repository:
@@ -648,4 +654,24 @@ repository:
     mnky_url_content:
         match: "[a-zA-Z_]\\w*://[^ \"'()\\[\\]]*(?=$|\\b)"
         name: "url.monkey2"
+    mnky_enum:
+        begin: "(?xi)\\s*(Enum)\\s+([a-zA-Z1-9_]+)\\w*"
+        beginCaptures:
+            "1":
+                name: "storage.type.monkey2"
+            "2":
+                name: "entity.name.type"
+        name: "enum.monkey2"
+        end: "(?i)\\b(end(\\s?enum)?)\\b"
+        endCaptures:
+            "1":
+                name: "storage.type.enum.monkey2"
+            "2":
+                name: "storage.type.enum.monkey2"
+        patterns: [
+            {
+                include: "$self"
+            }
+        ]
+
 scopeName: "source.monkey2"
