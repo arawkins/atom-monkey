@@ -5,15 +5,12 @@ This package provides basic support for the [Monkey2 programming language](http:
 ## Features
 
 **Compiler Integration**  
-
 Configure and run mx2cc from within Atom. Easily set build options, assign a default target, and get build output.
 
 **Syntax Highlighting**
-
 Highlighting for core language keywords.
 
 **Autocompletion**
-
 Provides basic autocompletion via the autocomplete-plus package.
 
 
@@ -27,10 +24,7 @@ path to your Monkey2 installation (eg. /Users/your-username/monkey2).
 
 ![Toolbar Screenshot](https://github.com/arawkins/atom-monkey/blob/master/images/mx2cc-toolbar.png?raw=true "mx2cc toolbar")
 
-The compiler options can all be set via the toolbar. Currently only the
-desktop and emscripten targets are enabled.
-
-The selected options will be used when building any file in the current
+The compiler options can all be set via the toolbar. The selected options will be used when building any file in the current
 project.
 
 If you have chosen a default target (see below), clicking the green arrow button
@@ -85,8 +79,6 @@ your variables, define their type explicitly, eg. `Local var:Image = Image.Load(
 Below are planned (but not promised!) additions to the package. I'll do my
 best to get these implemented at some point.
 
-* Highlighting of module keywords (mojo, mojox, etc.)
-* Additional Targets (ios/android) in compiler options
 * Atom Linter integration
 * Improving autocompletion
 
