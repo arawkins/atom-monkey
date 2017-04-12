@@ -809,13 +809,14 @@ module.exports =
                     for e in fileData.enums
                         if e.name == previousPrefix
                             for enumVar in e.variables
-                                suggestion =
-                                    text: enumVar.name
-                                    type: 'variable'
-                                    description: enumVar.description
-                                    leftLabel: enumVar.type
-                                    rightLabel: enumVar.value
-                                shortlist.push(suggestion)
+                                if not enumVar.private and not enumVar.hidden and enumVar.name.toLowerCase().search(prefix.toLowerCase()) == 0
+                                    suggestion =
+                                        text: enumVar.name
+                                        type: 'variable'
+                                        description: enumVar.description
+                                        leftLabel: enumVar.type
+                                        rightLabel: enumVar.value
+                                    shortlist.push(suggestion)
 
             else
                 for g in fileData.globals

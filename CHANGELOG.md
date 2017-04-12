@@ -1,3 +1,6 @@
+## 1.4.1
+* Bug fix: Enum autocompletion narrowing down as you type
+
 ## 1.4
 * Added enum syntax highlighting
 * Added enum autocompletion
