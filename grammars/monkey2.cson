@@ -191,19 +191,40 @@ patterns: [
             }
         ]
     }
+
     {
-        begin: "(?i)\\b(if|then|else|else(\\s?if)?)\\b"
+        begin: "(?i)\\b(if)\\b.*\\b(then)\\b\\s+\\S"
         beginCaptures:
             "1":
                 name: "keyword.control.if.monkey2"
-        end: "(?i)\\b(then|end(\\s?if)?)\\b"
+            "2":
+                name: "keyword.control.then.monkey2"
+        end: "$"
+        name: "control.if-then.monkey2"
+        patterns: [
+            {
+                match: "(?i)\\b(then)\\b"
+                name: "keyword.control.then.monkey2"
+            }
+            {
+                include: "$self"
+            }
+        ]
+    }
+
+    {
+        begin: "(?i)\\b(if|else|else(\\s?if)?)\\b"
+        beginCaptures:
+            "1":
+                name: "keyword.control.if.monkey2"
+        end: "(?i)\\b(end(\\s?if)?)\\b"
         endCaptures:
             "1":
                 name: "keyword.control.if.end.monkey2"
         name: "control.if.monkey2"
         patterns: [
             {
-                match: "(?i)\\b(then)\\b"
+                match: "(?i)\\b(then)\\b\\s*$"
                 name: "keyword.control.then.monkey2"
             }
             {
@@ -219,26 +240,8 @@ patterns: [
             }
         ]
     }
-    {
-        begin: "(?i)\\b(if)\\b"
-        beginCaptures:
-            "1":
-                name: "keyword.control.if.monkey2"
-        end: "$"
-        endCaptures:
-            "1":
-                name: "keyword.control.if.end.monkey2"
-        name: "control.if-then.monkey2"
-        patterns: [
-            {
-                match: "(?i)\\b(then)\\b"
-                name: "keyword.control.then.monkey2"
-            }
-            {
-                include: "$self"
-            }
-        ]
-    }
+
+
     {
         begin: "(?i)\\b(for)\\b"
         beginCaptures:

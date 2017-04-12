@@ -1,3 +1,6 @@
+## 1.4.2
+* Improved syntax highlighting on nested if statements and one line if/then statements
+
 ## 1.4.1
 * Bug fix: Enum autocompletion narrowing down as you type
 
