@@ -188,7 +188,9 @@ module.exports = Monkey =
         if atom.config.get "language-monkey2.saveOnBuild"
             for editor in atom.workspace.getTextEditors()
                 if editor != '' and editor != undefined
-                    editor.save()
+                    path = editor.getPath()
+                    if path != undefined and path == ''
+                        editor.save()
 
         if extension == 'monkey2'
             mPath = atom.config.get "language-monkey2.monkey2Path"

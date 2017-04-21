@@ -1,3 +1,6 @@
+## 1.4.3
+* Bug fix: "Crashes whilst autosaving when building"
+
 ## 1.4.2
 * Improved syntax highlighting on nested if statements and one line if/then statements
 
