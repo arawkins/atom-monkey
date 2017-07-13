@@ -187,7 +187,7 @@ module.exports =
         statementRegex = RegExp /^\s*(For|Select|While).*$/, 'im'
         ifRegex = RegExp /^\s*\bIf\b\s+.*$/, 'im'
         ifThenRegex = RegExp /^\s*\bIf\b\s+.*\bThen\b.*$/, 'im'
-        methodRegex = RegExp /^\s*Method\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
+        methodRegex = RegExp /^\s*Method\s+([\w<>]+)(:.+)?\s*\((.*)\).*$/, 'im'
         functionRegex = RegExp /^\s*Function\s+(\w+)(:.+)?\s*\((.*)\).*$/, 'im'
         fieldRegex = RegExp /^\s*Field\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
         globalRegex = RegExp /^\s*Global\s+(\w+?):([\w\[\]]+\b).*$/, 'im'
@@ -198,7 +198,7 @@ module.exports =
         enumRegex = RegExp /^\s*Enum\s+\b(\w+)\b\s*$/, 'im'
         enumValueRegex = RegExp /^\s*(\w+)\s*=\s*([0-9]+)\s*$/, 'im'
         enumValueListRegex = RegExp /^\s*((\w+\s?,?\s?)+)\s*$/, 'im'
-        operatorRegex = RegExp /Operator.*$/,'im'
+        #operatorRegex = RegExp /Operator.*$/,'im'
         interfaceRegex = RegExp /^\s*Interface\s+(.*)/, 'im'
         endRegex = RegExp /^\s*((w?end(if)?)|Next|end\s\b\w+\b)\s*$/, 'im'
         privateRegex = RegExp /^\s*Private\s*$/,'im'
@@ -207,7 +207,7 @@ module.exports =
         variableRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s+(.*)$/, 'im'
         instanceRegex = RegExp /^\s*(Global|Local)\s+(\w+):(=|\w+)\s?New\s\b(\w+)\b.*$/, 'im'
         namespaceRegex = RegExp /^\s*Namespace\s*(.*)$/, 'im'
-
+        operatorRegex = RegExp /^\s*Operator\s*(.*)$/, 'im'
         tabRegex = RegExp /^(\s*)\w+.*$/, 'im'
 
 
@@ -408,7 +408,7 @@ module.exports =
 
                 checkInterface = interfaceRegex.exec(line)
                 if checkInterface != null
-                    scope.push("Interface")
+                    #scope.push("Interface")
                     #console.log "Found interface"
                     #console.log checkInterface
                     thisInterface = new MonkeyClass(checkInterface[1])
@@ -458,8 +458,9 @@ module.exports =
                     if thisStruct.description.search("@hidden") != -1
                         thisStruct.hidden = true
                     thisStruct.private = inPrivate
-                    fileData.structs.push(thisStruct)
+                    fileData.classes.push(thisStruct)
                     scope.push(thisStruct)
+                    return
 
                 checkField = fieldRegex.exec(line)
                 if checkField != null
