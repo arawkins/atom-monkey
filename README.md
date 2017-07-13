@@ -1,6 +1,6 @@
 # Monkey2 for Atom
 
-This package provides basic support for the [Monkey2 programming language](http://monkey2.monkey-x.com) in [Atom](http://atom.io).
+This package provides basic support for the [Monkey2 programming language](http://monkeycoder.co.nz) in [Atom](http://atom.io).
 
 ## Features
 
@@ -84,7 +84,7 @@ best to get these implemented at some point.
 
 ## Support
 
-Please report any bugs or suggestions as github issues or in [this thread](http://monkey2.monkey-x.com/forums/topic/atom-package-for-monkey2/) on the monkey2 forums
+Please report any bugs or suggestions as github issues or in [this thread](http://monkeycoder.co.nz/forums/topic/atom-package-for-monkey2/) on the monkey2 forums
 
 ## Contributing
 
