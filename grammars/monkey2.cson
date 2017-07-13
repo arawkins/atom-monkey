@@ -4,7 +4,7 @@ fileTypes: [
 foldingStartMarker: '''
                       (?xi)
                           ^\\s*(
-                              (?<!end|end\\s)(function|class|interface|method|select|while|if|lambda|property) |
+                              (?<!end|end\\s)(function|class|struct|interface|method|select|while|if|lambda|property) |
                               \\#rem | for | repeat | '\\#region
                           )\\b
                     '''
@@ -12,7 +12,7 @@ foldingStopMarker: '''
                      (?xi)
                          ^\\s*(
                          # end <keyword>
-                             end\\s?(function|class|method|select|while|lambda|property) |
+                             end\\s?(function|class|struct|method|select|while|lambda|property) |
                              \\#end|'\\#end\\s?region|end
                          )\\b
                    '''
@@ -53,6 +53,9 @@ patterns: [
         include: "#mnky_method"
     }
     {
+        include: "#mnky_operator"
+    }
+    {
         include: "#mnky_property"
     }
     {
@@ -91,7 +94,7 @@ patterns: [
         ]
     }
     {
-        begin: "(?i)\\b(class)\\s+([a-zA-Z_]\\w*)(?:\\s+(extends)\\s+([a-zA-Z_]\\w*))?(?:\\s+(final|abstract))?"
+        begin: "(?i)\\b(class|struct)\\s+([a-zA-Z_]\\w*)(?:\\s+(extends)\\s+([a-zA-Z_]\\w*))?(?:\\s+(final|abstract))?"
         beginCaptures:
             "1":
                 name: "storage.type.class.monkey2"
@@ -103,7 +106,7 @@ patterns: [
                 name: "entity.other.inherited-class.monkey2"
             "5":
                 name: "storage.modifier.class.monkey2"
-        end: "(?i)\\b(end(\\s?class)?)\\b"
+        end: "(?i)\\b(end(\\s?class|struct)?)\\b"
         endCaptures:
             "1":
                 name: "storage.type.class.monkey2"
@@ -152,6 +155,9 @@ patterns: [
                 include: "#mnky_method"
             }
             {
+                include: "#mnky_operator"
+            }
+            {
                 include: "#mnky_property"
             }
             {
@@ -169,7 +175,7 @@ patterns: [
         ]
     }
     {
-        match: "\\s*\\b(c(ase|ontinue)|do|e(lse(\\s?if)?|nd(class|for(each)?|function|if|method|select|while)|xit)|for(\\s?each)?|if|return|select|then|wend|while)\\b"
+        match: "\\s*\\b(c(ase|ontinue)|do|e(lse(\\s?if)?|nd(class|struct|for(each)?|function|if|method|select|while)|xit)|for(\\s?each)?|if|return|select|then|wend|while)\\b"
         name: "control.keywords.monkey2"
     }
     {
@@ -553,6 +559,29 @@ repository:
             "1":
                 name: "storage.type.method.monkey2"
         name: "method.monkey2"
+        patterns: [
+            {
+                include: "$self"
+            }
+        ]
+    mnky_operator:
+        begin: "(?i)\\b(operator)\\s*(=|Mod=?|Sh[rl]=?|&=?|~|\\+=?|\\-=?|\\*=?|/=?|\\>|\\<|\\<=?>?\\>|\\[\\]=?)\\s?:(\\w+)\(\\w+\).*$"
+        beginCaptures:
+            "1":
+                name: "storage.type.method.monkey2"
+            "2":
+                name: "keyword.operator.monkey2"
+            "3":
+                name: "storage.type.monkey2"
+            "4":
+                name: "storage.type.monkey2"
+            "5":
+                name: "storage.type.monkey2"
+        end: "(?i)\\b(end(\\s?operator)?)\\b"
+        endCaptures:
+            "1":
+                name: "storage.type.method.monkey2"
+        name: "operator.monkey2"
         patterns: [
             {
                 include: "$self"
