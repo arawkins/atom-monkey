@@ -458,6 +458,7 @@ module.exports =
                     if thisStruct.description.search("@hidden") != -1
                         thisStruct.hidden = true
                     thisStruct.private = inPrivate
+                    thisStruct.type = "Class"
                     fileData.classes.push(thisStruct)
                     scope.push(thisStruct)
                     return
