@@ -1,3 +1,6 @@
+## 1.4.4
+* Improved syntax highlighting for Structs and Operator overloads
+
 ## 1.4.3
 * Bug fix: "Crashes whilst autosaving when building"
 
