@@ -189,7 +189,6 @@ module.exports = Monkey =
             for editor in atom.workspace.getTextEditors()
                 if editor != '' and editor != undefined
                     path = editor.getPath()
-                    console.log(path)
                     if path != undefined and path == ''
                         Promise.resolve(editor.save())
 
