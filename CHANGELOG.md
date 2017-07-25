@@ -1,3 +1,7 @@
+## 1.4.6
+* Fixed autocomplete crash when accessing array index (issue #5)
+* Adjusted padding on toolbar
+
 ## 1.4.5
 * Bug fix and Atom 1.19 compatibility fix for 'save on build' setting
 

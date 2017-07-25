@@ -707,6 +707,11 @@ module.exports =
         if /\(/.test(fullPrefix)
             return
 
+        # if accessing an array index, ignore for now.
+        # TODO look up type of array, get suggestions
+        if /\w+\[/.test(fullPrefix)
+            return
+
         shortlist = []
         instanceRegex = RegExp /^\s*(\w+)(\.[\w\.])?\s*$/, 'i'
         isAssignment = fullPrefix.search("=")
