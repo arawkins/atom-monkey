@@ -1,6 +1,6 @@
 {
   "name": "language-monkey2",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "main": "./lib/monkey",
   "description": "Support for the Monkey2 language in Atom.",
   "keywords": [
