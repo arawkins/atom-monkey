@@ -164,34 +164,45 @@ module.exports = Monkey =
     toggleOutput: ->
         if @outputPanel.isVisible() then @outputPanel.hide() else @outputPanel.show()
 
+    saveThenBuild: (targetPath) ->
+        promises = []
+
+        for editor in atom.workspace.getTextEditors()
+            if editor != '' and editor != undefined and editor.isModified()
+                editorPath = editor.getPath()
+                extension = editorPath.substr(editorPath.lastIndexOf('.')+1)
+                if extension = "monkey2"
+                    promises.push(editor.save())
+
+        Promise.all(promises).then(() =>
+            @build(targetPath)
+        )
+
+
     buildCurrent: ->
         currentEditor = atom.workspace.getActiveTextEditor()
         if currentEditor != '' and currentEditor != undefined
-            #currentEditor.save()
-            @build(currentEditor.getPath())
+            if atom.config.get "language-monkey2.saveOnBuild"
+                @saveThenBuild(currentEditor.getPath())
+            else
+                @build(currentEditor.getPath())
 
     buildDefault: ->
         target = @getCompilationTarget()
         if target == null
             atom.notifications.addError("No compilation target set. Right click a monkey file in the folder tree and choose 'Set Compilation Target'")
-
             return false
         else
-            this.build(target)
+            if atom.config.get "language-monkey2.saveOnBuild"
+                @saveThenBuild(target)
+            else
+                @build(target)
+
 
     build: (targetPath) ->
         extension = targetPath.substr(targetPath.lastIndexOf('.')+1)
         mPath = ''
         buildOut = null
-        console.log("building...")
-        # save current files
-        if atom.config.get "language-monkey2.saveOnBuild"
-            for editor in atom.workspace.getTextEditors()
-                if editor != '' and editor != undefined
-                    path = editor.getPath()
-                    if path != undefined and path == ''
-                        Promise.resolve(editor.save())
-
 
         if extension == 'monkey2'
             mPath = atom.config.get "language-monkey2.monkey2Path"

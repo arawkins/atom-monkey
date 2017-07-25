@@ -1,3 +1,6 @@
+## 1.4.5
+* Bug fix and Atom 1.19 compatibility fix for 'save on build' setting
+
 ## 1.4.4
 * Improved syntax highlighting for Structs and Operator overloads
 
